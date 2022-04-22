@@ -16,8 +16,8 @@ export interface EndUserErrorDisplay {
 }
 
 export interface AppProps {
-  externalNullifier: ABIEncodedValue
-  proofSignal?: ABIEncodedValue
+  externalNullifier: string
+  proofSignal?: string
   enableTelemetry?: boolean
   appName?: string
   signalDescription?: string

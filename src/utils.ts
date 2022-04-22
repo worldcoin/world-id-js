@@ -56,7 +56,7 @@ export const verifyVerificationResponse = (result: Record<string, string | undef
 
 /**
  * Validates that an string looks like an ABI-encoded string. Very basic format-like check.
- * The WLD app will validate the actual value.
+ * The WLD app validates the actual values.
  * @param value string to validate
  * @returns `true` if the value looks like an ABI-encoded string; `false` otherwise
  */
@@ -74,21 +74,5 @@ export const validateInputParams = (params: AppProps): { valid: boolean; error?:
   if (!params.externalNullifier) {
     return { valid: false, error: 'The `externalNullifier` parameter is always required.' }
   }
-
-  if (!validateABILikeEncoding(params.externalNullifier)) {
-    return {
-      valid: false,
-      error:
-        'The `externalNullifier` you provided does not look valid. This parameter should be an ABI-encoded string.',
-    }
-  }
-
-  if (params.proofSignal && !validateABILikeEncoding(params.proofSignal)) {
-    return {
-      valid: false,
-      error: 'The `proofSignal` you provided does not look valid. This parameter should be an ABI-encoded string.',
-    }
-  }
-
   return { valid: true }
 }

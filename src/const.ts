@@ -9,9 +9,9 @@ export const ERROR_MESSAGES: Record<ErrorCodes, string> = {
   [ErrorCodes.VerificationRejected]: 'User rejected verification request in Worldcoin app.',
   [ErrorCodes.AlreadySigned]: 'User has previously signed and submitted proof for this action.',
   [ErrorCodes.InvalidExternalNullifier]:
-    "The provided external nullifier is not valid. Make sure it's a valid ABI-encoded value. Review the docs for details.",
+    "The provided external nullifier is not valid. Make sure it's a valid string. Review the docs for details.",
   [ErrorCodes.InvalidProofSignal]:
-    "The provided proof signal is not valid. Make sure it's a valid ABI-encoded value. Review the docs for details.",
+    "The provided proof signal is not valid. Make sure it's a valid string or address. Review the docs for details.",
   [ErrorCodes.UnexpectedResponse]: 'Received an unexpected response from WLD app. Please try again.',
   [ErrorCodes.GenericError]: 'An unhandled exception ocurred. Please try again.',
 }
