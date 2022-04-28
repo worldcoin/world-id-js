@@ -42,10 +42,10 @@ export const buildVerificationRequest = (props: AppProps): VerificationRequest =
  */
 export const verifyVerificationResponse = (result: Record<string, string | undefined>): boolean => {
   const merkleRoot = 'merkleRoot' in result ? result.merkleRoot : undefined
-  const nullifierHash = 'nullifierHash' in result ? result.nullifierHash : undefined
+  const uniquenessHash = 'uniquenessHash' in result ? result.uniquenessHash : undefined
   const proof = 'proof' in result ? result.proof : undefined
 
-  for (const attr of [merkleRoot, nullifierHash, proof]) {
+  for (const attr of [merkleRoot, uniquenessHash, proof]) {
     if (!attr || !validateABILikeEncoding(attr)) {
       return false
     }
