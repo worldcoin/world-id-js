@@ -1,5 +1,7 @@
 <img src="https://raw.githubusercontent.com/worldcoin/world-id-js/main/world-id-logo.svg" alt="World ID logo" width="300" />
 
+> 💡 World ID is currently in Alpha development and only works in a test network. Please share [feedback](#feedback) about your experience to help us launch soon!
+
 # World ID Javascript Integration
 
 The Javascript integration is the simplest way to integrate [World ID](https://worldcoin.org/world-id). The package currently supports web applications and requires only a few lines of code.
@@ -93,6 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
 ## 📄 Documentation
 
 Full documentation for this package can be found at [https://id.worldcoin.org/docs/js][docs].
+
+## 🗣 Feedback
+
+Please share all feedback on your experience. You can find us on [Discord](https://discord.gg/worldcoin), look for the [#world-id](https://discord.com/channels/956750052771127337/968523914638688306) channel. Additionally, feel free to open an issue or a PR directly on this repo.
 
 ## 🧑‍💻 Development & testing
 
