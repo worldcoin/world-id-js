@@ -25,7 +25,7 @@ beforeAll(() => {
 
 describe('initialization', () => {
   it('can be initialized', () => {
-    init('wld-container-test', { externalNullifier: VALID_ABI, proofSignal: VALID_ABI })
+    init('wld-container-test', { actionId: VALID_ABI, signal: VALID_ABI })
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -45,39 +45,35 @@ describe('initialization', () => {
   })
 
   it('cannot be initialized twice', () => {
-    expect(() => init('wld-container-test', { externalNullifier: VALID_ABI, proofSignal: VALID_ABI })).not.toThrow()
+    expect(() => init('wld-container-test', { actionId: VALID_ABI, signal: VALID_ABI })).not.toThrow()
 
-    expect(() => init('wld-container-test', { externalNullifier: VALID_ABI, proofSignal: VALID_ABI })).toThrow(
+    expect(() => init('wld-container-test', { actionId: VALID_ABI, signal: VALID_ABI })).toThrow(
       'World ID is already initialized. To update properties, please use `worldID.update` instead.'
     )
   })
 })
 
 describe('parameter validation', () => {
-  it('validates externalNullifier is non-empty', () => {
-    expect(() => init('wld-container-test', { externalNullifier: '' })).toThrow(
-      'The `externalNullifier` parameter is always required.'
-    )
+  it('validates actionId is non-empty', () => {
+    expect(() => init('wld-container-test', { actionId: '' })).toThrow('The `actionId` parameter is always required.')
   })
 
-  it('validates externalNullifier is non-empty when updating', () => {
-    init('wld-container-test', { externalNullifier: VALID_ABI })
+  it('validates actionId is non-empty when updating', () => {
+    init('wld-container-test', { actionId: VALID_ABI })
 
-    expect(() => update({ externalNullifier: '' })).toThrow('The `externalNullifier` parameter is always required.')
+    expect(() => update({ actionId: '' })).toThrow('The `actionId` parameter is always required.')
   })
 
-  it('validates externalNullifier is non-null', () => {
+  it('validates actionId is non-null', () => {
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => init('wld-container-test', { externalNullifier: null })).toThrow(
-      'The `externalNullifier` parameter is always required.'
-    )
+    expect(() => init('wld-container-test', { actionId: null })).toThrow('The `actionId` parameter is always required.')
 
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => update({ externalNullifier: null })).toThrow('The `externalNullifier` parameter is always required.')
+    expect(() => update({ actionId: null })).toThrow('The `actionId` parameter is always required.')
   })
 
-  it('can be initialized with empty `proofSignal`', () => {
-    expect(() => init('wld-container-test', { externalNullifier: VALID_ABI })).not.toThrow()
+  it('can be initialized with empty `signal`', () => {
+    expect(() => init('wld-container-test', { actionId: VALID_ABI })).not.toThrow()
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -85,35 +81,35 @@ describe('parameter validation', () => {
       throw new Error('Element not found.')
     }
 
-    // Element is disabled (because `proofSignal` is not present)
+    // Element is disabled (because `signal` is not present)
     const elementStyle = window.getComputedStyle(element)
     expect(elementStyle.opacity).toBe('0.5')
     expect(elementStyle.cursor).toBe('not-allowed')
   })
 
-  it('validates `proofSignal` if present', () => {
-    expect(() => init('wld-container-test', { externalNullifier: VALID_ABI, proofSignal: 'invalid' })).toThrow(
-      'The `proofSignal` you provided does not look valid. This parameter should be an ABI-encoded string.'
+  it('validates `signal` if present', () => {
+    expect(() => init('wld-container-test', { actionId: VALID_ABI, signal: 'invalid' })).toThrow(
+      'The `signal` you provided does not look valid. This parameter should be an ABI-encoded string.'
     )
   })
 
-  it('validates `proofSignal` on update', () => {
-    init('wld-container-test', { externalNullifier: VALID_ABI })
+  it('validates `signal` on update', () => {
+    init('wld-container-test', { actionId: VALID_ABI })
 
-    expect(() => update({ proofSignal: '0xinvalid' })).toThrow(
-      'The `proofSignal` you provided does not look valid. This parameter should be an ABI-encoded string.'
+    expect(() => update({ signal: '0xinvalid' })).toThrow(
+      'The `signal` you provided does not look valid. This parameter should be an ABI-encoded string.'
     )
   })
 
   it('throws error if incorrect element type is passed', () => {
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => init(123, { externalNullifier: VALID_ABI })).toThrow(
+    expect(() => init(123, { actionId: VALID_ABI })).toThrow(
       'The passed element parameter does not look like a valid HTML element.'
     )
   })
 
   it('throws error if element cannot be found on DOM', () => {
-    expect(() => init('i_dont_exist', { externalNullifier: VALID_ABI })).toThrow(
+    expect(() => init('i_dont_exist', { actionId: VALID_ABI })).toThrow(
       'Element to mount World ID not found. Please make sure the element is valid.'
     )
   })
@@ -121,7 +117,7 @@ describe('parameter validation', () => {
 
 describe('activation', () => {
   it('can be activated', () => {
-    expect(() => init('wld-container-test', { externalNullifier: VALID_ABI, proofSignal: VALID_ABI })).not.toThrow()
+    expect(() => init('wld-container-test', { actionId: VALID_ABI, signal: VALID_ABI })).not.toThrow()
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -144,18 +140,16 @@ describe('activation', () => {
     )
   })
 
-  it('cannot be activated if `proofSignal` is not present', () => {
-    expect(() => init('wld-container-test', { externalNullifier: VALID_ABI })).not.toThrow()
+  it('cannot be activated if `signal` is not present', () => {
+    expect(() => init('wld-container-test', { actionId: VALID_ABI })).not.toThrow()
 
-    expect(() => enable()).toThrow(
-      'Please provide the `proofSignal` first using `.update()` or `.init()` as applicable.'
-    )
+    expect(() => enable()).toThrow('Please provide the `signal` first using `.update()` or `.init()` as applicable.')
   })
 })
 
 describe('remote fonts', () => {
   it('loads remote font by default', () => {
-    init('wld-container-test', { externalNullifier: VALID_ABI })
+    init('wld-container-test', { actionId: VALID_ABI })
 
     const elements = document.getElementsByTagName('link')
 
@@ -176,7 +170,7 @@ describe('remote fonts', () => {
   })
 
   it('does not load remote font if disabled', () => {
-    init('wld-container-test', { externalNullifier: VALID_ABI, disableRemoteFonts: true })
+    init('wld-container-test', { actionId: VALID_ABI, disableRemoteFonts: true })
 
     // No external stylesheet is loaded
     const elements = document.getElementsByTagName('link')
@@ -188,7 +182,7 @@ describe('state checks', () => {
   it('isInitialized', () => {
     expect(isInitialized()).toBeFalsy()
 
-    init('wld-container-test', { externalNullifier: VALID_ABI })
+    init('wld-container-test', { actionId: VALID_ABI })
 
     expect(isInitialized()).toBeTruthy()
   })
@@ -196,7 +190,7 @@ describe('state checks', () => {
   it('isEnabled', () => {
     expect(isEnabled()).toBeFalsy()
 
-    init('wld-container-test', { externalNullifier: VALID_ABI, proofSignal: VALID_ABI })
+    init('wld-container-test', { actionId: VALID_ABI, signal: VALID_ABI })
 
     expect(isEnabled()).toBeFalsy()
 
