@@ -2,7 +2,7 @@
 
 # World ID Javascript Integration
 
-The Javascript integration is the simplest way to integrate [World ID](https://worldcoin.org/world-id). The package currently supports web applications and requires only a few lines of code.
+The Javascript integration is the simplest way to integrate [World ID](https://id.worldcoin.org). The package currently supports web applications and requires only a few lines of code.
 
 > World ID is a mechanism to verify a single human has performed a specific action only once without exposing any personal information.
 
@@ -19,8 +19,8 @@ World ID can be used for multiple use cases, including:
 
 Want to see World ID in action? Check out some examples below,
 
-- **Mesha Airdrop.** Verify a user is receiving this airdrop only once. Demo (coming soon) | Source (coming soon).
-- **Cubed Voting.** Truly democratic voting on various topics. Demo (coming soon) | Source (coming soon).
+- **Mesha Airdrop.** Verify a user is receiving this airdrop only once. Demo (_coming soon_) | [Source](https://github.com/worldcoin/world-id-example-airdrop) | [dApp source](https://github.com/worldcoin/world-id-airdrop-example-dapp).
+- **Cubed Voting.** Truly democratic voting on various topics. Demo (_coming soon_) | Source (_coming soon_).
 
 ## 🚀 Getting started
 
@@ -29,15 +29,15 @@ Getting started with the Javascript package is really easy. Just follow the step
 1. Install/include the package in your app (**recommended**) or add the code snippet from our CDN.
 
 ```bash
-npm install @worldcoin/world-id
+npm install @worldcoin/id
 # or
-yarn add @worldcoin/world-id
+yarn add @worldcoin/id
 ```
 
 To add the script directly in your HTML,
 
 ```html
-<script type="text/javascript" src="<tbd>" />
+<script type="text/javascript" src="//unpkg.com/@worldcoin/id/dist/world-id.js"></script>
 ```
 
 2. Add a `<div>` in your HTML where you'd like to include World ID.
