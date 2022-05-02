@@ -57,7 +57,7 @@ export interface VerificationRequest {
 
 export interface VerificationResponse {
   merkleRoot: ABIEncodedValue
-  uniquenessHash: ABIEncodedValue
+  nullifierHash: ABIEncodedValue
   proof: ABIEncodedValue
 }
 export interface VerificationErrorResponse {
