@@ -73,7 +73,7 @@ describe('parameter validation', () => {
     expect(() => update({ actionId: null })).toThrow('The `actionId` parameter is always required.')
   })
 
-  it('can be initialized with empty `proofSignal`', () => {
+  it('can be initialized with empty `signal`', () => {
     expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID })).not.toThrow()
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
@@ -127,7 +127,7 @@ describe('activation', () => {
     )
   })
 
-  it('cannot be activated if `proofSignal` is not present', () => {
+  it('cannot be activated if `signal` is not present', () => {
     expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID })).not.toThrow()
 
     expect(() => enable()).toThrow('Please provide the `signal` first using `.update()` or `.init()` as applicable.')
