@@ -11,13 +11,13 @@ export const randomNumber = (min: number, max: number): number => {
 }
 
 export const buildVerificationRequest = (props: AppProps): VerificationRequest => {
-  if (!props.proofSignal) {
-    throw new Error('Unexpectedly trying to build verification request without a `proofSignal`.')
+  if (!props.signal) {
+    throw new Error('Unexpectedly trying to build verification request without a `signal`.')
   }
 
   const params: VerificationRequestParams = {
-    proofSignal: props.proofSignal,
-    externalNullifier: props.externalNullifier,
+    signal: props.signal,
+    actionId: props.actionId,
   }
 
   if (props.appName) {
@@ -71,22 +71,21 @@ export const validateABILikeEncoding = (value: string): boolean => {
  * @returns `true` if parameters are valid; error is raised otherwise.
  */
 export const validateInputParams = (params: AppProps): { valid: boolean; error?: string } => {
-  if (!params.externalNullifier) {
-    return { valid: false, error: 'The `externalNullifier` parameter is always required.' }
+  if (!params.actionId) {
+    return { valid: false, error: 'The `actionId` parameter is always required.' }
   }
 
-  if (!validateABILikeEncoding(params.externalNullifier)) {
+  if (!validateABILikeEncoding(params.actionId)) {
     return {
       valid: false,
-      error:
-        'The `externalNullifier` you provided does not look valid. This parameter should be an ABI-encoded string.',
+      error: 'The `actionId` you provided does not look valid. This parameter should be an ABI-encoded string.',
     }
   }
 
-  if (params.proofSignal && !validateABILikeEncoding(params.proofSignal)) {
+  if (params.signal && !validateABILikeEncoding(params.signal)) {
     return {
       valid: false,
-      error: 'The `proofSignal` you provided does not look valid. This parameter should be an ABI-encoded string.',
+      error: 'The `signal` you provided does not look valid. This parameter should be an ABI-encoded string.',
     }
   }
 

@@ -4,8 +4,8 @@ export enum ErrorCodes {
   ConnectionFailed = 'connection_failed',
   VerificationRejected = 'verification_rejected',
   AlreadySigned = 'already_signed',
-  InvalidExternalNullifier = 'invalid_external_nullifier',
-  InvalidProofSignal = 'invalid_proof_signal',
+  InvalidActionID = 'invalid_action_id',
+  InvalidSignal = 'invalid_signal',
   UnexpectedResponse = 'unexpected_response',
   GenericError = 'generic_error',
 }
@@ -16,8 +16,8 @@ export interface EndUserErrorDisplay {
 }
 
 export interface AppProps {
-  externalNullifier: ABIEncodedValue
-  proofSignal?: ABIEncodedValue
+  actionId: ABIEncodedValue
+  signal?: ABIEncodedValue
   enableTelemetry?: boolean
   appName?: string
   signalDescription?: string
@@ -42,8 +42,8 @@ export enum VerificationState {
 }
 
 export interface VerificationRequestParams {
-  externalNullifier: string
-  proofSignal: string
+  actionId: string
+  signal: string
   appName?: string
   signalDescription?: string
 }

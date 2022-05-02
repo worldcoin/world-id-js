@@ -54,7 +54,7 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
 }
 
 /**
- * Updates the parameters used for World ID (e.g. `proofSignal` or `externalNullifier`).
+ * Updates the parameters used for World ID (e.g. `signal` or `actionId`).
  * @param propsToUpdate
  */
 export const update = (propsToUpdate: Partial<AppProps>): void => {
@@ -74,8 +74,8 @@ export const enable = (): Promise<VerificationResponse> => {
       'World ID cannot be enabled before calling `.init()` or before the DOM is loaded. Please make sure you have called `.init()` and your DOM is ready.'
     )
   }
-  if (!worldLogic.props.proofSignal) {
-    throw new Error('Please provide the `proofSignal` first using `.update()` or `.init()` as applicable.')
+  if (!worldLogic.props.signal) {
+    throw new Error('Please provide the `signal` first using `.update()` or `.init()` as applicable.')
   }
 
   let callbacks = {}

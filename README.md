@@ -50,8 +50,8 @@ To add the script directly in your HTML,
 
 ```js
 worldID.init('world-id-container', {
-  externalNullifier: '0x0000000000000000000000000000000000000000000000000000000000000000',
-  proofSignal: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  actionId: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  signal: '0x0000000000000000000000000000000000000000000000000000000000000000',
   appName: 'My App', // optional, but recommended
   signalDescription: 'Receive candies airdrop 2022', // optional, but recommended
   enableTelemetry: true, // optional, but recommended
