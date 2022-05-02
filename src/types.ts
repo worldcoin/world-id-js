@@ -16,8 +16,8 @@ export interface EndUserErrorDisplay {
 }
 
 export interface AppProps {
-  actionId: ABIEncodedValue
-  signal?: ABIEncodedValue
+  actionId: string
+  signal?: string
   enableTelemetry?: boolean
   appName?: string
   signalDescription?: string
