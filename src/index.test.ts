@@ -4,8 +4,8 @@ import { testUtilsPlugin } from 'kea-test-utils'
 import { worldLogic } from 'worldLogic'
 import { init, update, enable, isInitialized, isEnabled } from '.'
 
-const SAMPLE_ACTION_ID = '@worldcoin/testAirdrop'
-const SAMPLE_SIGNAL = '0x0000000000000000000000000000000000000000'
+const SAMPLE_ACTION_ID = '0x330C8452C879506f313D1565702560435b0fee4C' // smart contract's address
+const SAMPLE_SIGNAL = '0x0000000000000000000000000000000000000000' // usually end user's wallet address
 
 beforeEach(() => {
   resetContext({
