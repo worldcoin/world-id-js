@@ -4,7 +4,7 @@ import { testUtilsPlugin } from 'kea-test-utils'
 import { worldLogic } from 'worldLogic'
 import { init, update, enable, isInitialized, isEnabled } from '.'
 
-const SAMPLE_EXTERNAL_NULLIFIER = '@worldcoin/testAirdrop'
+const SAMPLE_ACTION_ID = '@worldcoin/testAirdrop'
 const SAMPLE_SIGNAL = '0x0000000000000000000000000000000000000000'
 
 beforeEach(() => {
@@ -26,7 +26,7 @@ beforeAll(() => {
 
 describe('initialization', () => {
   it('can be initialized', () => {
-    init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER, proofSignal: SAMPLE_SIGNAL })
+    init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -46,41 +46,35 @@ describe('initialization', () => {
   })
 
   it('cannot be initialized twice', () => {
-    expect(() =>
-      init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER, proofSignal: SAMPLE_SIGNAL })
-    ).not.toThrow()
+    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).not.toThrow()
 
-    expect(() =>
-      init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER, proofSignal: SAMPLE_SIGNAL })
-    ).toThrow('World ID is already initialized. To update properties, please use `worldID.update` instead.')
+    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).toThrow(
+      'World ID is already initialized. To update properties, please use `worldID.update` instead.'
+    )
   })
 })
 
 describe('parameter validation', () => {
-  it('validates externalNullifier is non-empty', () => {
-    expect(() => init('wld-container-test', { externalNullifier: '' })).toThrow(
-      'The `externalNullifier` parameter is always required.'
-    )
+  it('validates actionId is non-empty', () => {
+    expect(() => init('wld-container-test', { actionId: '' })).toThrow('The `actionId` parameter is always required.')
   })
 
   it('validates externalNullifier is non-empty when updating', () => {
-    init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER })
+    init('wld-container-test', { actionId: SAMPLE_ACTION_ID })
 
-    expect(() => update({ externalNullifier: '' })).toThrow('The `externalNullifier` parameter is always required.')
+    expect(() => update({ actionId: '' })).toThrow('The `actionId` parameter is always required.')
   })
 
-  it('validates externalNullifier is non-null', () => {
+  it('validates actionId is non-null', () => {
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => init('wld-container-test', { externalNullifier: null })).toThrow(
-      'The `externalNullifier` parameter is always required.'
-    )
+    expect(() => init('wld-container-test', { actionId: null })).toThrow('The `actionId` parameter is always required.')
 
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => update({ externalNullifier: null })).toThrow('The `externalNullifier` parameter is always required.')
+    expect(() => update({ actionId: null })).toThrow('The `actionId` parameter is always required.')
   })
 
   it('can be initialized with empty `proofSignal`', () => {
-    expect(() => init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER })).not.toThrow()
+    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID })).not.toThrow()
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -88,7 +82,7 @@ describe('parameter validation', () => {
       throw new Error('Element not found.')
     }
 
-    // Element is disabled (because `proofSignal` is not present)
+    // Element is disabled (because `signal` is not present)
     const elementStyle = window.getComputedStyle(element)
     expect(elementStyle.opacity).toBe('0.5')
     expect(elementStyle.cursor).toBe('not-allowed')
@@ -96,13 +90,13 @@ describe('parameter validation', () => {
 
   it('throws error if incorrect element type is passed', () => {
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => init(123, { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER })).toThrow(
+    expect(() => init(123, { actionId: SAMPLE_ACTION_ID })).toThrow(
       'The passed element parameter does not look like a valid HTML element.'
     )
   })
 
   it('throws error if element cannot be found on DOM', () => {
-    expect(() => init('i_dont_exist', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER })).toThrow(
+    expect(() => init('i_dont_exist', { actionId: SAMPLE_ACTION_ID })).toThrow(
       'Element to mount World ID not found. Please make sure the element is valid.'
     )
   })
@@ -110,9 +104,7 @@ describe('parameter validation', () => {
 
 describe('activation', () => {
   it('can be enabled', () => {
-    expect(() =>
-      init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER, proofSignal: SAMPLE_SIGNAL })
-    ).not.toThrow()
+    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).not.toThrow()
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -136,17 +128,15 @@ describe('activation', () => {
   })
 
   it('cannot be activated if `proofSignal` is not present', () => {
-    expect(() => init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER })).not.toThrow()
+    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID })).not.toThrow()
 
-    expect(() => enable()).toThrow(
-      'Please provide the `proofSignal` first using `.update()` or `.init()` as applicable.'
-    )
+    expect(() => enable()).toThrow('Please provide the `signal` first using `.update()` or `.init()` as applicable.')
   })
 })
 
 describe('remote fonts', () => {
   it('loads remote font by default', () => {
-    init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER })
+    init('wld-container-test', { actionId: SAMPLE_ACTION_ID })
 
     const elements = document.getElementsByTagName('link')
 
@@ -167,7 +157,7 @@ describe('remote fonts', () => {
   })
 
   it('does not load remote font if disabled', () => {
-    init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER, disableRemoteFonts: true })
+    init('wld-container-test', { actionId: SAMPLE_ACTION_ID, disableRemoteFonts: true })
 
     // No external stylesheet is loaded
     const elements = document.getElementsByTagName('link')
@@ -179,7 +169,7 @@ describe('state checks', () => {
   it('isInitialized', () => {
     expect(isInitialized()).toBeFalsy()
 
-    init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER })
+    init('wld-container-test', { actionId: SAMPLE_ACTION_ID })
 
     expect(isInitialized()).toBeTruthy()
   })
@@ -187,7 +177,7 @@ describe('state checks', () => {
   it('isEnabled', () => {
     expect(isEnabled()).toBeFalsy()
 
-    init('wld-container-test', { externalNullifier: SAMPLE_EXTERNAL_NULLIFIER, proofSignal: SAMPLE_SIGNAL })
+    init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })
 
     expect(isEnabled()).toBeFalsy()
 

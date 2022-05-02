@@ -1,8 +1,8 @@
 {
-  "name": "@worldcoin/world-id",
+  "name": "@worldcoin/id",
   "type": "module",
   "version": "0.0.1",
-  "description": "",
+  "description": "Integrate World ID (proof of personhood) into your Javascript apps.",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -29,9 +29,14 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "keywords": [],
+  "keywords": [
+    "web3",
+    "proof-of-personhood"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "homepage": "https://id.worldcoin.org/docs/js",
+  "repository": "github:worldcoin/world-id-js",
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "0.1.1",
     "@testing-library/jest-dom": "5.16.3",

@@ -8,9 +8,9 @@ export const ERROR_MESSAGES: Record<ErrorCodes, string> = {
     'Unable to establish connection to Worldcoin app. Please verify internet connection and try again.',
   [ErrorCodes.VerificationRejected]: 'User rejected verification request in Worldcoin app.',
   [ErrorCodes.AlreadySigned]: 'User has previously signed and submitted proof for this action.',
-  [ErrorCodes.InvalidExternalNullifier]:
+  [ErrorCodes.InvalidActionID]:
     "The provided external nullifier is not valid. Make sure it's a valid string. Review the docs for details.",
-  [ErrorCodes.InvalidProofSignal]:
+  [ErrorCodes.InvalidSignal]:
     "The provided proof signal is not valid. Make sure it's a valid string or address. Review the docs for details.",
   [ErrorCodes.UnexpectedResponse]: 'Received an unexpected response from WLD app. Please try again.',
   [ErrorCodes.GenericError]: 'An unhandled exception ocurred. Please try again.',
@@ -35,11 +35,11 @@ export const END_USER_ERROR_MESSAGES: Partial<Record<ErrorCodes, EndUserErrorDis
     caption: 'You have already verified your identity for this action once. You cannot verify the same action twice.',
     noRetry: true,
   },
-  [ErrorCodes.InvalidExternalNullifier]: {
+  [ErrorCodes.InvalidActionID]: {
     caption: 'The verification request was invalid. Please contact the app before trying again.',
     noRetry: true,
   },
-  [ErrorCodes.InvalidProofSignal]: {
+  [ErrorCodes.InvalidSignal]: {
     caption: 'The verification request was invalid. Please contact the app before trying again.',
     noRetry: true,
   },
