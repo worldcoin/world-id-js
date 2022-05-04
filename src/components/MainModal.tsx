@@ -32,13 +32,11 @@ const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  min-height: 540px;
   transform: translate(-50%, -50%);
   width: 460px;
   max-width: calc(100% - 32px);
   z-index: 10000;
   display: ${(props) => (props.shown ? 'block' : 'none')};
-  overflow-y: auto;
 
   @media (max-width: ${breakpoints.sm}) {
     width: 100%;
