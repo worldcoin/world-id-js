@@ -21,3 +21,7 @@ export const H2 = styled.div`
   font-size: 1.4em;
   line-height: 1.3em;
 `
+
+export const P = styled.p`
+  margin: 1em 0;
+`
