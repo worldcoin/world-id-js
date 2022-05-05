@@ -1,5 +1,5 @@
 import { LinkGradient } from 'components/LinkGradient'
-import { H2 } from 'components/text'
+import { H2, P } from 'components/text'
 import { breakpoints } from 'const'
 import { useValues } from 'kea'
 import styled from 'styled-components'
@@ -62,7 +62,7 @@ export function ModalCTA(): JSX.Element | null {
         <H2>Don't have the Worldcoin app?</H2>
         <SWrapper>
           <div>
-            <p>Proive unique-humanness through biometrics, privately.</p>
+            <P>Prove unique-humanness through biometrics, privately.</P>
           </div>
           <div>
             <LinkGradient href="https://worldcoin.org/app#download" target="_blank">
