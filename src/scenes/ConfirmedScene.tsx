@@ -1,6 +1,6 @@
 import { Button } from 'components/Button'
 import { StatefulIcon } from 'components/StatefulIcon'
-import { H2 } from 'components/text'
+import { H2, P } from 'components/text'
 import { breakpoints } from 'const'
 import { useActions } from 'kea'
 import styled from 'styled-components'
@@ -25,7 +25,7 @@ export function ConfirmedScene(): JSX.Element {
     <SWrapper>
       <StatefulIcon state="success" />
       <H2>Verification Confirmed!</H2>
-      <p>This World ID request has been confirmed successfully.</p>
+      <P>This World ID request has been confirmed successfully.</P>
       <Button block onClick={terminate}>
         Continue
       </Button>

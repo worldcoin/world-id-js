@@ -2,7 +2,7 @@ import { IconCircleSuccess, IconHelpCircle } from 'assets/icons'
 import { Button } from 'components/Button'
 import { LinkButton } from 'components/LinkButton'
 import { QRRender } from 'components/QRRender'
-import { H1 } from 'components/text'
+import { H1, P } from 'components/text'
 import { useEffect, useState } from 'preact/hooks'
 import { useActions, useValues } from 'kea'
 import { worldLogic } from 'worldLogic'
@@ -32,6 +32,7 @@ const SColumn = styled.div`
 `
 
 const SCaption = styled.p`
+  margin: 14px 0;
   position: absolute;
   left: 32px;
   bottom: 0;
@@ -109,7 +110,7 @@ export function AwaitingConnectionScene(): JSX.Element {
     <SWrapper>
       <SColumn left>
         <H1>Prove you are a human doing this once with World ID.</H1>
-        <p>Scan this QR code with your phone's camera or the Worldcoin mobile app.</p>
+        <P>Scan this QR code with your phone's camera or the Worldcoin mobile app.</P>
         <SCaption>
           <LinkButton onClick={() => setModalView(ModalView.LearnMore)}>
             <LearnMoreLink />
