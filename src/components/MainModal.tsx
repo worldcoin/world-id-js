@@ -7,7 +7,7 @@ import { createPortal } from 'preact/compat'
 import { worldLogic } from 'worldLogic'
 import { useActions, useValues } from 'kea'
 import { PrincipalScene } from 'scenes/PrincipalScene'
-import { ModalView } from 'types'
+import { CTAShownState, ModalView } from 'types'
 import { LearnMoreScene } from 'scenes/LearnMoreScene'
 import { ModalCTA } from 'scenes/CTAScene'
 import { breakpoints } from 'const'
@@ -32,11 +32,13 @@ const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  min-height: ${(props) => (props.ctaShownState === CTAShownState.Show ? '540px' : '360px')};
   transform: translate(-50%, -50%);
   width: 460px;
   max-width: calc(100% - 32px);
   z-index: 10000;
   display: ${(props) => (props.shown ? 'block' : 'none')};
+  transition: min-height ease-in 0.5s;
 
   @media (max-width: ${breakpoints.sm}) {
     width: 100%;
@@ -125,13 +127,13 @@ function ModalBody(): JSX.Element {
 }
 
 export function MainModal(): JSX.Element {
-  const { isAppActive } = useValues(worldLogic)
+  const { isAppActive, ctaShownState } = useValues(worldLogic)
   const { terminate } = useActions(worldLogic)
 
   return createPortal(
     <GlobalStyles>
       <Overlay onClick={terminate} shown={isAppActive} data-testId="overlay" />
-      <ModalWrapper shown={isAppActive} data-testId="modal-wrapper">
+      <ModalWrapper ctaShownState={ctaShownState} shown={isAppActive} data-testId="modal-wrapper">
         {isAppActive && (
           <>
             <ModalContent>
