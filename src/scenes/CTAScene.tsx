@@ -15,7 +15,7 @@ const SWrapper = styled.div`
 `
 
 const SModalCTA = styled.div`
-  position: relative;
+  position: absolute;
   background-color: white;
   border-radius: var(--radius);
   margin-top: 32px;
@@ -26,7 +26,6 @@ const SModalCTA = styled.div`
 
   @media (max-width: ${breakpoints.sm}) {
     animation: unset !important;
-    position: absolute;
     bottom: 0;
     font-size: 0.85em;
     border-top: 1px solid var(--border-secondary);
