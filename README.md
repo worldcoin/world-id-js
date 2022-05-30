@@ -1,28 +1,11 @@
 <img src="https://raw.githubusercontent.com/worldcoin/world-id-js/main/world-id-logo.svg" alt="World ID logo" width="300" />
 
-> 💡 World ID is currently in Alpha development and only works in a test network. Please share [feedback](#feedback) about your experience to help us launch soon!
-
 # World ID Javascript Integration
 
 The Javascript integration is the simplest way to integrate [World ID](https://id.worldcoin.org). The package currently supports web applications and requires only a few lines of code.
 
-> World ID is a mechanism to verify a single human has performed a specific action only once without exposing any personal information.
-
-World ID can be used for multiple use cases, including:
-
-- **Democratic voting.** On-chain voting, ensure 1 person = 1 vote.
-- **Airdrops.** A person receives an airdrop only once (prevent bot abuse).
-- **Quadratic funding.** Fund projects based on the number of supporters.
-- **Person-bound NFTs.** On-chain credentials, achievements, vaccination records, ... NFTs that always belong to the same person.
-- **Account creation.** Verify a real person is creating an account once, even for non-web3 apps.
-- **Fraud prevention.** More robust KYC and fraud prevention controls, even for non-web3 apps.
-
-## 🎮 Demos
-
-Want to see World ID in action? Check out some examples below,
-
-- **Mesha Airdrop.** Verify a user is receiving this airdrop only once. Demo (_coming soon_) | [Source](https://github.com/worldcoin/world-id-example-airdrop) | [dApp source](https://github.com/worldcoin/world-id-airdrop-example-dapp).
-- **Cubed Voting.** Truly democratic voting on various topics. Demo (_coming soon_) | Source (_coming soon_).
+<!-- WORLD-ID-SHARED-README-TAG:START - Do not remove or modify this section directly -->
+<!-- WORLD-ID-SHARED-README-TAG:END -->
 
 ## 🚀 Getting started
 
@@ -92,14 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 ```
 
-## 📄 Documentation
-
-Full documentation for this package can be found at [https://id.worldcoin.org/docs/js][docs].
-
-## 🗣 Feedback
-
-Please share all feedback on your experience. You can find us on [Discord](https://discord.gg/worldcoin), look for the [#world-id](https://discord.com/channels/956750052771127337/968523914638688306) channel. Additionally, feel free to open an issue or a PR directly on this repo.
-
 ## 🧑‍💻 Development & testing
 
 To develop locally and contribute to this package, you can simply follow these instructions after clonning the repo.
@@ -121,11 +96,5 @@ To develop locally and contribute to this package, you can simply follow these i
   ```bash
   npm run build
   ```
-
-## 🧑‍⚖️ License
-
-This repository is MIT licensed. Please review the LICENSE file in this repository.
-
-Copyright (C) 2022 Tools for Humanity Corporation.
 
 [docs]: https://id.worldcoin.org/docs/js
