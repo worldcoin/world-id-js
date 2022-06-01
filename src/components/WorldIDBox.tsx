@@ -6,6 +6,12 @@ import styled from 'styled-components'
 import { VerificationState } from 'types'
 import { Checkbox } from './Checkbox'
 import { verificationLogic } from 'verificationLogic'
+import React from 'react'
+
+interface SWorldIDBox {
+  disabled?: boolean
+  terminated?: boolean
+}
 
 const SWorldIDBox = styled.div`
   border: 1px solid var(--wid-box-border);
@@ -19,9 +25,9 @@ const SWorldIDBox = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #fff;
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : props.terminated ? 'default' : 'pointer')};
+  cursor: ${(props: SWorldIDBox) => (props.disabled ? 'not-allowed' : props.terminated ? 'default' : 'pointer')};
   padding: 0 16px;
-  opacity: ${(props) => (props.disabled ? '0.5' : undefined)};
+  opacity: ${(props: SWorldIDBox) => (props.disabled ? '0.5' : undefined)};
 `
 
 const SMainContainer = styled.div`
@@ -56,7 +62,7 @@ export function WorldIDBox(): JSX.Element {
   const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
   const { verificationState } = useValues(verificationLogic)
 
-  const handleLearnMore = (e: Event) => {
+  const handleLearnMore = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (isAppEnabled && !isAppTerminated) {
       e.stopPropagation()
       showLearnMore()

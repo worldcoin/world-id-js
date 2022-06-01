@@ -25,9 +25,7 @@
     "outDir": "./dist",
     "rootDir": "src",
     "paths": {
-      "*": ["./src/*"],
-      "react": ["node_modules/preact/compat/"],
-      "react-dom": ["node_modules/preact/compat/"]
+      "*": ["./src/*"]
     },
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

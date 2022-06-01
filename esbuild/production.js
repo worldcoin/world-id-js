@@ -16,9 +16,6 @@ const baseConfig = {
   bundle: true,
   define: { global: 'window', worldIdJSVersion: JSON.stringify(version) },
   entryPoints: [path.join(path.resolve('.'), 'src', 'index.tsx')],
-  inject: ['./esbuild/preact-shim.js'],
-  jsxFactory: 'h',
-  jsxFragment: 'Fragment',
   logLevel: 'info',
   minify: true,
 

@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect, useRef } from 'react'
 import QRCodeStyling from 'qr-code-styling'
 import styled from 'styled-components'
-import renderToString from 'preact-render-to-string'
-import { WorldcoinLogomark } from 'assets/logos'
+//import { WorldcoinLogomark } from 'assets/logos'
+//import reactElementToJSXString from 'react-element-to-jsx-string'
 
-const logoB64 = window.btoa(renderToString(<WorldcoinLogomark />))
+//const logoB64 = window.btoa(reactElementToJSXString(<WorldcoinLogomark />))
+const logoB64 = ''
 
 const qrCode = new QRCodeStyling({
   width: 183,
