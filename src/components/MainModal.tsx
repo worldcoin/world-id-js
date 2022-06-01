@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { GlobalStyles } from 'styles'
 import { SquareButton } from './SquareButton'
 import { IconLeft } from 'assets/icons'
-import { createPortal } from 'react-dom'
+import { createPortal } from 'preact/compat'
 import { worldLogic } from 'worldLogic'
 import { useActions, useValues } from 'kea'
 import { PrincipalScene } from 'scenes/PrincipalScene'
@@ -11,19 +11,6 @@ import { CTAShownState, ModalView } from 'types'
 import { LearnMoreScene } from 'scenes/LearnMoreScene'
 import { ModalCTA } from 'scenes/CTAScene'
 import { breakpoints } from 'const'
-
-interface OverlayProps {
-  shown?: boolean
-}
-
-interface ModalWrapperProps {
-  ctaShownState: CTAShownState
-  shown?: boolean
-}
-
-interface SHeaderLogoProps {
-  centered?: boolean
-}
 
 const Overlay = styled.div`
   background-color: #000;
@@ -35,7 +22,7 @@ const Overlay = styled.div`
   bottom: 0;
   z-index: 5000;
   cursor: pointer;
-  display: ${(props: OverlayProps) => (props.shown ? 'block' : 'none')};
+  display: ${(props) => (props.shown ? 'block' : 'none')};
 `
 
 /**
@@ -45,12 +32,12 @@ const ModalWrapper = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  min-height: ${(props: ModalWrapperProps) => (props.ctaShownState === CTAShownState.Show ? '540px' : '360px')};
+  min-height: ${(props) => (props.ctaShownState === CTAShownState.Show ? '540px' : '360px')};
   transform: translate(-50%, -50%);
   width: 460px;
   max-width: calc(100% - 32px);
   z-index: 10000;
-  display: ${(props: ModalWrapperProps) => (props.shown ? 'block' : 'none')};
+  display: ${(props) => (props.shown ? 'block' : 'none')};
   transition: min-height ease-in 0.5s;
 
   @media (max-width: ${breakpoints.sm}) {
@@ -92,7 +79,7 @@ const SHeaderLogo = styled.div`
   display: flex;
   align-items: center;
   font-size: 24px;
-  justify-content: ${(props: SHeaderLogoProps) => (props.centered ? 'center' : undefined)};
+  justify-content: ${(props) => (props.centered ? 'center' : undefined)};
 `
 
 const SBody = styled.div`
@@ -114,7 +101,7 @@ function ModalHeader(): JSX.Element {
           <SquareButton onClick={modalGoBack} icon={<IconLeft />} />
         </div>
       )}
-      <SHeaderLogo centered={hideModalCloseButton || Boolean(modalGoBack)}>
+      <SHeaderLogo centered={hideModalCloseButton || modalGoBack}>
         <WorldcoinLogo />
       </SHeaderLogo>
       {!hideModalCloseButton && (

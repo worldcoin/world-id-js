@@ -1,13 +1,6 @@
 import styled from 'styled-components'
 import { ButtonInterface, SButton } from './Button'
 
-interface LinkGradientInterface extends Omit<ButtonInterface, 'type' | 'size'> {
-  children: string
-  href: string
-  target?: '_blank'
-  size?: 'md' | 'sm'
-}
-
 const SGradientWrapper = styled.div`
   background: linear-gradient(to right, red, purple);
   padding: 1px;
@@ -32,7 +25,7 @@ const SGradientWrapper = styled.div`
 const SGradientLink = styled(SButton).attrs({ as: 'a' })`
   background-color: white;
   border-radius: 1000px;
-  padding: ${(props: LinkGradientInterface) => (props.size === 'sm' ? '7px 16px' : '14px 32px')};
+  padding: ${(props) => (props.size === 'sm' ? '7px 16px' : '14px 32px')};
   overflow: hidden;
   white-space: nowrap;
 `
@@ -44,11 +37,17 @@ const SGradientText = styled.span`
   background-clip: text;
 `
 
+interface LinkGradientInterface extends Omit<ButtonInterface, 'type' | 'size'> {
+  children: string
+  href: string
+  target?: '_blank'
+  size?: 'md' | 'sm'
+}
+
 export function LinkGradient({ children, size = 'md', ...restOfProps }: LinkGradientInterface) {
   return (
     <SGradientWrapper>
       <SGradientLink size={size} {...restOfProps}>
-        {/* @ts-expect-error */}
         <SGradientText>{children}</SGradientText>
       </SGradientLink>
     </SGradientWrapper>

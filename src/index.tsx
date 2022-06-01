@@ -1,9 +1,9 @@
 import { App } from 'App'
 import { RenderError } from 'components/RenderError'
+import { render } from 'preact'
 import { AppProps, VerificationResponse, CallbackInterface } from 'types'
 import { validateInputParams } from 'utils'
 import { worldLogic } from 'worldLogic'
-import ReactDOM from 'react-dom'
 
 // Re-export to make them available externally
 export * from 'types'
@@ -39,7 +39,8 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
         headElementMatch[0].appendChild(link)
       }
     }
-    ReactDOM.render(<App />, mountNode as HTMLElement) // `mountNode` is already validated not to be `null` on `validate`
+
+    render(<App />, mountNode as HTMLElement) // `mountNode` is already validated not to be `null` on `validate`
   }
 
   if (/complete|interactive|loaded/.test(document.readyState)) {
@@ -109,7 +110,7 @@ const validate = (props: AppProps): void => {
   const { valid, error } = validateInputParams(props)
 
   if (!valid) {
-    ReactDOM.render(<RenderError />, mountNode)
+    render(<RenderError />, mountNode)
     throw error
   }
 }

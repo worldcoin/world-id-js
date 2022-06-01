@@ -14,11 +14,6 @@ const SWrapper = styled.div`
   }
 `
 
-interface SModalCTAProps {
-  show?: boolean
-  hide?: boolean
-}
-
 const SModalCTA = styled.div`
   position: absolute;
   background-color: white;
@@ -26,8 +21,8 @@ const SModalCTA = styled.div`
   margin-top: 32px;
   padding: 32px 32px 16px;
   z-index: 9000;
-  ${(props: SModalCTAProps) => props.show && 'animation: fadeIn 0.5s ease-in both;'}
-  ${(props: SModalCTAProps) => props.hide && 'animation: fadeOut 0.5s ease-in both;'}
+  ${(props) => props.show && 'animation: fadeIn 0.5s ease-in both;'}
+  ${(props) => props.hide && 'animation: fadeOut 0.5s ease-in both;'}
 
   @media (max-width: ${breakpoints.sm}) {
     animation: unset !important;

@@ -1,15 +1,5 @@
 import styled, { CSSProperties } from 'styled-components'
 
-export interface ButtonInterface {
-  type?: 'primary' | 'secondary' | 'stealth'
-  size?: 'md' | 'sm'
-  block?: boolean
-  style?: CSSProperties
-  disabled?: boolean
-  onClick?: () => void
-  children?: string | JSX.Element | JSX.Element[]
-}
-
 export const SButton = styled.button`
   border-radius: 1000px;
   outline: 0;
@@ -18,7 +8,7 @@ export const SButton = styled.button`
   color: white;
   cursor: pointer;
   padding: 14px 32px;
-  width: ${(props: ButtonInterface) => (props.block ? '100%' : undefined)};
+  width: ${(props) => (props.block ? '100%' : undefined)};
   transition: background-color 0.2s ease-in-out;
   overflow: hidden;
   white-space: nowrap;
@@ -32,7 +22,7 @@ export const SButton = styled.button`
     background-color: var(--primary-hover);
   }
 
-  ${(props: ButtonInterface) =>
+  ${(props) =>
     props.type === 'secondary' &&
     `
     background-color: var(--button-secondary);
@@ -42,7 +32,7 @@ export const SButton = styled.button`
     }
     `}
 
-  ${(props: ButtonInterface) =>
+  ${(props) =>
     props.type === 'stealth' &&
     `
     background-color: var(--button-stealth);
@@ -52,7 +42,7 @@ export const SButton = styled.button`
     }
     `}
 
-  ${(props: ButtonInterface) =>
+  ${(props) =>
     props.size === 'sm' &&
     `
     padding: 6px 12px;
@@ -60,7 +50,16 @@ export const SButton = styled.button`
     `}
 `
 
+export interface ButtonInterface {
+  type?: 'primary' | 'secondary' | 'stealth'
+  size?: 'md' | 'sm'
+  block?: boolean
+  style?: CSSProperties
+  disabled?: boolean
+  onClick?: () => void
+  children?: string | JSX.Element | JSX.Element[]
+}
+
 export function Button(props: ButtonInterface) {
-  // @ts-expect-error TODO: Fix typing
   return <SButton {...props} />
 }

@@ -11,6 +11,9 @@ export default {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleDirectories: ['node_modules', 'src'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    '^react$': 'preact/compat',
+  },
   testPathIgnorePatterns: ['<rootDir>/node_modules/'],
   transform: {
     '.(js|jsx|ts|tsx)$': [

@@ -3,13 +3,13 @@ import { Button } from 'components/Button'
 import { LinkButton } from 'components/LinkButton'
 import { QRRender } from 'components/QRRender'
 import { H1, P } from 'components/text'
+import { useEffect, useState } from 'preact/hooks'
 import { useActions, useValues } from 'kea'
 import { worldLogic } from 'worldLogic'
 import styled from 'styled-components'
 import { ModalView } from 'types'
 import { verificationLogic } from 'verificationLogic'
 import { breakpoints } from 'const'
-import { useEffect, useState } from 'react'
 
 const SWrapper = styled.div`
   display: flex;
@@ -20,14 +20,10 @@ const SWrapper = styled.div`
   }
 `
 
-interface SColumnProps {
-  left?: boolean
-}
-
 const SColumn = styled.div`
   flex-grow: 1;
   display: flex;
-  align-items: ${(props: SColumnProps) => (props.left ? 'flex-start' : undefined)};
+  align-items: ${(props) => (props.left ? 'flex-start' : undefined)};
   flex-direction: column;
 
   @media (max-width: ${breakpoints.sm}) {
