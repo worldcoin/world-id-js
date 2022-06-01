@@ -58,7 +58,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "jest": "27.5.1",
     "kea-test-utils": "0.2.2",
-    "kea-typegen": "1.4.3",
+    "kea-typegen": "3.1.0",
     "meow": "10.1.2",
     "prettier": "2.6.0",
     "prettier-eslint": "13.0.0",
@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@walletconnect/client": "1.7.5",
-    "kea": "2.5.10",
+    "kea": "3.0.1",
     "posthog-js-lite": "0.0.5",
     "preact": "10.6.6",
     "preact-render-to-string": "5.1.20",
