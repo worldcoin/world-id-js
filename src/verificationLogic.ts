@@ -164,5 +164,14 @@ export const verificationLogic = kea<verificationLogicType>({
       (s) => [s.errorResult],
       (errorResult): string => ERROR_MESSAGES[errorResult || ErrorCodes.GenericError],
     ],
+    qrCodeContent: [
+      (s) => [s.connectorUri],
+      (connectorUri): string | null => {
+        const bridgeUrl = new URL(connector.bridge)
+        return connectorUri
+          ? `https://worldcoin.org/verify?t=${connector.handshakeTopic}&k=${connector.key}&b=${bridgeUrl.hostname}`
+          : null
+      },
+    ],
   },
 })

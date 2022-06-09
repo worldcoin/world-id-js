@@ -104,7 +104,7 @@ function LearnMoreLink(): JSX.Element {
 
 export function AwaitingConnectionScene(): JSX.Element {
   const { setModalView } = useActions(worldLogic)
-  const { connectorUri } = useValues(verificationLogic)
+  const { qrCodeContent } = useValues(verificationLogic)
 
   return (
     <SWrapper>
@@ -117,10 +117,10 @@ export function AwaitingConnectionScene(): JSX.Element {
           </LinkButton>
         </SCaption>
       </SColumn>
-      {connectorUri && (
+      {qrCodeContent && (
         <SColumn>
-          <QRRender data={connectorUri} />
-          <CopyButton connectorUri={connectorUri || ''} />
+          <QRRender data={qrCodeContent} />
+          <CopyButton connectorUri={qrCodeContent || ''} />
         </SColumn>
       )}
     </SWrapper>
