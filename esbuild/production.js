@@ -1,37 +1,27 @@
 import esbuild from 'esbuild'
-import path from 'path'
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 import { clean } from 'esbuild-plugin-clean'
 import meow from 'meow'
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-const { version } = require('../package.json')
+
+import config from './config.js'
 
 const cli = meow({
   flags: { platform: { type: 'string', alias: 'p', isRequired: true } },
   importMeta: import.meta,
 })
 
+/** @type {import('esbuild').BuildOptions} */
 const baseConfig = {
-  bundle: true,
-  define: { global: 'window', worldIdJSVersion: JSON.stringify(version) },
-  entryPoints: [path.join(path.resolve('.'), 'src', 'index.tsx')],
-  inject: ['./esbuild/preact-shim.js'],
-  jsxFactory: 'h',
-  jsxFragment: 'Fragment',
-  logLevel: 'info',
+  ...config,
   minify: true,
-
-  plugins: [
-    NodeGlobalsPolyfillPlugin({
-      process: true,
-      buffer: true,
-    }),
-  ],
-
-  target: ['chrome58', 'firefox57', 'safari11', 'edge18'],
+  treeShaking: true,
+  define: {
+    ...config.define,
+    'process.env.NODE_ENV': "'production'",
+    'import.meta.env': '{ "MODE": "production" }',
+  },
 }
 
+/** @type {Record<string, import('esbuild').BuildOptions>} */
 const configs = {
   esm: {
     ...baseConfig,
@@ -54,7 +44,6 @@ const configs = {
 
       ...baseConfig.plugins,
     ],
-
     format: 'cjs',
     outfile: 'dist/index.cjs',
   },
