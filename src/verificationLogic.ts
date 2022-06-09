@@ -169,7 +169,7 @@ export const verificationLogic = kea<verificationLogicType>({
       (connectorUri): string | null => {
         const bridgeUrl = new URL(connector.bridge)
         return connectorUri
-          ? `https://worldcoin.org/verify?t=${connector.handshakeTopic}&k=${connector.key}&b=${bridgeUrl.hostname}`
+          ? `https://worldcoin.org/verify?t=${connector.handshakeTopic}&k=${connector.key}&b=${bridgeUrl.hostname}&v=1`
           : null
       },
     ],
