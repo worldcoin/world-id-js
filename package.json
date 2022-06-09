@@ -28,7 +28,9 @@
     "lint": "eslint --ext .tsx,.ts,.js,.jsx ./",
     "release": "standard-version",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prebundle-analyzer": "npm run build:esm",
+    "bundle-analyzer": "npx source-map-explorer dist/index.js dist/index.js.map --no-border-checks"
   },
   "keywords": [
     "web3",

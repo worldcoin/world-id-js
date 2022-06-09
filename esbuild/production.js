@@ -31,6 +31,7 @@ const configs = {
       }),
       ...baseConfig.plugins,
     ],
+    sourcemap: true,
     format: 'esm',
     outfile: 'dist/index.js',
   },
