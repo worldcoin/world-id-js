@@ -46,6 +46,8 @@ const babelTransforms = {
             },
           ],
         ],
+        configFile: false,
+        babelrc: false,
       })
       return { contents: result.code, loader: 'tsx' }
     })
