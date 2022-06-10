@@ -1,33 +1,16 @@
 import { createServer, request } from 'http'
 import esbuild from 'esbuild'
-import path from 'path'
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-const { version } = require('../package.json')
+
+import config from './config.js'
 
 const clients = []
 
 esbuild
   .build({
+    ...config,
     banner: { js: '(() => new EventSource("/esbuild").onmessage = () => location.reload())();' },
-    bundle: true,
-    define: { global: 'window', worldIdJSVersion: JSON.stringify(version) },
-    entryPoints: [path.join(path.resolve('.'), 'src', 'index.tsx')],
-    globalName: 'worldID',
-    inject: ['./esbuild/preact-shim.js'],
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment',
-    logLevel: 'info',
     outfile: 'dist/world-id-dev.js',
     sourcemap: 'inline',
-    target: ['chrome58', 'firefox57', 'safari11', 'edge18'],
-    plugins: [
-      NodeGlobalsPolyfillPlugin({
-        process: true,
-        buffer: true,
-      }),
-    ],
     watch: {
       onRebuild(error) {
         clients.forEach((response) => response.write('data: update\n\n'))

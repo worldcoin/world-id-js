@@ -28,7 +28,9 @@
     "lint": "eslint --ext .tsx,.ts,.js,.jsx ./",
     "release": "standard-version",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prebundle-analyzer": "npm run build:esm",
+    "bundle-analyzer": "npx source-map-explorer dist/index.js dist/index.js.map --no-border-checks"
   },
   "keywords": [
     "web3",
@@ -39,6 +41,10 @@
   "homepage": "https://id.worldcoin.org/docs/js",
   "repository": "github:worldcoin/world-id-js",
   "devDependencies": {
+    "@babel/core": "7.18.2",
+    "@babel/plugin-syntax-typescript": "7.17.12",
+    "@babel/preset-env": "7.18.2",
+    "@babel/preset-typescript": "7.17.12",
     "@esbuild-plugins/node-globals-polyfill": "0.1.1",
     "@testing-library/jest-dom": "5.16.3",
     "@testing-library/preact": "2.0.1",
@@ -46,8 +52,9 @@
     "@types/styled-components": "5.1.24",
     "@typescript-eslint/eslint-plugin": "5.15.0",
     "@typescript-eslint/parser": "5.15.0",
+    "babel-plugin-styled-components": "2.0.7",
     "concurrently": "7.0.0",
-    "esbuild": "0.14.27",
+    "esbuild": "0.14.43",
     "esbuild-jest": "0.5.0",
     "esbuild-plugin-alias": "0.2.1",
     "esbuild-plugin-clean": "0.9.0",
@@ -58,7 +65,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "jest": "27.5.1",
     "kea-test-utils": "0.2.2",
-    "kea-typegen": "1.4.3",
+    "kea-typegen": "3.1.0",
     "meow": "10.1.2",
     "prettier": "2.6.0",
     "prettier-eslint": "13.0.0",
@@ -68,10 +75,10 @@
   },
   "dependencies": {
     "@walletconnect/client": "1.7.5",
-    "kea": "2.5.10",
+    "kea": "3.0.1",
     "posthog-js-lite": "0.0.5",
-    "preact": "10.6.6",
-    "preact-render-to-string": "5.1.20",
+    "preact": "10.7.3",
+    "preact-render-to-string": "5.2.0",
     "qr-code-styling": "1.6.0-rc.1",
     "styled-components": "5.3.5"
   }
