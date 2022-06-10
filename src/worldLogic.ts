@@ -1,13 +1,13 @@
-import { kea } from 'kea'
+import { actions, connect, events, kea, listeners, path, props, reducers, selectors } from 'kea'
 import { initTelemetry, telemetryVerificationLaunched } from 'telemetry'
 import { CTAShownState, ErrorCodes, ModalView, VerificationState, AppProps, CallbackInterface } from 'types'
 import { verificationLogic } from 'verificationLogic'
 import type { worldLogicType } from './worldLogicType'
 
-export const worldLogic = kea<worldLogicType>({
-  props: {} as AppProps,
-  path: ['worldId', 'worldLogic'],
-  actions: {
+export const worldLogic = kea<worldLogicType>([
+  path(['worldId', 'worldLogic']),
+  props({} as AppProps),
+  actions({
     activate: true,
     terminate: true,
     enable: (payload: CallbackInterface) => ({ payload }),
@@ -16,11 +16,11 @@ export const worldLogic = kea<worldLogicType>({
     setModalView: (modalView: ModalView) => ({ modalView }),
     setAppEnabled: (enabled: boolean) => ({ enabled }),
     initTelemetry: true,
-  },
-  connect: {
+  }),
+  connect({
     actions: [verificationLogic, ['reset']],
-  },
-  reducers: {
+  }),
+  reducers({
     modalView: [
       ModalView.VerificationFlow as ModalView,
       {
@@ -67,8 +67,8 @@ export const worldLogic = kea<worldLogicType>({
         enable: (_, { payload }) => payload,
       },
     ],
-  },
-  listeners: ({ props, values, actions }) => ({
+  }),
+  listeners(({ props, values, actions }) => ({
     terminate: async (_, breakpoint) => {
       breakpoint()
       if (verificationLogic.values.verificationState === VerificationState.AwaitingConnection) {
@@ -113,8 +113,8 @@ export const worldLogic = kea<worldLogicType>({
     initTelemetry: async () => {
       initTelemetry(props.enableTelemetry)
     },
-  }),
-  selectors: ({ actions }) => ({
+  })),
+  selectors(({ actions }) => ({
     hideModalCloseButton: [
       () => [verificationLogic.selectors.verificationState],
       (verificationState: VerificationState): boolean =>
@@ -130,8 +130,8 @@ export const worldLogic = kea<worldLogicType>({
       () => [verificationLogic.selectors.verificationState],
       (verificationState: VerificationState): boolean => verificationState === VerificationState.Confirmed,
     ],
-  }),
-  events: ({ actions }) => ({
+  })),
+  events(({ actions }) => ({
     afterMount: [actions.initTelemetry],
-  }),
-})
+  })),
+])
