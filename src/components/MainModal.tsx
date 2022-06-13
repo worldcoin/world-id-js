@@ -55,7 +55,7 @@ const ModalWrapper = styled.div`
 
 const ModalContent = styled.div`
   position: relative;
-  background-color: white;
+  background-color: var(--bg);
   border-radius: var(--radius);
 
   @media (max-width: ${breakpoints.sm}) {
@@ -68,6 +68,7 @@ const SHeader = styled.div`
   padding: 32px 32px 16px;
   display: flex;
   align-items: center;
+  color: var(--text);
 
   @media (max-width: ${breakpoints.sm}) {
     padding: 32px 16px 16px;
@@ -126,12 +127,16 @@ function ModalBody(): JSX.Element {
   )
 }
 
-export function MainModal(): JSX.Element {
+interface MainModalInterface {
+  isDark?: boolean
+}
+
+export function MainModal({ isDark }: MainModalInterface): JSX.Element {
   const { isAppActive, ctaShownState } = useValues(worldLogic)
   const { terminate } = useActions(worldLogic)
 
   return createPortal(
-    <GlobalStyles>
+    <GlobalStyles isDark={isDark}>
       <Overlay onClick={terminate} shown={isAppActive} data-testId="overlay" />
       <ModalWrapper ctaShownState={ctaShownState} shown={isAppActive} data-testId="modal-wrapper">
         {isAppActive && (

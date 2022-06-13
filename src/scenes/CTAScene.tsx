@@ -16,7 +16,7 @@ const SWrapper = styled.div`
 
 const SModalCTA = styled.div`
   position: absolute;
-  background-color: white;
+  background-color: var(--bg);
   border-radius: var(--radius);
   margin-top: 32px;
   padding: 32px 32px 16px;
