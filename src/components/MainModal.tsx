@@ -127,16 +127,12 @@ function ModalBody(): JSX.Element {
   )
 }
 
-interface MainModalInterface {
-  isDark?: boolean
-}
-
-export function MainModal({ isDark }: MainModalInterface): JSX.Element {
-  const { isAppActive, ctaShownState } = useValues(worldLogic)
+export function MainModal(): JSX.Element {
+  const { isAppActive, ctaShownState, theme } = useValues(worldLogic)
   const { terminate } = useActions(worldLogic)
 
   return createPortal(
-    <GlobalStyles isDark={isDark}>
+    <GlobalStyles isDark={theme === 'dark'}>
       <Overlay onClick={terminate} shown={isAppActive} data-testId="overlay" />
       <ModalWrapper ctaShownState={ctaShownState} shown={isAppActive} data-testId="modal-wrapper">
         {isAppActive && (

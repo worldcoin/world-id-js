@@ -114,7 +114,7 @@ export const worldLogic = kea<worldLogicType>([
       initTelemetry(props.enableTelemetry)
     },
   })),
-  selectors(({ actions }) => ({
+  selectors(({ actions, props }) => ({
     hideModalCloseButton: [
       () => [verificationLogic.selectors.verificationState],
       (verificationState: VerificationState): boolean =>
@@ -130,6 +130,7 @@ export const worldLogic = kea<worldLogicType>([
       () => [verificationLogic.selectors.verificationState],
       (verificationState: VerificationState): boolean => verificationState === VerificationState.Confirmed,
     ],
+    theme: [() => [], () => props.theme],
   })),
   events(({ actions }) => ({
     afterMount: [actions.initTelemetry],
