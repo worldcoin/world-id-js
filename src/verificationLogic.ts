@@ -1,6 +1,6 @@
 import WalletConnect from '@walletconnect/client'
 import { END_USER_ERROR_MESSAGES, ERROR_MESSAGES } from 'const'
-import { kea } from 'kea'
+import { actions, kea, listeners, path, reducers, selectors } from 'kea'
 import { telemetryConnectionEstablished, telemetryVerificationFailed, telemetryVerificationSuccess } from 'telemetry'
 import {
   CTAShownState,
@@ -12,15 +12,15 @@ import {
 } from 'types'
 import { buildVerificationRequest, verifyVerificationResponse } from 'utils'
 import { worldLogic } from 'worldLogic'
-
 import type { verificationLogicType } from './verificationLogicType'
+
 const connector = new WalletConnect({
   bridge: 'https://bridge.walletconnect.org',
 })
 
-export const verificationLogic = kea<verificationLogicType>({
-  path: ['worldId', 'verificationLogic'],
-  actions: {
+export const verificationLogic = kea<verificationLogicType>([
+  path(['worldId', 'verificationLogic']),
+  actions({
     initConnection: true,
     handleConnectionEstablished: true,
     tryAgain: true,
@@ -30,8 +30,8 @@ export const verificationLogic = kea<verificationLogicType>({
     setErrored: (errorCode: ErrorCodes) => ({ errorCode }),
     setSuccess: (result: VerificationResponse) => ({ result }),
     setConnectionStartTime: (startTime: null | number) => ({ startTime }),
-  },
-  reducers: {
+  }),
+  reducers({
     verificationState: [
       VerificationState.AwaitingConnection as VerificationState,
       {
@@ -73,8 +73,8 @@ export const verificationLogic = kea<verificationLogicType>({
         setConnectionStartTime: (_, { startTime }) => startTime,
       },
     ],
-  },
-  listeners: ({ actions, values }) => ({
+  }),
+  listeners(({ actions, values }) => ({
     initConnection: async () => {
       if (values.connectorUri) {
         // Connection already initialized
@@ -153,8 +153,8 @@ export const verificationLogic = kea<verificationLogicType>({
     setErrored: async ({ errorCode }) => {
       telemetryVerificationFailed(errorCode)
     },
-  }),
-  selectors: {
+  })),
+  selectors({
     endUserError: [
       (s) => [s.errorResult],
       (errorResult): EndUserErrorDisplay | null =>
@@ -164,5 +164,22 @@ export const verificationLogic = kea<verificationLogicType>({
       (s) => [s.errorResult],
       (errorResult): string => ERROR_MESSAGES[errorResult || ErrorCodes.GenericError],
     ],
-  },
-})
+    qrCodeContent: [
+      (s) => [s.connectorUri],
+      (connectorUri): string | null => {
+        if (!connectorUri) {
+          return null
+        }
+
+        const bridgeUrl = new URL(connector.bridge)
+        const url = new URL('https://worldcoin.org/verify')
+        url.searchParams.append('t', connector.handshakeTopic)
+        url.searchParams.append('k', connector.key)
+        url.searchParams.append('b', bridgeUrl.hostname)
+        url.searchParams.append('v', '1')
+
+        return url.toString()
+      },
+    ],
+  }),
+])
