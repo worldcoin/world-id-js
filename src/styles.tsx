@@ -17,6 +17,7 @@ export const GlobalStyles = styled.div`
   --bg: ${(props) => (props.isDark ? '#0c0e10' : 'white')};
   --bg-mid: #f9f9f9;
   --gradient: linear-gradient(90deg, #ff6848 0%, #4940e0 100%);
+  --qr-color: ${(props) => (props.isDark ? 'white' : 'black')};
   --success: #217237;
   --danger: #ff6848;
   --wid-box-border: #183c4a;
