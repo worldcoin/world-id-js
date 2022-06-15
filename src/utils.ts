@@ -64,7 +64,7 @@ export const verifyVerificationResponse = (result: Record<string, string | undef
  */
 export const validateABILikeEncoding = (value: string): boolean => {
   const ABI_REGEX = /^0x[\dabcdef]+$/
-  return !!value.match(ABI_REGEX) && value.length >= 66 // Because `0` contains 66 characters
+  return !!value.toString().match(ABI_REGEX) && value.length >= 66 // Because `0` contains 66 characters
 }
 
 /**
