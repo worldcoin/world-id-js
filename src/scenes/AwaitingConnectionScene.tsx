@@ -56,6 +56,7 @@ const SCaption = styled.p`
   bottom: 0;
   button {
     color: var(--text-muted) !important;
+    font-family: var(--font-family);
   }
 
   @media (max-width: ${breakpoints.sm}) {

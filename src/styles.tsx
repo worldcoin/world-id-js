@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 export const GlobalStyles = styled.div`
-  @import url('https://fonts.googleapis.com/css2?family=Rubik&family=Sora:wght@600&display=swap');
   --radius: 8px;
   --primary: #4940e0;
   --primary-hover: #2a21ca;
@@ -28,8 +27,9 @@ export const GlobalStyles = styled.div`
   --link-gradient-to: ${(props) => (props.isDark ? '#ff5b26' : '#ff6848')};
   --link-gradient-color: ${(props) => (props.isDark ? 'white' : '#191c20')};
   --link-gradient-bg: ${(props) => (props.isDark ? '#191c20' : 'white')};
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+  --font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: var(--font-family);
   color: var(--text-default);
   font-size: 14px;
   line-height: 22px;

@@ -12,6 +12,7 @@ export const SButton = styled.button`
   transition: background-color 0.2s ease-in-out;
   overflow: hidden;
   white-space: nowrap;
+  font-family: var(--font-family);
 
   &:disabled {
     cursor: not-allowed;

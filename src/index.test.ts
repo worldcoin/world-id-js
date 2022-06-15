@@ -147,7 +147,7 @@ describe('remote fonts', () => {
     let elementFound = false
 
     for (const element of elements) {
-      if (element.href.includes('https://fonts.googleapis.com/css2?family=Inter') && element.rel === 'stylesheet') {
+      if (element.href.includes('https://fonts.googleapis.com/css2?family=Rubik') && element.rel === 'stylesheet') {
         elementFound = true
         break
       }
