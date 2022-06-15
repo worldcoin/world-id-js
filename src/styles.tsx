@@ -4,8 +4,9 @@ export const GlobalStyles = styled.div`
   --radius: 8px;
   --primary: #4940e0;
   --primary-hover: #2a21ca;
-  --button-secondary: #f0edf9;
-  --button-secondary-hover: #dfd9f2;
+  --button-secondary: ${(props) => (props.isDark ? '#272B2F' : '#f0edf9')};
+  --button-secondary-text: ${(props) => (props.isDark ? '#858494' : 'var(--text-default)')};
+  --button-secondary-hover: ${(props) => (props.isDark ? '#3f454b' : '#dfd9f2')};
   --button-stealth: ${(props) => (props.isDark ? 'rgba(241, 242, 242, 0.1)' : '#f1f2f2')};
   --button-stealth-hover: ${(props) => (props.isDark ? 'rgba(241, 242, 242, 0.2)' : '#e5e6e6')};
   --button: ${(props) => (props.isDark ? '#191c20' : 'white')};

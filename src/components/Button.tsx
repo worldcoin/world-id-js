@@ -26,7 +26,7 @@ export const SButton = styled.button`
     props.type === 'secondary' &&
     `
     background-color: var(--button-secondary);
-    color: var(--text-default);
+    color: var(--button-secondary-text);
     &:hover {
         background-color: var(--button-secondary-hover);
     }
