@@ -65,7 +65,7 @@ export function ModalCTA(): JSX.Element | null {
       <SModalCTA hide={ctaShownState === CTAShownState.Hide} show={ctaShownState === CTAShownState.Show}>
         <SHeading>Don’t have the Worldcoin app yet?</SHeading>
         <SText>Proving unique-humanness through biometrics, without intruding privacy.</SText>
-        <LinkGradient href="https://worldcoin.org/app#download" target="_blank">
+        <LinkGradient href="https://worldcoin.org/download" target="_blank">
           Install now
         </LinkGradient>
       </SModalCTA>
