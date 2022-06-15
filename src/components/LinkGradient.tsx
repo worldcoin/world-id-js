@@ -23,7 +23,7 @@ const SGradientWrapper = styled.div`
 `
 
 const SGradientLink = styled(SButton).attrs({ as: 'a' })`
-  background-color: white;
+  background-color: var(--button);
   border-radius: 1000px;
   padding: ${(props) => (props.size === 'sm' ? '7px 16px' : '14px 32px')};
   overflow: hidden;

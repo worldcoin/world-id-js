@@ -18,8 +18,11 @@ const qrCode = new QRCodeStyling({
     type: 'dot',
   },
   dotsOptions: {
-    color: '#000',
+    color: 'var(--qr-color)',
     type: 'extra-rounded',
+  },
+  backgroundOptions: {
+    color: 'transparent',
   },
   imageOptions: {
     margin: 4,

@@ -2,7 +2,8 @@ import { IconClose } from 'assets/icons'
 import styled from 'styled-components'
 
 const SSquareButton = styled.button`
-  background-color: white;
+  color: inherit;
+  background-color: var(--bg);
   border: 1px solid var(--border-secondary);
   border-radius: var(--radius);
   height: 40px;

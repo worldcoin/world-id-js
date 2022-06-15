@@ -19,6 +19,7 @@ export interface AppProps {
   actionId: string
   signal?: string
   enableTelemetry?: boolean
+  theme?: 'light' | 'dark'
   appName?: string
   signalDescription?: string
   disableRemoteFonts?: boolean
