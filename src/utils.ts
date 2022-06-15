@@ -1,4 +1,6 @@
 import { AppProps, VerificationRequest, VerificationRequestParams } from 'types'
+import sha3 from 'js-sha3'
+import { arrayify, concat, hexlify } from '@ethersproject/bytes'
 
 /**
  * Generates a random integer between a specified range
@@ -16,8 +18,8 @@ export const buildVerificationRequest = (props: AppProps): VerificationRequest =
   }
 
   const params: VerificationRequestParams = {
-    signal: props.signal,
-    actionId: props.actionId,
+    signal: props.advancedUseRawSignal ? props.signal : hashBytes(props.signal).digest,
+    actionId: props.advancedUseRawActionId ? props.actionId : hashBytes(props.actionId).digest,
   }
 
   if (props.appName) {
@@ -74,5 +76,47 @@ export const validateInputParams = (params: AppProps): { valid: boolean; error?:
   if (!params.actionId) {
     return { valid: false, error: 'The `actionId` parameter is always required.' }
   }
+
+  if (params.advancedUseRawActionId && !validateABILikeEncoding(params.actionId)) {
+    return {
+      valid: false,
+      error: `You enabled 'advancedUseRawActionId' which uses the action ID raw (without any additional hashing or encoding),
+        but the action ID you provided does not look to be validly hashed or encoded. Please check
+        https://id.worldcoin.org/docs/js/reference#parameters for details.`,
+    }
+  }
+
+  if (params.advancedUseRawSignal && params.signal && !validateABILikeEncoding(params.signal)) {
+    return {
+      valid: false,
+      error: `You enabled 'advancedUseRawSignal' which uses the signal raw (without any additional hashing or encoding),
+        but the signal you provided does not look to be validly hashed or encoded. Please check
+        https://id.worldcoin.org/docs/js/reference#parameters for details.`,
+    }
+  }
+
   return { valid: true }
+}
+
+/**
+ * Hashes an input using the `keccak256` hashing function used across the World ID protocol, to be used as
+ * a ZKP input.
+ * @param input - Input to hash (if it's a string, it'll be converted to bytes first)
+ * @returns hash
+ */
+export function hashBytes(input: string | Buffer): { hash: BigInt; digest: string } {
+  const bytesInput = Buffer.isBuffer(input) ? input : Buffer.from(input)
+  const hash = BigInt(keccak256(bytesInput)) >> BigInt(8)
+  return { hash, digest: `0x${hash.toString(16)}` }
+}
+
+/**
+ * Partial implementation of `keccak256` hash from @ethersproject/solidity; only supports hashing a single BytesLike value
+ * @param value value to hash
+ * @returns
+ */
+export function keccak256(value: Buffer): string {
+  const tight: Array<Uint8Array> = [arrayify(value)]
+  const data = hexlify(concat(tight))
+  return '0x' + sha3.keccak_256(arrayify(data))
 }
