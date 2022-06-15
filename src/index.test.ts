@@ -189,7 +189,7 @@ describe('remote fonts', () => {
   })
 
   it('does not load remote font if disabled', () => {
-    init('wld-container-test', { action_id: SAMPLE_ACTION_ID, disableRemoteFonts: true })
+    init('wld-container-test', { action_id: SAMPLE_ACTION_ID, disable_remote_fonts: true })
 
     // No external stylesheet is loaded
     const elements = document.getElementsByTagName('link')
