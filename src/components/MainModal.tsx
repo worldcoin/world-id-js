@@ -34,7 +34,7 @@ const ModalWrapper = styled.div`
   left: 50%;
   min-height: ${(props) => (props.ctaShownState === CTAShownState.Show ? '540px' : '360px')};
   transform: translate(-50%, -50%);
-  width: 460px;
+  width: 500px;
   max-width: calc(100% - 32px);
   z-index: 10000;
   display: ${(props) => (props.shown ? 'block' : 'none')};

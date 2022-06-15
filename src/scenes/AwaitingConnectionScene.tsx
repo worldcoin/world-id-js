@@ -21,13 +21,31 @@ const SWrapper = styled.div`
 `
 
 const SColumn = styled.div`
-  flex-grow: 1;
+  flex-grow: ${(props) => (props.left ? 1 : undefined)};
   display: flex;
   align-items: ${(props) => (props.left ? 'flex-start' : undefined)};
   flex-direction: column;
 
   @media (max-width: ${breakpoints.sm}) {
     align-items: center;
+  }
+`
+
+const SHeading = styled(H1)`
+  margin-top: 15px;
+
+  @media (max-width: ${breakpoints.sm}) {
+    margin-top: 0;
+  }
+`
+
+const SText = styled(P)`
+  max-width: 212px;
+  margin-top: 12px;
+
+  @media (max-width: ${breakpoints.sm}) {
+    max-width: none;
+    margin-top: 1em;
   }
 `
 
@@ -109,8 +127,8 @@ export function AwaitingConnectionScene(): JSX.Element {
   return (
     <SWrapper>
       <SColumn left>
-        <H1>Prove you are a human doing this once with World ID.</H1>
-        <P>Scan this QR code with your phone's camera or the Worldcoin mobile app.</P>
+        <SHeading>Prove you haven’t done this before with World ID</SHeading>
+        <SText>Scan or copy this QR code with your phone’s camera or Worldcoin mobile app.</SText>
         <SCaption>
           <LinkButton onClick={() => setModalView(ModalView.LearnMore)}>
             <LearnMoreLink />

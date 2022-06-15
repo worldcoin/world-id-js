@@ -1,7 +1,7 @@
 import { Button } from 'components/Button'
 import { LinkButton } from 'components/LinkButton'
 import { StatefulIcon } from 'components/StatefulIcon'
-import { H2 } from 'components/text'
+import { H3 } from 'components/text'
 import { breakpoints } from 'const'
 import { useActions, useValues } from 'kea'
 import styled from 'styled-components'
@@ -58,7 +58,7 @@ export function ErrorScene(): JSX.Element {
   return (
     <SWrapper>
       <StatefulIcon />
-      <H2>{endUserError?.title || 'Something went wrong!'}</H2>
+      <H3>{endUserError?.title || 'Something went wrong!'}</H3>
       <SCaption>{endUserError?.caption || 'Sorry, there was a problem with your request, please try again.'}</SCaption>
       {actionButtons}
     </SWrapper>

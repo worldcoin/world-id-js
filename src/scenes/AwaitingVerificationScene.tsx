@@ -1,6 +1,6 @@
 import { Button } from 'components/Button'
 import { Loader } from 'components/Loader'
-import { H2, P } from 'components/text'
+import { H3, P } from 'components/text'
 import { breakpoints } from 'const'
 import { useActions } from 'kea'
 import styled from 'styled-components'
@@ -38,7 +38,7 @@ export function AwaitingVerificationScene(): JSX.Element {
         <Loader />
       </SLoaderWrapper>
       <SCaption>
-        <H2>Confirm Request</H2>
+        <H3>Confirm Request</H3>
         <P>Please confirm the verification request in your Worldcoin app.</P>
         <Button block onClick={terminate} type="secondary">
           Cancel
