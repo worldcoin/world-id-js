@@ -30,7 +30,7 @@ describe('validateABILikeEncoding', () => {
 
 describe('buildVerificationRequest', () => {
   it('encodes signal & action ID correctly', () => {
-    const output = buildVerificationRequest({ actionId: 'my_action', signal: 'my_signal' })
+    const output = buildVerificationRequest({ action_id: 'my_action', signal: 'my_signal' })
     expect(output).toEqual(
       expect.objectContaining({
         jsonrpc: '2.0',
@@ -38,7 +38,7 @@ describe('buildVerificationRequest', () => {
         params: [
           {
             signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
-            actionId: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+            action_id: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
           },
         ],
       })
@@ -46,9 +46,9 @@ describe('buildVerificationRequest', () => {
   })
   it('passes signal raw if appropriate', () => {
     const output = buildVerificationRequest({
-      actionId: 'my_action',
+      action_id: 'my_action',
       signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
-      advancedUseRawSignal: true,
+      advanced_use_raw_signal: true,
     })
     expect(output).toEqual(
       expect.objectContaining({
@@ -57,7 +57,7 @@ describe('buildVerificationRequest', () => {
         params: [
           {
             signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
-            actionId: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+            action_id: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
           },
         ],
       })
@@ -65,9 +65,9 @@ describe('buildVerificationRequest', () => {
   })
   it('passes action ID raw if appropriate', () => {
     const output = buildVerificationRequest({
-      actionId: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+      action_id: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
       signal: 'my_signal',
-      advancedUseRawActionId: true,
+      advanced_use_raw_action_id: true,
     })
     expect(output).toEqual(
       expect.objectContaining({
@@ -76,7 +76,7 @@ describe('buildVerificationRequest', () => {
         params: [
           {
             signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
-            actionId: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+            action_id: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
           },
         ],
       })

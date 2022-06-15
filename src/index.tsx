@@ -30,7 +30,7 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
 
     validate(props)
 
-    if (!props.disableRemoteFonts) {
+    if (!props.disable_remote_fonts) {
       const link = document.createElement('link')
       link.rel = 'stylesheet'
       link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap'
@@ -54,7 +54,7 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
 }
 
 /**
- * Updates the parameters used for World ID (e.g. `signal` or `actionId`).
+ * Updates the parameters used for World ID (e.g. `signal` or `action_id`).
  * @param propsToUpdate
  */
 export const update = (propsToUpdate: Partial<AppProps>): void => {

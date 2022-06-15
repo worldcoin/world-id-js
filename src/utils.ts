@@ -18,16 +18,16 @@ export const buildVerificationRequest = (props: AppProps): VerificationRequest =
   }
 
   const params: VerificationRequestParams = {
-    signal: props.advancedUseRawSignal ? props.signal : hashBytes(props.signal).digest,
-    actionId: props.advancedUseRawActionId ? props.actionId : hashBytes(props.actionId).digest,
+    signal: props.advanced_use_raw_signal ? props.signal : hashBytes(props.signal).digest,
+    action_id: props.advanced_use_raw_action_id ? props.action_id : hashBytes(props.action_id).digest,
   }
 
-  if (props.appName) {
-    params.appName = props.appName
+  if (props.app_name) {
+    params.app_name = props.app_name
   }
 
-  if (props.signalDescription) {
-    params.signalDescription = props.signalDescription
+  if (props.signal_description) {
+    params.signal_description = props.signal_description
   }
 
   return {
@@ -43,11 +43,11 @@ export const buildVerificationRequest = (props: AppProps): VerificationRequest =
  * @param result expects a valid `VerificationResponse`
  */
 export const verifyVerificationResponse = (result: Record<string, string | undefined>): boolean => {
-  const merkleRoot = 'merkleRoot' in result ? result.merkleRoot : undefined
-  const nullifierHash = 'nullifierHash' in result ? result.nullifierHash : undefined
+  const merkle_root = 'merkle_root' in result ? result.merkle_root : undefined
+  const nullifier_hash = 'nullifier_hash' in result ? result.nullifier_hash : undefined
   const proof = 'proof' in result ? result.proof : undefined
 
-  for (const attr of [merkleRoot, nullifierHash, proof]) {
+  for (const attr of [merkle_root, nullifier_hash, proof]) {
     if (!attr || !validateABILikeEncoding(attr)) {
       return false
     }
@@ -73,23 +73,23 @@ export const validateABILikeEncoding = (value: string): boolean => {
  * @returns `true` if parameters are valid; error is raised otherwise.
  */
 export const validateInputParams = (params: AppProps): { valid: boolean; error?: string } => {
-  if (!params.actionId) {
-    return { valid: false, error: 'The `actionId` parameter is always required.' }
+  if (!params.action_id) {
+    return { valid: false, error: 'The `action_id` parameter is always required.' }
   }
 
-  if (params.advancedUseRawActionId && !validateABILikeEncoding(params.actionId)) {
+  if (params.advanced_use_raw_action_id && !validateABILikeEncoding(params.action_id)) {
     return {
       valid: false,
-      error: `You enabled 'advancedUseRawActionId' which uses the action ID raw (without any additional hashing or encoding),
+      error: `You enabled 'advanced_use_raw_action_id' which uses the action ID raw (without any additional hashing or encoding),
         but the action ID you provided does not look to be validly hashed or encoded. Please check
         https://id.worldcoin.org/docs/js/reference#parameters for details.`,
     }
   }
 
-  if (params.advancedUseRawSignal && params.signal && !validateABILikeEncoding(params.signal)) {
+  if (params.advanced_use_raw_signal && params.signal && !validateABILikeEncoding(params.signal)) {
     return {
       valid: false,
-      error: `You enabled 'advancedUseRawSignal' which uses the signal raw (without any additional hashing or encoding),
+      error: `You enabled 'advanced_use_raw_signal' which uses the signal raw (without any additional hashing or encoding),
         but the signal you provided does not look to be validly hashed or encoded. Please check
         https://id.worldcoin.org/docs/js/reference#parameters for details.`,
     }
