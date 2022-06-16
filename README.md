@@ -32,8 +32,8 @@ To add the script directly in your HTML,
 
 ```js
 worldID.init('world-id-container', {
-  actionId: '0x0000000000000000000000000000000000000000000000000000000000000000',
-  signal: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  action_id: 'wid_staging_PN8fFL7V2N', // obtain this from developer.worldcoin.org
+  signal: 'my_signal',
   enableTelemetry: true, // optional, but recommended
 })
 ```

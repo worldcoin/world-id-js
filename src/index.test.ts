@@ -26,7 +26,7 @@ beforeAll(() => {
 
 describe('initialization', () => {
   it('can be initialized', () => {
-    init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })
+    init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -46,35 +46,37 @@ describe('initialization', () => {
   })
 
   it('cannot be initialized twice', () => {
-    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).not.toThrow()
+    expect(() => init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).not.toThrow()
 
-    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).toThrow(
+    expect(() => init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).toThrow(
       'World ID is already initialized. To update properties, please use `worldID.update` instead.'
     )
   })
 })
 
 describe('parameter validation', () => {
-  it('validates actionId is non-empty', () => {
-    expect(() => init('wld-container-test', { actionId: '' })).toThrow('The `actionId` parameter is always required.')
+  it('validates action_id is non-empty', () => {
+    expect(() => init('wld-container-test', { action_id: '' })).toThrow('The `action_id` parameter is always required.')
   })
 
   it('validates externalNullifier is non-empty when updating', () => {
-    init('wld-container-test', { actionId: SAMPLE_ACTION_ID })
+    init('wld-container-test', { action_id: SAMPLE_ACTION_ID })
 
-    expect(() => update({ actionId: '' })).toThrow('The `actionId` parameter is always required.')
+    expect(() => update({ action_id: '' })).toThrow('The `action_id` parameter is always required.')
   })
 
-  it('validates actionId is non-null', () => {
+  it('validates action_id is non-null', () => {
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => init('wld-container-test', { actionId: null })).toThrow('The `actionId` parameter is always required.')
+    expect(() => init('wld-container-test', { action_id: null })).toThrow(
+      'The `action_id` parameter is always required.'
+    )
 
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => update({ actionId: null })).toThrow('The `actionId` parameter is always required.')
+    expect(() => update({ action_id: null })).toThrow('The `action_id` parameter is always required.')
   })
 
   it('can be initialized with empty `signal`', () => {
-    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID })).not.toThrow()
+    expect(() => init('wld-container-test', { action_id: SAMPLE_ACTION_ID })).not.toThrow()
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -93,7 +95,7 @@ describe('parameter validation', () => {
 
     for (const action_id of invalid_action_ids) {
       // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-      expect(() => init('wld-container-test', { actionId: action_id, advancedUseRawActionId: true })).toThrow(
+      expect(() => init('wld-container-test', { action_id: action_id, advanced_use_raw_action_id: true })).toThrow(
         'but the action ID you provided does not look to be validly hashed or encoded'
       )
 
@@ -109,7 +111,7 @@ describe('parameter validation', () => {
     for (const signal of invalid_signals) {
       expect(() =>
         // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-        init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal, advancedUseRawSignal: true })
+        init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal, advanced_use_raw_signal: true })
       ).toThrow('but the signal you provided does not look to be validly hashed or encoded')
 
       resetContext({
@@ -120,13 +122,13 @@ describe('parameter validation', () => {
 
   it('throws error if incorrect element type is passed', () => {
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    expect(() => init(123, { actionId: SAMPLE_ACTION_ID })).toThrow(
+    expect(() => init(123, { action_id: SAMPLE_ACTION_ID })).toThrow(
       'The passed element parameter does not look like a valid HTML element.'
     )
   })
 
   it('throws error if element cannot be found on DOM', () => {
-    expect(() => init('i_dont_exist', { actionId: SAMPLE_ACTION_ID })).toThrow(
+    expect(() => init('i_dont_exist', { action_id: SAMPLE_ACTION_ID })).toThrow(
       'Element to mount World ID not found. Please make sure the element is valid.'
     )
   })
@@ -134,7 +136,7 @@ describe('parameter validation', () => {
 
 describe('activation', () => {
   it('can be enabled', () => {
-    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).not.toThrow()
+    expect(() => init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })).not.toThrow()
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
 
@@ -158,7 +160,7 @@ describe('activation', () => {
   })
 
   it('cannot be activated if `signal` is not present', () => {
-    expect(() => init('wld-container-test', { actionId: SAMPLE_ACTION_ID })).not.toThrow()
+    expect(() => init('wld-container-test', { action_id: SAMPLE_ACTION_ID })).not.toThrow()
 
     expect(() => enable()).toThrow('Please provide the `signal` first using `.update()` or `.init()` as applicable.')
   })
@@ -166,7 +168,7 @@ describe('activation', () => {
 
 describe('remote fonts', () => {
   it('loads remote font by default', () => {
-    init('wld-container-test', { actionId: SAMPLE_ACTION_ID })
+    init('wld-container-test', { action_id: SAMPLE_ACTION_ID })
 
     const elements = document.getElementsByTagName('link')
 
@@ -187,7 +189,7 @@ describe('remote fonts', () => {
   })
 
   it('does not load remote font if disabled', () => {
-    init('wld-container-test', { actionId: SAMPLE_ACTION_ID, disableRemoteFonts: true })
+    init('wld-container-test', { action_id: SAMPLE_ACTION_ID, disable_remote_fonts: true })
 
     // No external stylesheet is loaded
     const elements = document.getElementsByTagName('link')
@@ -199,7 +201,7 @@ describe('state checks', () => {
   it('isInitialized', () => {
     expect(isInitialized()).toBeFalsy()
 
-    init('wld-container-test', { actionId: SAMPLE_ACTION_ID })
+    init('wld-container-test', { action_id: SAMPLE_ACTION_ID })
 
     expect(isInitialized()).toBeTruthy()
   })
@@ -207,7 +209,7 @@ describe('state checks', () => {
   it('isEnabled', () => {
     expect(isEnabled()).toBeFalsy()
 
-    init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })
+    init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })
 
     expect(isEnabled()).toBeFalsy()
 
