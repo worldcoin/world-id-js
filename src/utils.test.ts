@@ -1,4 +1,5 @@
-import { validateABILikeEncoding, buildVerificationRequest } from 'utils'
+import { validateABILikeEncoding, buildVerificationRequest, hashBytes } from 'utils'
+import crypto from 'crypto'
 
 describe('validateABILikeEncoding', () => {
   it('validates correct cases', () => {
@@ -28,6 +29,26 @@ describe('validateABILikeEncoding', () => {
   })
 })
 
+describe('hashBytes', () => {
+  it('pads hash output correctly', () => {
+    const randString = crypto.randomBytes(24).toString('utf-8')
+    const hashed = hashBytes(randString)
+    expect(hashed.digest.length).toEqual(64 + 2) // 64 bytes + `0x`
+    expect(hashed.hash).toEqual(BigInt(hashed.digest))
+  })
+  it('pads hash output from bytes correctly', () => {
+    const randBytes = crypto.randomBytes(24)
+    const hashed = hashBytes(randBytes)
+    expect(hashed.digest.length).toEqual(64 + 2) // 64 bytes + `0x`
+    expect(hashed.hash).toEqual(BigInt(hashed.digest))
+  })
+  it('hashes string correctly', () => {
+    const hashed = hashBytes('iAmMario')
+    expect(hashed.digest).toEqual('0x0039bc875c711af9786d4ea1eab987d4a602c26eca0af14ce6639fa254b06c47')
+    expect(hashed.hash).toEqual(BigInt(hashed.digest))
+  })
+})
+
 describe('buildVerificationRequest', () => {
   it('encodes signal & action ID correctly', () => {
     const output = buildVerificationRequest({ action_id: 'my_action', signal: 'my_signal' })
@@ -37,8 +58,8 @@ describe('buildVerificationRequest', () => {
         method: 'wld_worldIDVerification',
         params: [
           {
-            signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
-            action_id: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+            signal: '0x001578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
+            action_id: '0x00613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
           },
         ],
       })
@@ -47,7 +68,7 @@ describe('buildVerificationRequest', () => {
   it('passes signal raw if appropriate', () => {
     const output = buildVerificationRequest({
       action_id: 'my_action',
-      signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
+      signal: '0x001578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
       advanced_use_raw_signal: true,
     })
     expect(output).toEqual(
@@ -56,8 +77,8 @@ describe('buildVerificationRequest', () => {
         method: 'wld_worldIDVerification',
         params: [
           {
-            signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
-            action_id: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+            signal: '0x001578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
+            action_id: '0x00613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
           },
         ],
       })
@@ -65,7 +86,7 @@ describe('buildVerificationRequest', () => {
   })
   it('passes action ID raw if appropriate', () => {
     const output = buildVerificationRequest({
-      action_id: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+      action_id: '0x00613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
       signal: 'my_signal',
       advanced_use_raw_action_id: true,
     })
@@ -75,8 +96,8 @@ describe('buildVerificationRequest', () => {
         method: 'wld_worldIDVerification',
         params: [
           {
-            signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
-            action_id: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+            signal: '0x001578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
+            action_id: '0x00613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
           },
         ],
       })
