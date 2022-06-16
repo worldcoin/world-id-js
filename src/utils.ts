@@ -107,7 +107,8 @@ export const validateInputParams = (params: AppProps): { valid: boolean; error?:
 export function hashBytes(input: string | Buffer): { hash: BigInt; digest: string } {
   const bytesInput = Buffer.isBuffer(input) ? input : Buffer.from(input)
   const hash = BigInt(keccak256(bytesInput)) >> BigInt(8)
-  return { hash, digest: `0x${hash.toString(16)}` }
+  const rawDigest = hash.toString(16)
+  return { hash, digest: `0x${rawDigest.padStart(64, '0')}` }
 }
 
 /**
