@@ -1,4 +1,4 @@
-import { validateABILikeEncoding } from 'utils'
+import { validateABILikeEncoding, buildVerificationRequest } from 'utils'
 
 describe('validateABILikeEncoding', () => {
   it('validates correct cases', () => {
@@ -25,5 +25,61 @@ describe('validateABILikeEncoding', () => {
     expect(validateABILikeEncoding('🪙🪙🪙')).toBeFalsy() // invalid chars
     expect(validateABILikeEncoding('0x00000000000000000000000000000000000000@0000000000000000000000000')).toBeFalsy() // invalid chars
     expect(validateABILikeEncoding('0x000000000000000000000000000000000000000000000000000000000000000z')).toBeFalsy() // invalid chars
+  })
+})
+
+describe('buildVerificationRequest', () => {
+  it('encodes signal & action ID correctly', () => {
+    const output = buildVerificationRequest({ actionId: 'my_action', signal: 'my_signal' })
+    expect(output).toEqual(
+      expect.objectContaining({
+        jsonrpc: '2.0',
+        method: 'wld_worldIDVerification',
+        params: [
+          {
+            signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
+            actionId: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+          },
+        ],
+      })
+    )
+  })
+  it('passes signal raw if appropriate', () => {
+    const output = buildVerificationRequest({
+      actionId: 'my_action',
+      signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
+      advancedUseRawSignal: true,
+    })
+    expect(output).toEqual(
+      expect.objectContaining({
+        jsonrpc: '2.0',
+        method: 'wld_worldIDVerification',
+        params: [
+          {
+            signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
+            actionId: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+          },
+        ],
+      })
+    )
+  })
+  it('passes action ID raw if appropriate', () => {
+    const output = buildVerificationRequest({
+      actionId: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+      signal: 'my_signal',
+      advancedUseRawActionId: true,
+    })
+    expect(output).toEqual(
+      expect.objectContaining({
+        jsonrpc: '2.0',
+        method: 'wld_worldIDVerification',
+        params: [
+          {
+            signal: '0x1578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
+            actionId: '0x613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
+          },
+        ],
+      })
+    )
   })
 })

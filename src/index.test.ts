@@ -88,6 +88,36 @@ describe('parameter validation', () => {
     expect(elementStyle.cursor).toBe('not-allowed')
   })
 
+  it('throws error if raw action ID does not look like a hex-encoded hash', () => {
+    const invalid_action_ids = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg']
+
+    for (const action_id of invalid_action_ids) {
+      // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+      expect(() => init('wld-container-test', { actionId: action_id, advancedUseRawActionId: true })).toThrow(
+        'but the action ID you provided does not look to be validly hashed or encoded'
+      )
+
+      resetContext({
+        plugins: [testUtilsPlugin],
+      })
+    }
+  })
+
+  it('throws error if raw signal does not look like a hex-encoded hash', () => {
+    const invalid_signals = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg']
+
+    for (const signal of invalid_signals) {
+      expect(() =>
+        // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+        init('wld-container-test', { actionId: SAMPLE_ACTION_ID, signal, advancedUseRawSignal: true })
+      ).toThrow('but the signal you provided does not look to be validly hashed or encoded')
+
+      resetContext({
+        plugins: [testUtilsPlugin],
+      })
+    }
+  })
+
   it('throws error if incorrect element type is passed', () => {
     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
     expect(() => init(123, { actionId: SAMPLE_ACTION_ID })).toThrow(

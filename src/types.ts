@@ -23,6 +23,8 @@ export interface AppProps {
   appName?: string
   signalDescription?: string
   disableRemoteFonts?: boolean
+  advancedUseRawSignal?: boolean
+  advancedUseRawActionId?: boolean
 }
 
 export interface CallbackInterface {
