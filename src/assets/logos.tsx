@@ -21,7 +21,7 @@ export function WorldcoinLogoWithLetters({ style }: { style?: CSSProperties }): 
         d="M36.9968 6.59687C37.1899 6.59687 37.3477 6.75333 37.3477 6.94688C37.3477 7.14042 37.193 7.29687 37.0003 7.29687L36.9968 7.29687C36.8037 7.29687 36.6477 7.14042 36.6477 6.94687C36.6477 6.75332 36.8037 6.59687 36.9968 6.59687"
         fill="#5E54FF"
       />
-      <circle cx="36.9987" cy="5.0026" r="3.66667" stroke="#5E54FF" stroke-width="0.7"/>
+      <circle cx="36.9987" cy="5.0026" r="3.66667" stroke="#5E54FF" stroke-width="0.7" />
       <defs>
         <linearGradient
           id="paint0_linear_18_318"

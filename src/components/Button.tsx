@@ -16,7 +16,7 @@ export const Button = styled.button`
 
   &:hover {
     background-color: ${(props) =>
-      props.color === 'primary' ? 'var(--button-primary-hover-bg)' : 'var(--button-hover-bg)'}
+      props.color === 'primary' ? 'var(--button-primary-hover-bg)' : 'var(--button-hover-bg)'};
   }
 
   &:disabled {

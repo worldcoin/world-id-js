@@ -105,9 +105,7 @@ function CopyButton({ connectorUri }: { connectorUri?: string }): JSX.Element {
 
   return (
     <SCopyWrapper>
-      <StealthButton onClick={onClick}>
-        {content}
-      </StealthButton>
+      <StealthButton onClick={onClick}>{content}</StealthButton>
     </SCopyWrapper>
   )
 }
