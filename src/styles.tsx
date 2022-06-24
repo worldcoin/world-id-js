@@ -22,7 +22,13 @@ export const GlobalStyles = styled.div`
   --qr-color: ${(props) => (props.isDark ? 'white' : 'black')};
   --success: #217237;
   --danger: #ff6848;
-  --wid-box-border: #183c4a;
+  --wld-box-color: ${(props) => (props.isDark ? '#ffffff' : '#183c4a')};
+  --wld-box-bg: ${(props) => (props.isDark ? '#191c20' : '#ffffff')};
+  --wld-box-border-width: 2px;
+  --wld-box-border-gradient-from: #ff6848;
+  --wld-box-border-gradient-to: #4940e0;
+  --wld-box-logo-gradient-from: ${(props) => (props.isDark ? '#4940E0' : '#FF6848')};
+  --wld-box-logo-gradient-to: ${(props) => (props.isDark ? '#7C74FB' : '#4940E0')};
   --link-gradient-from: #4940e0;
   --link-gradient-to: ${(props) => (props.isDark ? '#ff5b26' : '#ff6848')};
   --link-gradient-color: ${(props) => (props.isDark ? 'white' : '#191c20')};
