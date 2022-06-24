@@ -2,17 +2,15 @@ import { IconCircleSuccess, IconFailure } from 'assets/icons'
 import styled from 'styled-components'
 
 const SStatefulIcon = styled.div`
-  background-color: ${(props) => (props.state === 'success' ? 'var(--primary)' : 'var(--bg-mid)')};
+  color: ${(props) => (props.state === 'success' ? 'var(--statefull-primary-color)' : 'var(--statefull-color)')};
+  background-color: ${(props) => (props.state === 'success' ? 'var(--statefull-primary-bg)' : 'var(--statefull-bg)')};
   border-radius: 50%;
-  color: var(--primary);
   width: 72px;
   height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: ${(props) => (props.state === 'success' ? '3em' : '1.4em')};
-  margin-bottom: 32px;
-  margin-top: 16px;
 `
 
 interface StatefulIconInterface {

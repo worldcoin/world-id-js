@@ -1,54 +1,44 @@
 import styled, { CSSProperties } from 'styled-components'
 
-export const SButton = styled.button`
-  border-radius: 1000px;
-  outline: 0;
+export const Button = styled.button`
+  width: ${(props) => (props.fullWidth ? '100%' : undefined)};
+  height: 54px;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: ${(props) => (props.color === 'primary' ? 'var(--button-primary-color)' : 'var(--button-color)')};
+  background-color: ${(props) => (props.color === 'primary' ? 'var(--button-primary-bg)' : 'var(--button-bg)')};
+  border-radius: 12px;
   border: 0;
-  background-color: var(--primary);
-  color: white;
+  outline: 0;
   cursor: pointer;
-  padding: 14px 32px;
-  width: ${(props) => (props.block ? '100%' : undefined)};
-  transition: background-color 0.2s ease-in-out;
-  overflow: hidden;
-  white-space: nowrap;
-  font-family: var(--font-family);
+
+  &:hover {
+    background-color: ${(props) =>
+      props.color === 'primary' ? 'var(--button-primary-hover-bg)' : 'var(--button-hover-bg)'}
+  }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
+`
+
+export const StealthButton = styled(Button)`
+  height: 24px;
+  padding: 0 10px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--button-stealth-color);
+  background-color: var(--button-stealth-bg);
+  border-radius: 8px;
 
   &:hover {
-    background-color: var(--primary-hover);
+    background-color: var(--button-stealth-hover-bg);
   }
-
-  ${(props) =>
-    props.type === 'secondary' &&
-    `
-    background-color: var(--button-secondary);
-    color: var(--button-secondary-text);
-    &:hover {
-        background-color: var(--button-secondary-hover);
-    }
-    `}
-
-  ${(props) =>
-    props.type === 'stealth' &&
-    `
-    background-color: var(--button-stealth);
-    color: var(--text-default);
-    &:hover {
-        background-color: var(--button-stealth-hover);
-    }
-    `}
-
-  ${(props) =>
-    props.size === 'sm' &&
-    `
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    `}
 `
 
 export interface ButtonInterface {
@@ -59,8 +49,4 @@ export interface ButtonInterface {
   disabled?: boolean
   onClick?: () => void
   children?: string | JSX.Element | JSX.Element[]
-}
-
-export function Button(props: ButtonInterface) {
-  return <SButton {...props} />
 }

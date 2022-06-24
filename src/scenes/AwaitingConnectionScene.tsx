@@ -1,5 +1,5 @@
 import { IconCircleSuccess, IconHelpCircle } from 'assets/icons'
-import { Button } from 'components/Button'
+import { StealthButton } from 'components/Button'
 import { LinkButton } from 'components/LinkButton'
 import { QRRender } from 'components/QRRender'
 import { H1, P } from 'components/text'
@@ -40,11 +40,10 @@ const SHeading = styled(H1)`
 `
 
 const SText = styled(P)`
-  max-width: 212px;
   margin-top: 12px;
+  font-size: 16px;
 
   @media (max-width: ${breakpoints.sm}) {
-    max-width: none;
     margin-top: 1em;
   }
 `
@@ -106,9 +105,9 @@ function CopyButton({ connectorUri }: { connectorUri?: string }): JSX.Element {
 
   return (
     <SCopyWrapper>
-      <Button type="stealth" size="sm" onClick={onClick}>
+      <StealthButton onClick={onClick}>
         {content}
-      </Button>
+      </StealthButton>
     </SCopyWrapper>
   )
 }

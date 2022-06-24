@@ -8,14 +8,29 @@ import { worldLogic } from 'worldLogic'
 
 const SWrapper = styled.div`
   display: flex;
-  align-items: center;
   flex-direction: column;
-  max-width: 70%;
-  margin: 0 auto;
-  text-align: center;
+  align-items: center;
   @media (max-width: ${breakpoints.sm}) {
     height: calc(100vh - 88px); // 88px for header size
     justify-content: center;
+  }
+`
+
+const SIconWrapper = styled.div`
+  margin: 60px 0 48px 0;
+`
+
+const SHeader = styled(H3)`
+  text-align: center;
+`
+
+const SText = styled(P)`
+  margin-top: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+  max-width: 290px;
+  @media (max-width: ${breakpoints.sm}) {
+    max-width: none;
   }
 `
 
@@ -23,10 +38,12 @@ export function ConfirmedScene(): JSX.Element {
   const { terminate } = useActions(worldLogic)
   return (
     <SWrapper>
-      <StatefulIcon state="success" />
-      <H3>Verification Confirmed!</H3>
-      <P>This World ID request has been confirmed successfully.</P>
-      <Button block onClick={terminate}>
+      <SIconWrapper>
+        <StatefulIcon state="success" />
+      </SIconWrapper>
+      <SHeader>Identity Confirmed!</SHeader>
+      <SText>Yay! Your identity has been successfully confirmed. You can start using your WorldID.</SText>
+      <Button color="primary" fullWidth onClick={terminate}>
         Continue
       </Button>
     </SWrapper>

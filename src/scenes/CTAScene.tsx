@@ -10,12 +10,12 @@ const SModalCTA = styled.div`
   position: absolute;
   background-color: var(--bg);
   border-radius: var(--radius);
-  margin-top: 32px;
+  margin-top: 8px;
   padding: 32px 32px 26px;
   z-index: 9000;
   display: grid;
   grid-template-columns: 1fr auto;
-  row-gap: 28px;
+  row-gap: 16px;
   align-items: center;
   ${(props) => props.show && 'animation: fadeIn 0.5s ease-in both;'};
   ${(props) => props.hide && 'animation: fadeOut 0.5s ease-in both;'};

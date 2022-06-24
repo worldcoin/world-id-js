@@ -17,16 +17,21 @@ const SWrapper = styled.div`
 `
 
 const SLoaderWrapper = styled.div`
-  font-size: 4em;
+  margin: 72px 0 72px 0;
+  font-size: 2em;
 `
 
-const SCaption = styled.div`
+const SHeader = styled(H3)`
   text-align: center;
-  margin-top: 32px;
-  max-width: 60%;
+`
 
+const SText = styled(P)`
+  margin-top: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+  max-width: 240px;
   @media (max-width: ${breakpoints.sm}) {
-    max-width: 100%;
+    max-width: none;
   }
 `
 
@@ -37,13 +42,11 @@ export function AwaitingVerificationScene(): JSX.Element {
       <SLoaderWrapper>
         <Loader />
       </SLoaderWrapper>
-      <SCaption>
-        <H3>Confirm Request</H3>
-        <P>Please confirm the verification request in your Worldcoin app.</P>
-        <Button block onClick={terminate} type="secondary">
-          Cancel
-        </Button>
-      </SCaption>
+      <SHeader>Confirm Request</SHeader>
+      <SText>Please confirm your identity inside your Worldcoin mobile app.</SText>
+      <Button fullWidth onClick={terminate}>
+        Cancel
+      </Button>
     </SWrapper>
   )
 }

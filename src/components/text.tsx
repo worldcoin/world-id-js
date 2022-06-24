@@ -30,9 +30,10 @@ export const H2 = styled.div`
 `
 
 export const H3 = styled.div`
-  font-weight: 400;
-  font-size: 1.4em;
-  line-height: 1.3em;
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 1.286em;
+  line-height: 1.333em;
 `
 
 export const P = styled.p`
