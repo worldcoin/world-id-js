@@ -113,6 +113,9 @@ export const worldLogic = kea<worldLogicType>([
     initTelemetry: async () => {
       initTelemetry(props.enable_telemetry)
     },
+    setModalView: async () => {
+      actions.toggleCTAShown()
+    },
   })),
   selectors(({ actions, props }) => ({
     hideModalCloseButton: [
