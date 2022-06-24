@@ -111,7 +111,7 @@ export const worldLogic = kea<worldLogicType>([
       }
     },
     initTelemetry: async () => {
-      initTelemetry(props.enableTelemetry)
+      initTelemetry(props.enable_telemetry)
     },
   })),
   selectors(({ actions, props }) => ({

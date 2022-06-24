@@ -16,13 +16,15 @@ export interface EndUserErrorDisplay {
 }
 
 export interface AppProps {
-  actionId: string
+  action_id: string
   signal?: string
-  enableTelemetry?: boolean
   theme?: 'light' | 'dark'
-  appName?: string
-  signalDescription?: string
-  disableRemoteFonts?: boolean
+  enable_telemetry?: boolean
+  app_name?: string
+  signal_description?: string
+  disable_remote_fonts?: boolean
+  advanced_use_raw_signal?: boolean
+  advanced_use_raw_action_id?: boolean
 }
 
 export interface CallbackInterface {
@@ -43,10 +45,10 @@ export enum VerificationState {
 }
 
 export interface VerificationRequestParams {
-  actionId: string
+  action_id: string
   signal: string
-  appName?: string
-  signalDescription?: string
+  app_name?: string
+  signal_description?: string
 }
 
 export interface VerificationRequest {
@@ -57,8 +59,8 @@ export interface VerificationRequest {
 }
 
 export interface VerificationResponse {
-  merkleRoot: ABIEncodedValue
-  nullifierHash: ABIEncodedValue
+  merkle_root: ABIEncodedValue
+  nullifier_hash: ABIEncodedValue
   proof: ABIEncodedValue
 }
 export interface VerificationErrorResponse {

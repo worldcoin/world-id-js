@@ -1,4 +1,6 @@
 import { AppProps, VerificationRequest, VerificationRequestParams } from 'types'
+import sha3 from 'js-sha3'
+import { arrayify, concat, hexlify } from '@ethersproject/bytes'
 
 /**
  * Generates a random integer between a specified range
@@ -16,16 +18,16 @@ export const buildVerificationRequest = (props: AppProps): VerificationRequest =
   }
 
   const params: VerificationRequestParams = {
-    signal: props.signal,
-    actionId: props.actionId,
+    signal: props.advanced_use_raw_signal ? props.signal : hashBytes(props.signal).digest,
+    action_id: props.advanced_use_raw_action_id ? props.action_id : hashBytes(props.action_id).digest,
   }
 
-  if (props.appName) {
-    params.appName = props.appName
+  if (props.app_name) {
+    params.app_name = props.app_name
   }
 
-  if (props.signalDescription) {
-    params.signalDescription = props.signalDescription
+  if (props.signal_description) {
+    params.signal_description = props.signal_description
   }
 
   return {
@@ -41,11 +43,11 @@ export const buildVerificationRequest = (props: AppProps): VerificationRequest =
  * @param result expects a valid `VerificationResponse`
  */
 export const verifyVerificationResponse = (result: Record<string, string | undefined>): boolean => {
-  const merkleRoot = 'merkleRoot' in result ? result.merkleRoot : undefined
-  const nullifierHash = 'nullifierHash' in result ? result.nullifierHash : undefined
+  const merkle_root = 'merkle_root' in result ? result.merkle_root : undefined
+  const nullifier_hash = 'nullifier_hash' in result ? result.nullifier_hash : undefined
   const proof = 'proof' in result ? result.proof : undefined
 
-  for (const attr of [merkleRoot, nullifierHash, proof]) {
+  for (const attr of [merkle_root, nullifier_hash, proof]) {
     if (!attr || !validateABILikeEncoding(attr)) {
       return false
     }
@@ -62,7 +64,7 @@ export const verifyVerificationResponse = (result: Record<string, string | undef
  */
 export const validateABILikeEncoding = (value: string): boolean => {
   const ABI_REGEX = /^0x[\dabcdef]+$/
-  return !!value.match(ABI_REGEX) && value.length >= 66 // Because `0` contains 66 characters
+  return !!value.toString().match(ABI_REGEX) && value.length >= 66 // Because `0` contains 66 characters
 }
 
 /**
@@ -71,8 +73,51 @@ export const validateABILikeEncoding = (value: string): boolean => {
  * @returns `true` if parameters are valid; error is raised otherwise.
  */
 export const validateInputParams = (params: AppProps): { valid: boolean; error?: string } => {
-  if (!params.actionId) {
-    return { valid: false, error: 'The `actionId` parameter is always required.' }
+  if (!params.action_id) {
+    return { valid: false, error: 'The `action_id` parameter is always required.' }
   }
+
+  if (params.advanced_use_raw_action_id && !validateABILikeEncoding(params.action_id)) {
+    return {
+      valid: false,
+      error: `You enabled 'advanced_use_raw_action_id' which uses the action ID raw (without any additional hashing or encoding),
+        but the action ID you provided does not look to be validly hashed or encoded. Please check
+        https://id.worldcoin.org/docs/js/reference#parameters for details.`,
+    }
+  }
+
+  if (params.advanced_use_raw_signal && params.signal && !validateABILikeEncoding(params.signal)) {
+    return {
+      valid: false,
+      error: `You enabled 'advanced_use_raw_signal' which uses the signal raw (without any additional hashing or encoding),
+        but the signal you provided does not look to be validly hashed or encoded. Please check
+        https://id.worldcoin.org/docs/js/reference#parameters for details.`,
+    }
+  }
+
   return { valid: true }
+}
+
+/**
+ * Hashes an input using the `keccak256` hashing function used across the World ID protocol, to be used as
+ * a ZKP input.
+ * @param input - Input to hash (if it's a string, it'll be converted to bytes first)
+ * @returns hash
+ */
+export function hashBytes(input: string | Buffer): { hash: BigInt; digest: string } {
+  const bytesInput = Buffer.isBuffer(input) ? input : Buffer.from(input)
+  const hash = BigInt(keccak256(bytesInput)) >> BigInt(8)
+  const rawDigest = hash.toString(16)
+  return { hash, digest: `0x${rawDigest.padStart(64, '0')}` }
+}
+
+/**
+ * Partial implementation of `keccak256` hash from @ethersproject/solidity; only supports hashing a single BytesLike value
+ * @param value value to hash
+ * @returns
+ */
+export function keccak256(value: Buffer): string {
+  const tight: Array<Uint8Array> = [arrayify(value)]
+  const data = hexlify(concat(tight))
+  return '0x' + sha3.keccak_256(arrayify(data))
 }

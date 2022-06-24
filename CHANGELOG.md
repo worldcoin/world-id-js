@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.3.0 (2022-06-16)
+
+Critical update to ensure proper interaction with WLD apps.
+
+### ⚠ BREAKING CHANGES
+
+- correct padding on hashed hex strings (#22)
+
+### Bug Fixes
+
+- correct padding on hashed hex strings ([#22](https://github.com/worldcoin/world-id-js/issues/22)) ([919624c](https://github.com/worldcoin/world-id-js/commit/919624cba3fda54f6236e817f758bae5f4961f6e))
+
+## 0.2.0 (2022-06-16)
+
+**Do not use this version!** It will not work properly with WLD apps.
+
+### ⚠ BREAKING CHANGES
+
+- use snake_case everywhere (#20)
+- encode and hash action ID & signal (#19)
+
+### Features
+
+### Bug Fixes
+
+- encode and hash action ID & signal ([#19](https://github.com/worldcoin/world-id-js/issues/19)) ([a829d27](https://github.com/worldcoin/world-id-js/commit/a829d2753116dc3d0d026de81d2704fcf0a138ae))
+- use snake_case everywhere ([#20](https://github.com/worldcoin/world-id-js/issues/20)) ([c8c9ea5](https://github.com/worldcoin/world-id-js/commit/c8c9ea5793e6284707fd0f5c43850191c1f304b6))
+
 ## 0.1.0 (2022-06-10)
 
 ### ⚠ BREAKING CHANGES
