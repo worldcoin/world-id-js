@@ -53,7 +53,7 @@ export function ErrorScene(): JSX.Element {
   return (
     <SWrapper>
       <SIconWrapper>
-        <StatefulIcon />
+        <StatefulIcon color={endUserError?.noRetry ? undefined : 'primary'} />
       </SIconWrapper>
       <SHeader>{endUserError?.title || 'Something went wrong!'}</SHeader>
       <SText>{endUserError?.caption || 'Sorry, there was a problem with your request, please try again.'}</SText>
