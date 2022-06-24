@@ -20,6 +20,7 @@ export const GlobalStyles = styled.div`
   --statefull-primary-bg: #4940e0;
   --statefull-primary-color: #ffffff;
   --border-secondary: ${(props) => (props.isDark ? 'rgba(187, 190, 199, 0.3)' : '#edecfc')};
+  --border: ${(props) => (props.isDark ? '#ffffff33' : '#ffffff')};
   --bg: ${(props) => (props.isDark ? '#0c0e10' : 'white')};
   --gradient: linear-gradient(90deg, #ff6848 0%, #4940e0 100%);
   --qr-container-color: ${(props) => (props.isDark ? '#ffffff1c' : '#4940e01a')};

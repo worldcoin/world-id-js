@@ -56,6 +56,7 @@ const ModalWrapper = styled.div`
 const ModalContent = styled.div`
   position: relative;
   background-color: var(--bg);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
 
   @media (max-width: ${breakpoints.sm}) {
