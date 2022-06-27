@@ -73,7 +73,7 @@ const SHeader = styled.div`
   color: var(--text);
 
   @media (max-width: ${breakpoints.sm}) {
-    padding: 16px;
+    padding: 16px 24px;
   }
 `
 
@@ -89,7 +89,7 @@ const SBody = styled.div`
   padding: 0 32px 32px;
 
   @media (max-width: ${breakpoints.sm}) {
-    padding: 0 16px 0;
+    padding: 0 24px 0;
   }
 `
 
