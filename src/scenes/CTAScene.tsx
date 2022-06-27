@@ -6,6 +6,12 @@ import styled from 'styled-components'
 import { CTAShownState } from 'types'
 import { worldLogic } from 'worldLogic'
 
+const SRoot = styled.div`
+  @media (max-width: ${breakpoints.sm}) {
+    display: none;
+  }
+`
+
 const SModalCTA = styled.div`
   position: absolute;
   background-color: var(--bg);
@@ -60,7 +66,7 @@ export function ModalCTA(): JSX.Element | null {
   }
 
   return (
-    <>
+    <SRoot>
       <SModalMobileSpacer />
       <SModalCTA hide={ctaShownState === CTAShownState.Hide} show={ctaShownState === CTAShownState.Show}>
         <SHeading>Don’t have the Worldcoin app yet?</SHeading>
@@ -69,6 +75,6 @@ export function ModalCTA(): JSX.Element | null {
           Install now
         </LinkGradient>
       </SModalCTA>
-    </>
+    </SRoot>
   )
 }

@@ -42,14 +42,14 @@ const ModalWrapper = styled.div`
 
   @media (max-width: ${breakpoints.sm}) {
     width: 100%;
-    max-height: unset;
+    max-height: 100%;
     max-width: unset;
-    top: 0;
+    top: auto;
     bottom: 0;
     left: 0;
     right: 0;
     transform: unset;
-    min-height: 620px;
+    min-height: unset;
   }
 `
 
@@ -60,8 +60,9 @@ const ModalContent = styled.div`
   border-radius: var(--radius);
 
   @media (max-width: ${breakpoints.sm}) {
-    border-radius: 0;
     height: 100%;
+    padding-bottom: 32px;
+    border-radius: 36px 36px 0 0;
   }
 `
 
@@ -72,7 +73,7 @@ const SHeader = styled.div`
   color: var(--text);
 
   @media (max-width: ${breakpoints.sm}) {
-    padding: 32px 16px 16px;
+    padding: 16px;
   }
 `
 

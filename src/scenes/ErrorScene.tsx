@@ -12,7 +12,6 @@ const SWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   @media (max-width: ${breakpoints.sm}) {
-    height: calc(100vh - 88px); // 88px for header size
     justify-content: center;
   }
 `

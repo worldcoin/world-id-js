@@ -1,48 +1,15 @@
 import styled from 'styled-components'
-;`
-The MIT License (MIT)
-
-Copyright (c) 2014 Luke Haas
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-`
 
 const SLoader = styled.div`
-  border-radius: 50%;
-  width: 1em;
-  height: 1em;
-  margin: 0 auto;
-  position: relative;
-  text-indent: -9999em;
-  border-top: 0.11em solid #f0edf9;
-  border-right: 0.11em solid #f0edf9;
-  border-bottom: 0.11em solid #f0edf9;
-  border-left: 0.11em solid var(--primary);
+  color: var(--loader);
   -webkit-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
   -webkit-animation: loadAnimation 2s infinite linear;
   animation: loadAnimation 2s infinite linear;
 
-  &:after {
-    border-radius: 50%;
-    width: 1em;
-    height: 1em;
+  & > svg {
+    display: block;
   }
 
   @-webkit-keyframes loadAnimation {
@@ -67,4 +34,30 @@ const SLoader = styled.div`
   }
 `
 
-export const Loader = (): JSX.Element => <SLoader />
+export const Loader = (): JSX.Element => (
+  <SLoader>
+    <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="17.9997" cy="17.9997" r="15.9997" stroke="currentColor" stroke-width="4" />
+      <path
+        d="M33.9981 17.9997C33.9981 15.3386 33.3343 12.7194 32.0668 10.3795C30.7994 8.03951 28.9683 6.05265 26.7394 4.59879C24.5104 3.14492 21.9541 2.26998 19.3017 2.05319C16.6494 1.83639 13.9849 2.28459 11.5495 3.3572C9.11404 4.42981 6.9846 6.09295 5.35399 8.19602C3.72338 10.2991 2.64309 12.7757 2.21094 15.4015"
+        stroke="url(#paint0_linear_7782_165735)"
+        stroke-width="4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_7782_165735"
+          x1="36.9975"
+          y1="17.9997"
+          x2="1.99805"
+          y2="17.9997"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#4940e0" />
+          <stop offset="1" stop-color="#4940e0" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </SLoader>
+)

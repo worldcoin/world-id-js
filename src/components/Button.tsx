@@ -1,4 +1,5 @@
 import styled, { CSSProperties } from 'styled-components'
+import { breakpoints } from 'const'
 
 export const Button = styled.button`
   width: ${(props) => (props.fullWidth ? '100%' : undefined)};
@@ -38,6 +39,17 @@ export const StealthButton = styled(Button)`
 
   &:hover {
     background-color: var(--button-stealth-hover-bg);
+  }
+
+  @media (max-width: ${breakpoints.sm}) {
+    line-height: 22px;
+    font-size: 18px;
+    &,
+    &:hover {
+      font-weight: 500;
+      color: var(--button-stealth-mobile-color);
+      background: transparent;
+    }
   }
 `
 

@@ -42,4 +42,5 @@ export const P = styled.p`
   font-size: 1em;
   line-height: 1.286;
   letter-spacing: -0.01em;
+  color: var(--text-default);
 `

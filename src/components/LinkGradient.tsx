@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { breakpoints } from 'const'
 import { ButtonInterface } from './Button'
 
 const SGradientWrapper = styled.div`
@@ -18,16 +19,21 @@ const SGradientWrapper = styled.div`
 
 const SGradientLink = styled.a`
   padding: 12px 24px;
+  line-height: 18px;
   font-family: 'Sora', sans-serif;
-  font-size: 1em;
+  font-size: 16px;
   font-weight: 600;
-  line-height: 1.286;
   text-transform: uppercase;
+  text-align: center;
   color: var(--link-gradient-color);
   background-color: var(--link-gradient-bg);
   border-radius: 10px;
   overflow: hidden;
   white-space: nowrap;
+
+  @media (max-width: ${breakpoints.sm}) {
+    padding: 19px 24px;
+  }
 `
 
 interface LinkGradientInterface extends Omit<ButtonInterface, 'type' | 'size'> {

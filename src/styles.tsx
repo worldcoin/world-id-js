@@ -12,6 +12,7 @@ export const GlobalStyles = styled.div`
   --button-stealth-color: ${(props) => (props.isDark ? '#ffffff' : '#191C20')};
   --button-stealth-bg: ${(props) => (props.isDark ? '#272B2F' : '#f1f2f2')};
   --button-stealth-hover-bg: ${(props) => (props.isDark ? '#3f454b' : '#e5e6e6')};
+  --button-stealth-mobile-color: ${(props) => (props.isDark ? '#ffffff' : '#4940e0')};
   --text: ${(props) => (props.isDark ? '#ffffff' : '#010101')};
   --text-default: ${(props) => (props.isDark ? '#ffffff' : '#183c4a')};
   --text-muted: #bbbec7;
@@ -38,6 +39,7 @@ export const GlobalStyles = styled.div`
   --link-gradient-to: ${(props) => (props.isDark ? '#ff5b26' : '#ff6848')};
   --link-gradient-color: ${(props) => (props.isDark ? 'white' : '#191c20')};
   --link-gradient-bg: ${(props) => (props.isDark ? '#191c20' : 'white')};
+  --loader: ${(props) => (props.isDark ? '#101719' : '#f0eDf9')};
   --font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-family: var(--font-family);
@@ -47,10 +49,6 @@ export const GlobalStyles = styled.div`
 
   a {
     text-decoration: none;
-  }
-
-  p {
-    color: var(--text-default);
   }
 
   @keyframes fadeIn {
