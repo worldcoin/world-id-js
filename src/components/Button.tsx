@@ -50,6 +50,9 @@ export const StealthButton = styled(Button)`
       color: var(--button-stealth-mobile-color);
       background: transparent;
     }
+    &:hover {
+      opacity: 0.7;
+    }
   }
 `
 
