@@ -6,6 +6,7 @@ import { useEffect, useErrorBoundary } from 'preact/hooks'
 import { telemetryException } from 'telemetry'
 import { useValues } from 'kea'
 import { worldLogic } from 'worldLogic'
+import { Dropdown } from 'components/Dropdown'
 
 const Wrapper = styled.div`
   max-width: 100%;
@@ -27,7 +28,7 @@ export function App(): JSX.Element {
     <GlobalStyles isDark={theme === 'dark'}>
       <Wrapper>
         <WorldIDBox />
-        <MainModal />
+        <MainModal additionalButtons={<Dropdown isDevMode />} />
       </Wrapper>
     </GlobalStyles>
   )

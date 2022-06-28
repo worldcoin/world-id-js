@@ -13,6 +13,9 @@ export const GlobalStyles = styled.div`
   --button-stealth-bg: ${(props) => (props.isDark ? '#272B2F' : '#f1f2f2')};
   --button-stealth-hover-bg: ${(props) => (props.isDark ? '#3f454b' : '#e5e6e6')};
   --button-stealth-mobile-color: ${(props) => (props.isDark ? '#ffffff' : '#4940e0')};
+  --button-square-hover-bg: ${(props) => (props.isDark ? '#FFFFFF1A' : '#0101010D')};
+  --button-square-active-color: ${(props) => (props.isDark ? '#0C0E10' : '#FFFFFF')};
+  --button-square-active-bg: ${(props) => (props.isDark ? '#FFFFFF' : '#4940e0')};
   --text: ${(props) => (props.isDark ? '#ffffff' : '#010101')};
   --text-default: ${(props) => (props.isDark ? '#ffffff' : '#183c4a')};
   --text-muted: #bbbec7;
@@ -40,6 +43,10 @@ export const GlobalStyles = styled.div`
   --link-gradient-color: ${(props) => (props.isDark ? 'white' : '#191c20')};
   --link-gradient-bg: ${(props) => (props.isDark ? '#191c20' : 'white')};
   --loader: ${(props) => (props.isDark ? '#101719' : '#f0edf9')};
+  --dropdown-menu-bg: ${(props) => (props.isDark ? '#353535' : '#ffffff')};
+  --dropdown-menu-color: ${(props) => (props.isDark ? '#ffffff33' : '#000000')};
+  --dropdown-menu-link-color: ${(props) => (props.isDark ? '#ffffff' : '#4940e0')};
+  --dropdown-menu-text-color: ${(props) => (props.isDark ? '#ffffff33' : '#0c0e104d')};
   --font-family: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-family: var(--font-family);

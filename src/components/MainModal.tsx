@@ -85,6 +85,12 @@ const SHeaderLogo = styled.div`
   justify-content: ${(props) => (props.centered ? 'center' : undefined)};
 `
 
+const SHeaderButtons = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  gap: 12px;
+`
+
 const SBody = styled.div`
   padding: 0 32px 32px;
 
@@ -93,7 +99,7 @@ const SBody = styled.div`
   }
 `
 
-function ModalHeader(): JSX.Element {
+function ModalHeader({ additionalButtons }: { additionalButtons?: JSX.Element }): JSX.Element {
   const { hideModalCloseButton, modalGoBack } = useValues(worldLogic)
   const { terminate } = useActions(worldLogic)
 
@@ -107,11 +113,10 @@ function ModalHeader(): JSX.Element {
       <SHeaderLogo centered={hideModalCloseButton || modalGoBack}>
         <WorldcoinLogo />
       </SHeaderLogo>
-      {!hideModalCloseButton && (
-        <div>
-          <SquareButton onClick={terminate} />
-        </div>
-      )}
+      <SHeaderButtons>
+        {additionalButtons}
+        {!hideModalCloseButton && <SquareButton onClick={terminate} />}
+      </SHeaderButtons>
     </SHeader>
   )
 }
@@ -129,9 +134,14 @@ function ModalBody(): JSX.Element {
   )
 }
 
-export function MainModal(): JSX.Element {
+interface MainModalInterface {
+  additionalButtons?: JSX.Element
+}
+
+export function MainModal(props: MainModalInterface): JSX.Element {
   const { isAppActive, ctaShownState, theme } = useValues(worldLogic)
   const { terminate } = useActions(worldLogic)
+  const { additionalButtons } = props
 
   return createPortal(
     <GlobalStyles isDark={theme === 'dark'}>
@@ -141,7 +151,7 @@ export function MainModal(): JSX.Element {
         {isAppActive && (
           <>
             <ModalContent>
-              <ModalHeader />
+              <ModalHeader additionalButtons={additionalButtons} />
               <ModalBody />
             </ModalContent>
             <ModalCTA />
