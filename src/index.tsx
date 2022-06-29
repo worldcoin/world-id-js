@@ -33,7 +33,7 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
     if (!props.disable_remote_fonts) {
       const link = document.createElement('link')
       link.rel = 'stylesheet'
-      link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap'
+      link.href = 'https://fonts.googleapis.com/css2?family=Rubik:wght@400&family=Sora:wght@600&display=swap'
       const headElementMatch = document.getElementsByTagName('head')
       if (headElementMatch && headElementMatch[0]) {
         headElementMatch[0].appendChild(link)

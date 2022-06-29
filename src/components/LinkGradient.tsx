@@ -1,43 +1,41 @@
 import styled from 'styled-components'
-import { ButtonInterface, SButton } from './Button'
+import { breakpoints } from 'const'
 
 const SGradientWrapper = styled.div`
-  background: linear-gradient(to right, red, purple);
-  padding: 1px;
-  border-radius: 1000px;
-  display: flex;
+  background: linear-gradient(to right, var(--link-gradient-from), var(--link-gradient-to));
+  padding: 2px;
+  border-radius: 12px;
+  display: grid;
+  align-items: center;
   &:hover {
     background: unset;
     a {
-      background: var(--gradient);
-    }
-
-    span {
       color: white;
-      background: unset;
-      -webkit-background-clip: unset;
-      -webkit-text-fill-color: unset;
-      background-clip: unset;
+      background: linear-gradient(to right, var(--link-gradient-from), var(--link-gradient-to));
     }
   }
 `
 
-const SGradientLink = styled(SButton).attrs({ as: 'a' })`
-  background-color: var(--button);
-  border-radius: 1000px;
-  padding: ${(props) => (props.size === 'sm' ? '7px 16px' : '14px 32px')};
+const SGradientLink = styled.a`
+  padding: 12px 24px;
+  line-height: 18px;
+  font-family: 'Sora', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--link-gradient-color);
+  background-color: var(--link-gradient-bg);
+  border-radius: 10px;
   overflow: hidden;
   white-space: nowrap;
+
+  @media (max-width: ${breakpoints.sm}) {
+    padding: 19px 24px;
+  }
 `
 
-const SGradientText = styled.span`
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-`
-
-interface LinkGradientInterface extends Omit<ButtonInterface, 'type' | 'size'> {
+interface LinkGradientInterface {
   children: string
   href: string
   target?: '_blank'
@@ -48,7 +46,7 @@ export function LinkGradient({ children, size = 'md', ...restOfProps }: LinkGrad
   return (
     <SGradientWrapper>
       <SGradientLink size={size} {...restOfProps}>
-        <SGradientText>{children}</SGradientText>
+        {children}
       </SGradientLink>
     </SGradientWrapper>
   )

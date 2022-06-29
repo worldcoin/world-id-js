@@ -31,16 +31,45 @@ const qrCode = new QRCodeStyling({
 })
 
 const SQRContainer = styled.div`
+  position: relative;
+  z-index: 0;
   display: flex;
-  min-width: 183px;
-  min-height: 183px;
-  justify-content: flex-end;
+  width: 198px;
+  height: 198px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--qr-container-color);
+  border-radius: 2px;
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: -1;
+    background: var(--bg);
+  }
+  &::before {
+    top: 24px;
+    bottom: 24px;
+    left: -1px;
+    right: -1px;
+  }
+  &::after {
+    top: -1px;
+    bottom: -1px;
+    left: 24px;
+    right: 24px;
+  }
+  & > * {
+    position: relative;
+  }
 `
 
 interface QRRenderInterface {
   data: string
 }
 
+// FIXME: This component can probably be memoized (pure component)
 export function QRRender({ data }: QRRenderInterface): JSX.Element {
   const qrContainRef = useRef<HTMLDivElement>(null)
   useEffect(() => {

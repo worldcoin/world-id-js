@@ -34,7 +34,7 @@ const ModalWrapper = styled.div`
   left: 50%;
   min-height: ${(props) => (props.ctaShownState === CTAShownState.Show ? '540px' : '360px')};
   transform: translate(-50%, -50%);
-  width: 460px;
+  width: 500px;
   max-width: calc(100% - 32px);
   z-index: 10000;
   display: ${(props) => (props.shown ? 'block' : 'none')};
@@ -42,25 +42,27 @@ const ModalWrapper = styled.div`
 
   @media (max-width: ${breakpoints.sm}) {
     width: 100%;
-    max-height: unset;
+    max-height: 100%;
     max-width: unset;
-    top: 0;
+    top: auto;
     bottom: 0;
     left: 0;
     right: 0;
     transform: unset;
-    min-height: 620px;
+    min-height: unset;
   }
 `
 
 const ModalContent = styled.div`
   position: relative;
   background-color: var(--bg);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
 
   @media (max-width: ${breakpoints.sm}) {
-    border-radius: 0;
     height: 100%;
+    padding-bottom: 32px;
+    border-radius: 36px 36px 0 0;
   }
 `
 
@@ -71,7 +73,7 @@ const SHeader = styled.div`
   color: var(--text);
 
   @media (max-width: ${breakpoints.sm}) {
-    padding: 32px 16px 16px;
+    padding: 16px 24px;
   }
 `
 
@@ -87,7 +89,7 @@ const SBody = styled.div`
   padding: 0 32px 32px;
 
   @media (max-width: ${breakpoints.sm}) {
-    padding: 0 16px 0;
+    padding: 0 24px 0;
   }
 `
 
@@ -133,6 +135,7 @@ export function MainModal(): JSX.Element {
 
   return createPortal(
     <GlobalStyles isDark={theme === 'dark'}>
+      {/* FIXME Is this wrapper necessary? It already exists in App */}
       <Overlay onClick={terminate} shown={isAppActive} data-testId="overlay" />
       <ModalWrapper ctaShownState={ctaShownState} shown={isAppActive} data-testId="modal-wrapper">
         {isAppActive && (

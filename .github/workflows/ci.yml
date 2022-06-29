@@ -30,7 +30,7 @@ jobs:
 
       - name: Check Typescript
         run: |
-          npm run typescript:check
+          npm run typecheck
 
   test:
     name: Test

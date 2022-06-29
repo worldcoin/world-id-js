@@ -1,6 +1,6 @@
 import { Button } from 'components/Button'
 import { Loader } from 'components/Loader'
-import { H2, P } from 'components/text'
+import { H3, P } from 'components/text'
 import { breakpoints } from 'const'
 import { useActions } from 'kea'
 import styled from 'styled-components'
@@ -11,22 +11,26 @@ const SWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   @media (max-width: ${breakpoints.sm}) {
-    height: calc(100vh - 88px); // 88px for header size
     justify-content: center;
   }
 `
 
 const SLoaderWrapper = styled.div`
-  font-size: 4em;
+  margin: 72px 0 72px 0;
+  font-size: 2em;
 `
 
-const SCaption = styled.div`
+const SHeader = styled(H3)`
   text-align: center;
-  margin-top: 32px;
-  max-width: 60%;
+`
 
+const SText = styled(P)`
+  margin-top: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+  max-width: 240px;
   @media (max-width: ${breakpoints.sm}) {
-    max-width: 100%;
+    max-width: none;
   }
 `
 
@@ -37,13 +41,11 @@ export function AwaitingVerificationScene(): JSX.Element {
       <SLoaderWrapper>
         <Loader />
       </SLoaderWrapper>
-      <SCaption>
-        <H2>Confirm Request</H2>
-        <P>Please confirm the verification request in your Worldcoin app.</P>
-        <Button block onClick={terminate} type="secondary">
-          Cancel
-        </Button>
-      </SCaption>
+      <SHeader>Confirm Request</SHeader>
+      <SText>Please confirm the request in your Worldcoin app.</SText>
+      <Button block onClick={terminate}>
+        Cancel
+      </Button>
     </SWrapper>
   )
 }

@@ -4,6 +4,8 @@ import { WorldIDBox } from 'components/WorldIDBox'
 import { MainModal } from 'components/MainModal'
 import { useEffect, useErrorBoundary } from 'preact/hooks'
 import { telemetryException } from 'telemetry'
+import { useValues } from 'kea'
+import { worldLogic } from 'worldLogic'
 
 const Wrapper = styled.div`
   max-width: 100%;
@@ -12,6 +14,7 @@ const Wrapper = styled.div`
 
 export function App(): JSX.Element {
   const [error, resetError] = useErrorBoundary()
+  const { theme } = useValues(worldLogic)
 
   useEffect(() => {
     if (error) {
@@ -21,7 +24,7 @@ export function App(): JSX.Element {
   }, [error])
 
   return (
-    <GlobalStyles>
+    <GlobalStyles isDark={theme === 'dark'}>
       <Wrapper>
         <WorldIDBox />
         <MainModal />

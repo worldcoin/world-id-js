@@ -60,7 +60,7 @@
         signal: 'user-id-1',
         app_name: 'candyApp',
         signal_description: 'Receive initial airdrop April 2022',
-        theme: 'dark',
+        theme: 'light',
       })
 
       function activateWorldId() {
@@ -68,7 +68,7 @@
           .enable()
           .then((result) => {
             document.getElementById('btn-main').removeAttribute('disabled')
-            console.log('Verified succesfully:', result)
+            console.log('Verified successfully:', result)
           })
           .catch((failure) => {
             console.warn('Verification failed:', failure)
