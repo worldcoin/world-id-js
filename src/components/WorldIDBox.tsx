@@ -1,4 +1,4 @@
-import { WorldcoinLogoWithLetters } from 'assets/logos'
+import { WIDLogo } from 'assets/logos'
 import { useActions, useValues } from 'kea'
 import { worldLogic } from 'worldLogic'
 import styled from 'styled-components'
@@ -67,9 +67,9 @@ export function WorldIDBox(): JSX.Element {
     >
       <SContainer>
         <Checkbox isChecked={verificationState === VerificationState.Confirmed} />
-        <SMainContainer>I’m a unique person</SMainContainer>
+        <SMainContainer>I&apos;m a unique person</SMainContainer>
         <SLogoContainer onClick={handleLearnMore}>
-          <WorldcoinLogoWithLetters />
+          <WIDLogo />
         </SLogoContainer>
       </SContainer>
     </SWorldIDBox>

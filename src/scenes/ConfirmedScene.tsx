@@ -40,8 +40,8 @@ export function ConfirmedScene(): JSX.Element {
       <SIconWrapper>
         <StatefulIcon state="success" color="primary" />
       </SIconWrapper>
-      <SHeader>Identity Confirmed!</SHeader>
-      <SText>Yay! Your identity has been successfully confirmed. You can start using your WorldID.</SText>
+      <SHeader>Verification Confirmed!</SHeader>
+      <SText>Great! This World ID request has been successfully confirmed.</SText>
       <Button color="primary" fullWidth onClick={terminate}>
         Continue
       </Button>
