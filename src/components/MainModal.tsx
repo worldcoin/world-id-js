@@ -135,7 +135,7 @@ function ModalBody(): JSX.Element {
 }
 
 interface MainModalInterface {
-  additionalButtons?: JSX.Element
+  additionalButtons?: JSX.Element | false
 }
 
 export function MainModal(props: MainModalInterface): JSX.Element {

@@ -6,7 +6,7 @@ import { useEffect, useErrorBoundary } from 'preact/hooks'
 import { telemetryException } from 'telemetry'
 import { useValues } from 'kea'
 import { worldLogic } from 'worldLogic'
-import { Dropdown } from 'components/Dropdown'
+import { DebugDropdown } from 'components/DebugDropdown'
 
 const Wrapper = styled.div`
   max-width: 100%;
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
 export function App(): JSX.Element {
   const [error, resetError] = useErrorBoundary()
-  const { theme } = useValues(worldLogic)
+  const { theme, isDevMode } = useValues(worldLogic)
 
   useEffect(() => {
     if (error) {
@@ -28,7 +28,7 @@ export function App(): JSX.Element {
     <GlobalStyles isDark={theme === 'dark'}>
       <Wrapper>
         <WorldIDBox />
-        <MainModal additionalButtons={<Dropdown isDevMode />} />
+        <MainModal additionalButtons={isDevMode && <DebugDropdown />} />
       </Wrapper>
     </GlobalStyles>
   )

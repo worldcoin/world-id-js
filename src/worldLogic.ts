@@ -134,6 +134,7 @@ export const worldLogic = kea<worldLogicType>([
       (verificationState: VerificationState): boolean => verificationState === VerificationState.Confirmed,
     ],
     theme: [() => [], () => props.theme],
+    isDevMode: [() => [], () => window.location.hostname === 'localhost'],
   })),
   events(({ actions }) => ({
     afterMount: [actions.initTelemetry],

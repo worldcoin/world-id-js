@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { IconCode, MaximizeIcon } from 'assets/icons'
 import { SquareButton } from 'components/SquareButton'
 import { useCallback, useRef, useState } from 'preact/hooks'
+import { memo } from 'preact/compat'
 
 const SRoot = styled.div`
   position: relative;
@@ -33,7 +34,7 @@ const SMenuItem = styled.div`
   padding: 8px 0;
 `
 
-const SMenuLink = styled.div`
+const SMenuLink = styled.a`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -60,7 +61,7 @@ const SMenuText = styled.div`
   color: var(--dropdown-menu-text-color);
 `
 
-export function Dropdown({ isDevMode }: { isDevMode?: boolean }): JSX.Element {
+export const DebugDropdown = memo((): JSX.Element => {
   const ref = useRef<Node>(null)
 
   const [open, setOpen] = useState(false)
@@ -85,30 +86,28 @@ export function Dropdown({ isDevMode }: { isDevMode?: boolean }): JSX.Element {
       <SquareButton active={open} noBorder onClick={onOpen} icon={<IconCode />} />
       {open && (
         <SMenu>
-          {isDevMode && <SMenuTitle>Running in Dev mode</SMenuTitle>}
+          <SMenuTitle>Running in Dev mode</SMenuTitle>
           <SMenuItem>
-            <SMenuLink>
+            <SMenuLink href="https://simulator.worldcoin.org" target="_blank" rel="noopener">
               Go to simulator <MaximizeIcon />
             </SMenuLink>
             <SMenuText>to scan the QR and test</SMenuText>
           </SMenuItem>
           <SMenuItem>
-            <SMenuLink>
+            <SMenuLink href="https://id.worldcoin.org/test" target="_blank" rel="noopener">
               How to test World ID? <MaximizeIcon />
             </SMenuLink>
           </SMenuItem>
           <SMenuItem>
-            <SMenuLink>
+            <SMenuLink href="https://id.worldcoin.org/docs/js" target="_blank" rel="noopener">
               JS Widget docs <MaximizeIcon />
             </SMenuLink>
           </SMenuItem>
-          {isDevMode && (
-            <SMenuItem>
-              <SMenuText>Debug messages in console</SMenuText>
-            </SMenuItem>
-          )}
+          <SMenuItem>
+            <SMenuText>Debug messages shown in console</SMenuText>
+          </SMenuItem>
         </SMenu>
       )}
     </SRoot>
   )
-}
+})
