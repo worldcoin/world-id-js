@@ -28,7 +28,7 @@ export function App(): JSX.Element {
     <GlobalStyles isDark={theme === 'dark'}>
       <Wrapper>
         <WorldIDBox />
-        <MainModal additionalButtons={isDevMode && <DebugDropdown />} />
+        <MainModal additionalButtons={isDevMode ? <DebugDropdown /> : undefined} />
       </Wrapper>
     </GlobalStyles>
   )
