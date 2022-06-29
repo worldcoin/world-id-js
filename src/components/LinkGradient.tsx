@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { breakpoints } from 'const'
-import { ButtonInterface } from './Button'
 
 const SGradientWrapper = styled.div`
   background: linear-gradient(to right, var(--link-gradient-from), var(--link-gradient-to));
@@ -36,7 +35,7 @@ const SGradientLink = styled.a`
   }
 `
 
-interface LinkGradientInterface extends Omit<ButtonInterface, 'type' | 'size'> {
+interface LinkGradientInterface {
   children: string
   href: string
   target?: '_blank'
