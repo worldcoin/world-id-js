@@ -101,3 +101,52 @@ export function IconArrowUp({ style }: { style?: CSSProperties }): JSX.Element {
 export function IconArrowDown({ style }: { style?: CSSProperties }): JSX.Element {
   return <IconArrowUp style={{ transform: 'rotate(180deg)', ...style }} />
 }
+
+export function IconCode({ style }: { style?: CSSProperties }): JSX.Element {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
+      <path
+        d="M6.78955 8.30273L3.00008 12.3027L6.78955 16.3027"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M17.2104 8.30273L20.9999 12.3027L17.2104 16.3027"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.8877 7.00045L9.87874 17.493"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  )
+}
+
+export function MaximizeIcon({ style }: { style?: CSSProperties }): JSX.Element {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
+      <path
+        d="M13.9998 6L13.9998 2M13.9998 2L9.99984 2M13.9998 2L6.6665 9.33333"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M8 3.33398H6C3.79086 3.33398 2 5.12485 2 7.33398V10.0006C2 12.2098 3.79086 14.0007 6 14.0007H8.66666C10.8758 14.0007 12.6667 12.2098 12.6667 10.0007V8.00065"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  )
+}
