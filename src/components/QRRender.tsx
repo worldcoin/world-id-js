@@ -69,6 +69,7 @@ interface QRRenderInterface {
   data: string
 }
 
+// FIXME: This component can probably be memoized (pure component)
 export function QRRender({ data }: QRRenderInterface): JSX.Element {
   const qrContainRef = useRef<HTMLDivElement>(null)
   useEffect(() => {

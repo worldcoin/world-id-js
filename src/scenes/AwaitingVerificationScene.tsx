@@ -42,7 +42,7 @@ export function AwaitingVerificationScene(): JSX.Element {
         <Loader />
       </SLoaderWrapper>
       <SHeader>Confirm Request</SHeader>
-      <SText>Please confirm your identity inside your Worldcoin mobile app.</SText>
+      <SText>Please confirm the request in your Worldcoin app.</SText>
       <Button block onClick={terminate}>
         Cancel
       </Button>

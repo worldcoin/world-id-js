@@ -146,15 +146,18 @@ export function AwaitingConnectionScene(): JSX.Element {
     <SRoot>
       <STitle>
         <STitlePrimary>Prove you haven’t done this before with World ID</STitlePrimary>
-        <STitleSecondary>Scan or copy this QR code with your phone’s camera or Worldcoin mobile app.</STitleSecondary>
+        <STitleSecondary>
+          Scan or copy this QR code with your phone’s camera or the Worldcoin mobile app.
+        </STitleSecondary>
       </STitle>
       <SImage>{qrCodeContent && <QRRender data={qrCodeContent} />}</SImage>
       <SFigureAction>
         <CopyButton connectorUri={qrCodeContent || ''} />
       </SFigureAction>
       <SCta>
+        {/* FIXME: This should open the universal link to the app */}
         <LinkGradient href="https://worldcoin.org/download" target="_blank">
-          Get Worldcoin app
+          Open Worldcoin app
         </LinkGradient>
       </SCta>
       <SLearn>

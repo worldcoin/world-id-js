@@ -44,3 +44,10 @@ export const P = styled.p`
   letter-spacing: -0.01em;
   color: var(--text-default);
 `
+
+export const A = styled.a`
+  color: var(--primary);
+  &:visited {
+    color: var(--primary);
+  }
+`

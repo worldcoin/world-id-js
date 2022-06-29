@@ -67,7 +67,7 @@ export function WorldIDBox(): JSX.Element {
     >
       <SContainer>
         <Checkbox isChecked={verificationState === VerificationState.Confirmed} />
-        <SMainContainer>I&apos;m a unique person</SMainContainer>
+        <SMainContainer>I&apos;m doing this once</SMainContainer>
         <SLogoContainer onClick={handleLearnMore}>
           <WIDLogo />
         </SLogoContainer>
