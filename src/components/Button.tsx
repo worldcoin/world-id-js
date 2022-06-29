@@ -1,8 +1,8 @@
-import styled, { CSSProperties } from 'styled-components'
+import styled from 'styled-components'
 import { breakpoints } from 'const'
 
 export const Button = styled.button`
-  width: ${(props) => (props.fullWidth ? '100%' : undefined)};
+  width: ${(props) => (props.block ? '100%' : undefined)};
   height: 54px;
   font-family: 'Sora', sans-serif;
   font-size: 14px;
@@ -55,13 +55,3 @@ export const StealthButton = styled(Button)`
     }
   }
 `
-
-export interface ButtonInterface {
-  type?: 'primary' | 'secondary' | 'stealth'
-  size?: 'md' | 'sm'
-  block?: boolean
-  style?: CSSProperties
-  disabled?: boolean
-  onClick?: () => void
-  children?: string | JSX.Element | JSX.Element[]
-}

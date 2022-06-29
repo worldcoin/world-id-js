@@ -42,7 +42,7 @@ export function ConfirmedScene(): JSX.Element {
       </SIconWrapper>
       <SHeader>Verification Confirmed!</SHeader>
       <SText>Great! This World ID request has been successfully confirmed.</SText>
-      <Button color="primary" fullWidth onClick={terminate}>
+      <Button color="primary" block onClick={terminate}>
         Continue
       </Button>
     </SWrapper>

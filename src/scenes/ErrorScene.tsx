@@ -40,11 +40,11 @@ export function ErrorScene(): JSX.Element {
   const { tryAgain } = useActions(verificationLogic)
 
   const actionButtons = endUserError?.noRetry ? (
-    <Button fullWidth onClick={terminate}>
+    <Button block onClick={terminate}>
       Close
     </Button>
   ) : (
-    <Button color="primary" fullWidth onClick={tryAgain}>
+    <Button color="primary" block onClick={tryAgain}>
       Try again
     </Button>
   )
