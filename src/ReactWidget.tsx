@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { H3, P } from 'components/text'
 
 export function ReactWidget(
-  props: AppProps & { className?: string; onSuccess?: () => void; onError?: () => void }
+  props: AppProps & { className?: string; onSuccess?: () => void; onError?: () => void; enabled?: boolean }
 ): JSX.Element {
   const ErrorHeading = styled(H3)`
     font-size: 16px;
@@ -60,7 +60,7 @@ export function ReactWidget(
     })
 
     // REVIEW should we use isInitialized to enable worldID?
-    if (worldId.isInitialized()) {
+    if (worldId.isInitialized() && props.enabled) {
       activateWorldId()
     }
   }, [props, validation])
