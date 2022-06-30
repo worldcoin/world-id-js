@@ -68,7 +68,7 @@ const SImage = styled.div`
   }
 `
 
-const SImageApp = styled.a`
+const SImageApp = styled.div`
   display: block;
   margin-top: 16px;
 `
@@ -167,7 +167,7 @@ export function AwaitingConnectionScene(): JSX.Element {
       <SImage>{qrCodeContent && <QRRender data={qrCodeContent} />}</SImage>
       <SImage mobile>
         {!qrShown ? (
-          <SImageApp href={'' /* TODO add link to app*/}>
+          <SImageApp>
             <WorldcoinApp />
           </SImageApp>
         ) : (

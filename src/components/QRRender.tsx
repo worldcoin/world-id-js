@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat'
 import { useEffect, useRef } from 'preact/hooks'
 import QRCodeStyling from 'qr-code-styling'
 import styled from 'styled-components'
@@ -69,8 +70,7 @@ interface QRRenderInterface {
   data: string
 }
 
-// FIXME: This component can probably be memoized (pure component)
-export function QRRender({ data }: QRRenderInterface): JSX.Element {
+export const QRRender = memo(function QRRender({ data }: QRRenderInterface): JSX.Element {
   const qrContainRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     qrContainRef?.current && qrCode.append(qrContainRef.current)
@@ -81,4 +81,4 @@ export function QRRender({ data }: QRRenderInterface): JSX.Element {
   }, [data])
 
   return <SQRContainer ref={qrContainRef} />
-}
+})
