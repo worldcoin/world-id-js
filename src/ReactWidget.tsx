@@ -2,23 +2,10 @@ import { AppProps } from 'types'
 import worldId from 'index'
 import { validateInputParams } from 'utils'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import styled from 'styled-components'
-import { H3, P } from 'components/text'
 
 export function ReactWidget(
   props: AppProps & { className?: string; onSuccess?: () => void; onError?: () => void; enabled?: boolean }
 ): JSX.Element {
-  const ErrorHeading = styled(H3)`
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-  `
-
-  const ErrorMessage = styled(P)`
-    font-size: 12px;
-    text-align: center;
-  `
-
   const widgetReference = useRef<HTMLDivElement | null>(null)
   const [validation, setValidation] = useState<ReturnType<typeof validateInputParams>>({ valid: false })
 
@@ -65,16 +52,5 @@ export function ReactWidget(
     }
   }, [props, validation])
 
-  return (
-    <div className={props.className}>
-      {validation.valid && <div ref={widgetReference} />}
-
-      {!validation.valid && (
-        <div>
-          <ErrorHeading>Error while props validation</ErrorHeading>
-          {validation.error && <ErrorMessage>{validation.error}</ErrorMessage>}
-        </div>
-      )}
-    </div>
-  )
+  return <div className={props.className}>{validation.valid && <div ref={widgetReference} />}</div>
 }
