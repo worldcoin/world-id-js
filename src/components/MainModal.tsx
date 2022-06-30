@@ -149,7 +149,6 @@ export function MainModal(props: MainModalInterface): JSX.Element {
 
   return createPortal(
     <GlobalStyles isDark={theme === 'dark'}>
-      {/* FIXME Is this wrapper necessary? It already exists in App */}
       <Overlay onClick={terminate} shown={isAppActive} data-testId="overlay" />
       <ModalWrapper ctaShownState={ctaShownState} shown={isAppActive} data-testId="modal-wrapper" wide={isWide}>
         {isAppActive && (
