@@ -4,7 +4,13 @@ import { validateInputParams } from 'utils'
 import { useEffect, useRef, useState } from 'preact/hooks'
 
 export function ReactWidget(
-  props: AppProps & { className?: string; onSuccess?: () => void; onError?: () => void; enabled?: boolean }
+  props: AppProps & {
+    className?: string
+    onSuccess?: () => void
+    onError?: () => void
+    enabled?: boolean
+    debug?: boolean
+  }
 ): JSX.Element {
   const widgetReference = useRef<HTMLDivElement | null>(null)
   const [validation, setValidation] = useState<ReturnType<typeof validateInputParams>>({ valid: false })
@@ -13,14 +19,18 @@ export function ReactWidget(
     worldId
       .enable()
       .then((result) => {
-        console.log('Verified successfully:', result)
+        if (props.debug) {
+          console.log('Verified successfully:', result)
+        }
 
         if (props.onSuccess) {
           props.onSuccess()
         }
       })
       .catch((failure) => {
-        console.warn('Verification failed:', failure)
+        if (props.debug) {
+          console.warn('Verification failed:', failure)
+        }
 
         if (props.onError) {
           return props.onError()
