@@ -150,7 +150,7 @@ export function AwaitingConnectionScene(): JSX.Element {
   const { setModalView } = useActions(worldLogic)
   const { qrCodeContent } = useValues(verificationLogic)
 
-  const [qrShown, setQrShown] = useState(false)
+  const [qrShown, setQrShown] = useState(false) // Used for mobile
 
   const toggleQrShown = useCallback(() => {
     setQrShown((qrShown) => !qrShown)
