@@ -186,8 +186,7 @@ export function AwaitingConnectionScene(): JSX.Element {
         {qrShown && <CopyButton connectorUri={qrCodeContent || ''} />}
       </SFigureAction>
       <SCta>
-        {/* FIXME: This should open the universal link to the app */}
-        <LinkGradient href="https://worldcoin.org/download" target="_blank">
+        <LinkGradient href={qrCodeContent ?? 'https://worldcoin.org/verify'} target="_blank">
           Open Worldcoin app
         </LinkGradient>
       </SCta>
