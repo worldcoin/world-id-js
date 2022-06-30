@@ -5,7 +5,7 @@ import { ErrorCodes } from 'types'
 declare const worldIdJSVersion: string
 
 const posthog = createInternalPostHogInstance(
-  'phc_QttqgDbMQDYHX1EMH7FnT6ECBVzdp0kGUq92aQaVQ6I',
+  'phc_QttqgDbMQDYHX1EMH7FnT6ECBVzdp0kGUq92aQaVQ6I', // cspell:disable-line
   { fetch: window.fetch.bind(window) },
   globalThis
 )
