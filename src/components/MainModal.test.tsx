@@ -8,7 +8,7 @@ beforeEach(() => {
 })
 
 describe('ConnectModal', () => {
-  // Render should be used with clenaup
+  // Render should be used with clean up
   afterEach(cleanup)
 
   it('renders well', () => {
