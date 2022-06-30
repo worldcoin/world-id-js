@@ -27,7 +27,7 @@
     "prebuild": "npm run typegen",
     "prebundle-analyzer": "npm run build:esm",
     "release": "standard-version",
-    "spellcheck": "cspell **/*.{ts,js,tsx,json} -e dist/",
+    "spellcheck": "cspell **/*.{ts,js,tsx,json} -e dist/ -e node_modules/",
     "test": "jest",
     "test:watch": "jest --watch",
     "typecheck": "kea-typegen check && tsc --noEmit --emitDeclarationOnly false --declaration false",
