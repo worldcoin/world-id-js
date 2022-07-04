@@ -51,6 +51,7 @@ const ModalWrapper = styled.div`
     right: 0;
     transform: unset;
     min-height: unset;
+    overflow-y: auto;
   }
 `
 
