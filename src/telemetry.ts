@@ -4,17 +4,19 @@ import { ErrorCodes } from 'types'
 // Set at build time
 declare const worldIdJSVersion: string
 
-const posthogFetchError = { name: 'posthog-error' }
+function factoryPosthogFetchError(error: unknown) {
+  return { name: 'posthog-error', error }
+}
 
 window.onunhandledrejection = function (event) {
-  return event.reason !== posthogFetchError
+  return event.reason.name !== 'posthog-error'
 }
 
 async function posthogFetch(input: RequestInfo, init?: RequestInit) {
   try {
     return await window.fetch(input, init)
   } catch (error) {
-    throw posthogFetchError
+    throw factoryPosthogFetchError(error)
   }
 }
 
