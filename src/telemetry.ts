@@ -4,9 +4,23 @@ import { ErrorCodes } from 'types'
 // Set at build time
 declare const worldIdJSVersion: string
 
+const posthogFetchError = { name: 'posthog-error' }
+
+window.onunhandledrejection = function (event) {
+  return event.reason !== posthogFetchError
+}
+
+async function posthogFetch(input: RequestInfo, init?: RequestInit) {
+  try {
+    return await window.fetch(input, init)
+  } catch (error) {
+    throw posthogFetchError
+  }
+}
+
 const posthog = createInternalPostHogInstance(
   'phc_QttqgDbMQDYHX1EMH7FnT6ECBVzdp0kGUq92aQaVQ6I',
-  { fetch: window.fetch.bind(window) },
+  { fetch: posthogFetch },
   globalThis
 )
 
