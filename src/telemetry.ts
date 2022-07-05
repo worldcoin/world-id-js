@@ -4,24 +4,24 @@ import { ErrorCodes } from 'types'
 // Set at build time
 declare const worldIdJSVersion: string
 
-function factoryPosthogFetchError(error: unknown) {
-  return { name: 'posthog-error', error }
+function factoryPostHogFetchError(error: unknown) {
+  return { name: 'telemetry-error', error }
 }
 
 window.onunhandledrejection = function (event) {
-  return event.reason.name !== 'posthog-error'
+  return event.reason.name !== 'telemetry-error'
 }
 
-async function posthogFetch(input: RequestInfo, init?: RequestInit) {
+async function posthogFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
   try {
     return await window.fetch(input, init)
   } catch (error) {
-    throw factoryPosthogFetchError(error)
+    throw factoryPostHogFetchError(error)
   }
 }
 
 const posthog = createInternalPostHogInstance(
-  'phc_QttqgDbMQDYHX1EMH7FnT6ECBVzdp0kGUq92aQaVQ6I',
+  'phc_QttqgDbMQDYHX1EMH7FnT6ECBVzdp0kGUq92aQaVQ6I', // cspell:disable-line
   { fetch: posthogFetch },
   globalThis
 )
