@@ -47,7 +47,7 @@ export const StealthButton = styled(Button)`
     &,
     &:hover {
       font-weight: 500;
-      color: var(--button-stealth-mobile-color);
+      color: ${(props) => (props.secondary ? '#858494' : 'var(--button-stealth-mobile-color)')};
       background: transparent;
     }
     &:hover {

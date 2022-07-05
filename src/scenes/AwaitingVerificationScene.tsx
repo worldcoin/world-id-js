@@ -17,7 +17,7 @@ const SWrapper = styled.div`
 
 const SLoaderWrapper = styled.div`
   margin: 72px 0 72px 0;
-  font-size: 2em;
+  font-size: 4em;
 `
 
 const SHeader = styled(H3)`

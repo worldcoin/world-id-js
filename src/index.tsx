@@ -4,6 +4,7 @@ import { render } from 'preact'
 import { AppProps, VerificationResponse, CallbackInterface } from 'types'
 import { validateInputParams } from 'utils'
 import { worldLogic } from 'worldLogic'
+import * as utils from 'utils'
 
 // Re-export to make them available externally
 export * from 'types'
@@ -115,4 +116,4 @@ const validate = (props: AppProps): void => {
   }
 }
 
-export default { init, update, enable, isEnabled, isInitialized }
+export default { init, update, enable, isEnabled, isInitialized, utils }

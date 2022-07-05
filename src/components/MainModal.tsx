@@ -7,10 +7,11 @@ import { createPortal } from 'preact/compat'
 import { worldLogic } from 'worldLogic'
 import { useActions, useValues } from 'kea'
 import { PrincipalScene } from 'scenes/PrincipalScene'
-import { CTAShownState, ModalView } from 'types'
+import { CTAShownState, ModalView, VerificationState } from 'types'
 import { LearnMoreScene } from 'scenes/LearnMoreScene'
 import { ModalCTA } from 'scenes/CTAScene'
 import { breakpoints } from 'const'
+import { verificationLogic } from 'verificationLogic'
 
 const Overlay = styled.div`
   background-color: #000;
@@ -34,7 +35,7 @@ const ModalWrapper = styled.div`
   left: 50%;
   min-height: ${(props) => (props.ctaShownState === CTAShownState.Show ? '540px' : '360px')};
   transform: translate(-50%, -50%);
-  width: 500px;
+  width: ${(props) => (props.wide ? '500px' : '400px')};
   max-width: calc(100% - 32px);
   z-index: 10000;
   display: ${(props) => (props.shown ? 'block' : 'none')};
@@ -50,6 +51,7 @@ const ModalWrapper = styled.div`
     right: 0;
     transform: unset;
     min-height: unset;
+    overflow-y: auto;
   }
 `
 
@@ -139,15 +141,17 @@ interface MainModalInterface {
 }
 
 export function MainModal(props: MainModalInterface): JSX.Element {
-  const { isAppActive, ctaShownState, theme } = useValues(worldLogic)
+  const { verificationState } = useValues(verificationLogic)
+  const { isAppActive, ctaShownState, theme, modalView } = useValues(worldLogic)
   const { terminate } = useActions(worldLogic)
   const { additionalButtons } = props
 
+  const isWide = modalView === ModalView.VerificationFlow && verificationState === VerificationState.AwaitingConnection
+
   return createPortal(
     <GlobalStyles isDark={theme === 'dark'}>
-      {/* FIXME Is this wrapper necessary? It already exists in App */}
       <Overlay onClick={terminate} shown={isAppActive} data-testId="overlay" />
-      <ModalWrapper ctaShownState={ctaShownState} shown={isAppActive} data-testId="modal-wrapper">
+      <ModalWrapper ctaShownState={ctaShownState} shown={isAppActive} data-testId="modal-wrapper" wide={isWide}>
         {isAppActive && (
           <>
             <ModalContent>

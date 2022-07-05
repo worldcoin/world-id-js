@@ -91,7 +91,7 @@ describe('parameter validation', () => {
   })
 
   it('throws error if raw action ID does not look like a hex-encoded hash', () => {
-    const invalid_action_ids = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg']
+    const invalid_action_ids = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg'] // cspell:disable-line
 
     for (const action_id of invalid_action_ids) {
       // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
@@ -106,7 +106,7 @@ describe('parameter validation', () => {
   })
 
   it('throws error if raw signal does not look like a hex-encoded hash', () => {
-    const invalid_signals = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg']
+    const invalid_signals = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg'] // cspell:disable-line
 
     for (const signal of invalid_signals) {
       expect(() =>
@@ -128,7 +128,7 @@ describe('parameter validation', () => {
   })
 
   it('throws error if element cannot be found on DOM', () => {
-    expect(() => init('i_dont_exist', { action_id: SAMPLE_ACTION_ID })).toThrow(
+    expect(() => init('i_do_not_exist', { action_id: SAMPLE_ACTION_ID })).toThrow(
       'Element to mount World ID not found. Please make sure the element is valid.'
     )
   })

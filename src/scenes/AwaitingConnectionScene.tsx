@@ -3,7 +3,7 @@ import { StealthButton } from 'components/Button'
 import { LinkButton } from 'components/LinkButton'
 import { QRRender } from 'components/QRRender'
 import { H1, P } from 'components/text'
-import { useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'preact/hooks'
 import { useActions, useValues } from 'kea'
 import { worldLogic } from 'worldLogic'
 import styled from 'styled-components'
@@ -11,6 +11,7 @@ import { ModalView } from 'types'
 import { verificationLogic } from 'verificationLogic'
 import { breakpoints } from 'const'
 import { LinkGradient } from 'components/LinkGradient'
+import { WorldcoinApp } from 'assets/logos'
 
 const SRoot = styled.div`
   display: grid;
@@ -59,19 +60,26 @@ const STitleSecondary = styled(P)`
 `
 
 const SImage = styled.div`
+  display: ${(props) => (props.mobile ? 'none' : 'grid')};
   grid-area: image;
   @media (max-width: ${breakpoints.sm}) {
-    display: grid;
+    display: ${(props) => (props.mobile ? 'grid' : 'none')};
     justify-content: center;
   }
 `
 
+const SImageApp = styled.div`
+  display: block;
+  margin-top: 16px;
+`
+
 const SFigureAction = styled.div`
   grid-area: imageCopy;
-  display: grid;
+  display: ${(props) => (props.mobile ? 'none' : 'grid')};
   justify-content: center;
   margin-top: 16px;
   @media (max-width: ${breakpoints.sm}) {
+    display: ${(props) => (props.mobile ? 'grid' : 'none')};
     margin-top: 24px;
   }
 `
@@ -142,6 +150,12 @@ export function AwaitingConnectionScene(): JSX.Element {
   const { setModalView } = useActions(worldLogic)
   const { qrCodeContent } = useValues(verificationLogic)
 
+  const [qrShown, setQrShown] = useState(false) // Used for mobile
+
+  const toggleQrShown = useCallback(() => {
+    setQrShown((qrShown) => !qrShown)
+  }, [])
+
   return (
     <SRoot>
       <STitle>
@@ -151,12 +165,28 @@ export function AwaitingConnectionScene(): JSX.Element {
         </STitleSecondary>
       </STitle>
       <SImage>{qrCodeContent && <QRRender data={qrCodeContent} />}</SImage>
+      <SImage mobile>
+        {!qrShown ? (
+          <SImageApp>
+            <WorldcoinApp />
+          </SImageApp>
+        ) : (
+          qrCodeContent && <QRRender data={qrCodeContent} />
+        )}
+      </SImage>
       <SFigureAction>
         <CopyButton connectorUri={qrCodeContent || ''} />
       </SFigureAction>
+      <SFigureAction mobile>
+        {!qrShown && (
+          <StealthButton onClick={toggleQrShown} secondary>
+            Show QR code instead
+          </StealthButton>
+        )}
+        {qrShown && <CopyButton connectorUri={qrCodeContent || ''} />}
+      </SFigureAction>
       <SCta>
-        {/* FIXME: This should open the universal link to the app */}
-        <LinkGradient href="https://worldcoin.org/download" target="_blank">
+        <LinkGradient href={qrCodeContent ?? 'https://worldcoin.org/verify'} target="_blank">
           Open Worldcoin app
         </LinkGradient>
       </SCta>
