@@ -4,9 +4,25 @@ import { ErrorCodes } from 'types'
 // Set at build time
 declare const worldIdJSVersion: string
 
+function factoryPostHogFetchError(error: unknown) {
+  return { name: 'telemetry-error', error }
+}
+
+window.onunhandledrejection = function (event) {
+  return event.reason.name !== 'telemetry-error'
+}
+
+async function posthogFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
+  try {
+    return await window.fetch(input, init)
+  } catch (error) {
+    throw factoryPostHogFetchError(error)
+  }
+}
+
 const posthog = createInternalPostHogInstance(
   'phc_QttqgDbMQDYHX1EMH7FnT6ECBVzdp0kGUq92aQaVQ6I', // cspell:disable-line
-  { fetch: window.fetch.bind(window) },
+  { fetch: posthogFetch },
   globalThis
 )
 

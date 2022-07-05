@@ -5,5 +5,5 @@
   "allowCompoundWords": true,
   "dictionaries": ["typescript", "node", "npm", "html"],
   "enabledLanguageIds": ["typescript", "typescriptreact", "javascript", "markdown", "yaml", "json"],
-  "words": ["arrayify", "esbuild", "hexlify", "iife", "keccak", "merkle", "nullifer", "Worldcoin"]
+  "words": ["arrayify", "esbuild", "hexlify", "iife", "keccak", "merkle", "nullifer", "PostHog", "Worldcoin"]
 }
