@@ -16,7 +16,7 @@ const SGradientWrapper = styled.div`
   }
 `
 
-const SGradientLink = styled.a`
+const SGradientLink = styled.a<{ size: LinkGradientInterface['size'] }>`
   padding: 12px 24px;
   line-height: 18px;
   font-family: 'Sora', sans-serif;

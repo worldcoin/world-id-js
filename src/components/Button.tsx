@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { breakpoints } from 'const'
 
-export const Button = styled.button`
+export const Button = styled.button<{ block?: boolean }>`
   width: ${(props) => (props.block ? '100%' : undefined)};
   height: 54px;
   font-family: 'Sora', sans-serif;
@@ -26,7 +26,7 @@ export const Button = styled.button`
   }
 `
 
-export const StealthButton = styled(Button)`
+export const StealthButton = styled(Button)<{ secondary?: boolean; onClick?: () => void }>`
   height: 24px;
   padding: 0 10px;
   font-family: 'Rubik', sans-serif;

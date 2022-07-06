@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { GlobalStyles } from 'styles'
 import { SquareButton } from './SquareButton'
 import { IconLeft } from 'assets/icons'
-import { createPortal } from 'preact/compat'
+import { createPortal } from 'react-dom'
 import { worldLogic } from 'worldLogic'
 import { useActions, useValues } from 'kea'
 import { PrincipalScene } from 'scenes/PrincipalScene'
@@ -13,7 +13,7 @@ import { ModalCTA } from 'scenes/CTAScene'
 import { breakpoints } from 'const'
 import { verificationLogic } from 'verificationLogic'
 
-const Overlay = styled.div`
+const Overlay = styled.div<{ shown: boolean }>`
   background-color: #000;
   opacity: 0.8;
   position: fixed;
@@ -29,7 +29,7 @@ const Overlay = styled.div`
 /**
  * Outer wrapper that holds the two modals (default & CTA)
  */
-const ModalWrapper = styled.div`
+const ModalWrapper = styled.div<{ shown: boolean; ctaShownState: CTAShownState; wide: boolean }>`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -79,7 +79,7 @@ const SHeader = styled.div`
   }
 `
 
-const SHeaderLogo = styled.div`
+const SHeaderLogo = styled.div<{ centered?: boolean | (() => void) }>`
   flex-grow: 1;
   display: flex;
   align-items: center;

@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import { IconCode, MaximizeIcon } from 'assets/icons'
 import { SquareButton } from 'components/SquareButton'
-import { useCallback, useRef, useState } from 'preact/hooks'
-import { memo } from 'preact/compat'
+import { useCallback, useRef, useState, memo } from 'react'
 
 const SRoot = styled.div`
   position: relative;
@@ -62,7 +61,7 @@ const SMenuText = styled.div`
 `
 
 export const DebugDropdown = memo((): JSX.Element => {
-  const ref = useRef<Node>(null)
+  const ref = useRef<HTMLDivElement | null>(null)
 
   const [open, setOpen] = useState(false)
 

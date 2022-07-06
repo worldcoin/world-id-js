@@ -1,7 +1,7 @@
 import { AppProps } from 'types'
 import worldId from 'index'
 import { validateInputParams } from 'utils'
-import { useEffect, useRef } from 'preact/hooks'
+import { useEffect, useRef } from 'react'
 
 type Props = AppProps & {
   className?: string

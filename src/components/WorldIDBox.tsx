@@ -5,8 +5,9 @@ import styled from 'styled-components'
 import { VerificationState } from 'types'
 import { Checkbox } from './Checkbox'
 import { verificationLogic } from 'verificationLogic'
+import { MouseEvent as ReactMouseEvent } from 'react'
 
-const SWorldIDBox = styled.div`
+const SWorldIDBox = styled.div<{ disabled: boolean; terminated: boolean }>`
   user-select: none;
   display: grid;
   padding: var(--wld-box-border-width);
@@ -38,7 +39,7 @@ const SMainContainer = styled.div`
   line-height: 18px;
 `
 
-const SLogoContainer = styled.div`
+const SLogoContainer = styled.div<{ onClick: (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => void }>`
   --gradient-from: var(--wld-box-logo-gradient-from);
   --gradient-to: var(--wld-box-logo-gradient-to);
   display: grid;
@@ -51,7 +52,7 @@ export function WorldIDBox(): JSX.Element {
   const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
   const { verificationState } = useValues(verificationLogic)
 
-  const handleLearnMore = (e: Event) => {
+  const handleLearnMore = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
     if (isAppEnabled && !isAppTerminated) {
       e.stopPropagation()
       showLearnMore()

@@ -8,19 +8,19 @@ const packageJson = require('../package.json')
 /**
  * @type {import('esbuild').Plugin}
  */
-const preactCompatPlugin = {
-  name: 'preact-compat',
-  setup(build) {
-    build.onResolve({ filter: /^(react-dom|react)$/ }, async (args) => {
-      const preact = await build.resolve('preact/compat', {
-        resolveDir: args.resolveDir,
-        importer: args.importer,
-        kind: args.kind,
-      })
-      return { path: preact.path, sideEffects: false }
-    })
-  },
-}
+// const preactCompatPlugin = {
+//   name: 'preact-compat',
+//   setup(build) {
+//     build.onResolve({ filter: /^(react-dom|react)$/ }, async (args) => {
+//       const preact = await build.resolve('preact/compat', {
+//         resolveDir: args.resolveDir,
+//         importer: args.importer,
+//         kind: args.kind,
+//       })
+//       return { path: preact.path, sideEffects: false }
+//     })
+//   },
+// }
 
 /**
  * @type {import('esbuild').Plugin}
@@ -64,7 +64,7 @@ export default /** @type {import('esbuild').BuildOptions} */ ({
   },
   entryPoints: [require.resolve('../src/index.tsx')],
   globalName: 'worldID',
-  inject: [require.resolve('./preact-shim.js')],
+  // inject: [require.resolve('./preact-shim.js')],
   jsxFactory: 'h',
   jsxFragment: 'Fragment',
   target: ['chrome58', 'firefox57', 'safari11', 'edge18'],
@@ -73,7 +73,7 @@ export default /** @type {import('esbuild').BuildOptions} */ ({
       process: false,
       buffer: true,
     }),
-    preactCompatPlugin,
+    // preactCompatPlugin,
     babelTransforms,
   ],
 })

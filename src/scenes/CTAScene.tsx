@@ -12,7 +12,7 @@ const SRoot = styled.div`
   }
 `
 
-const SModalCTA = styled.div`
+const SModalCTA = styled.div<{ show: boolean; hide: boolean }>`
   position: absolute;
   background-color: var(--bg);
   border-radius: var(--radius);

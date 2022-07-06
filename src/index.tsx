@@ -1,6 +1,6 @@
 import { App } from 'App'
 import { RenderError } from 'components/RenderError'
-import { render } from 'preact'
+import { render } from 'react-dom'
 import { AppProps, VerificationResponse, CallbackInterface } from 'types'
 import { validateInputParams } from 'utils'
 import { worldLogic } from 'worldLogic'

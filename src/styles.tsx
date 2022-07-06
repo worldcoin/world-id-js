@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const GlobalStyles = styled.div`
+export const GlobalStyles = styled.div<{ isDark?: boolean }>`
   --radius: 8px;
   --primary: #4940e0;
   --button-color: ${(props) => (props.isDark ? '#858494' : '#183c4a')};

@@ -2,7 +2,7 @@ import { IconClose } from 'assets/icons'
 import styled from 'styled-components'
 import { breakpoints } from 'const'
 
-const SSquareButton = styled.button`
+const SSquareButton = styled.button<{ active?: boolean; noBorder?: boolean }>`
   color: ${(props) => (props.active ? 'var(--button-square-active-color) !important' : 'inherit')};
   background-color: ${(props) => (props.active ? 'var(--button-square-active-bg) !important' : 'var(--bg)')};
   border: ${(props) => (!props.noBorder ? '1px solid var(--border-secondary)' : '1px solid transparent')};

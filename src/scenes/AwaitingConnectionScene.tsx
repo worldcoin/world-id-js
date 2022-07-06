@@ -3,7 +3,7 @@ import { StealthButton } from 'components/Button'
 import { LinkButton } from 'components/LinkButton'
 import { QRRender } from 'components/QRRender'
 import { H1, P } from 'components/text'
-import { useCallback, useEffect, useState } from 'preact/hooks'
+import { useCallback, useEffect, useState } from 'react'
 import { useActions, useValues } from 'kea'
 import { worldLogic } from 'worldLogic'
 import styled from 'styled-components'
@@ -59,7 +59,7 @@ const STitleSecondary = styled(P)`
   }
 `
 
-const SImage = styled.div`
+const SImage = styled.div<{ mobile?: boolean }>`
   display: ${(props) => (props.mobile ? 'none' : 'grid')};
   grid-area: image;
   @media (max-width: ${breakpoints.sm}) {
@@ -73,7 +73,7 @@ const SImageApp = styled.div`
   margin-top: 16px;
 `
 
-const SFigureAction = styled.div`
+const SFigureAction = styled.div<{ mobile?: boolean }>`
   grid-area: imageCopy;
   display: ${(props) => (props.mobile ? 'none' : 'grid')};
   justify-content: center;

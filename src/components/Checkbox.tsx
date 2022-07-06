@@ -1,7 +1,7 @@
 import { IconCircleSuccess } from 'assets/icons'
 import styled from 'styled-components'
 
-const SCheckbox = styled.div`
+const SCheckbox = styled.div<{ isChecked: boolean }>`
   border: ${(props) => (props.isChecked ? undefined : '1px solid currentColor')};
   border-radius: 50%;
   height: ${(props) => (props.isChecked ? 'unset' : '18px')};

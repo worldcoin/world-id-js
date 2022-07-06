@@ -1,7 +1,7 @@
 import { IconCircleSuccess, IconFailure } from 'assets/icons'
 import styled from 'styled-components'
 
-const SStatefulIcon = styled.div`
+const SStatefulIcon = styled.div<{ state: StatefulIconInterface['state'] }>`
   color: ${(props) => (props.color === 'primary' ? 'var(--stateful-primary-color)' : 'var(--stateful-color)')};
   background-color: ${(props) => (props.color === 'primary' ? 'var(--stateful-primary-bg)' : 'var(--stateful-bg)')};
   border-radius: 50%;
