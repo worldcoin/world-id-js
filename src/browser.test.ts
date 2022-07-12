@@ -2,7 +2,7 @@ import { fireEvent, queryAllByTestId } from '@testing-library/preact'
 import { resetContext } from 'kea'
 import { testUtilsPlugin } from 'kea-test-utils'
 import { worldLogic } from 'worldLogic'
-import { init, update, enable, isInitialized, isEnabled } from '.'
+import { init, update, enable, isInitialized, isEnabled } from './browser'
 
 const SAMPLE_ACTION_ID = '0x330C8452C879506f313D1565702560435b0fee4C' // smart contract's address
 const SAMPLE_SIGNAL = '0x0000000000000000000000000000000000000000' // usually end user's wallet address

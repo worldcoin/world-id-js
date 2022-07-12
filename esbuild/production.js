@@ -1,6 +1,8 @@
 import esbuild from 'esbuild'
 import { clean } from 'esbuild-plugin-clean'
 import meow from 'meow'
+import { createRequire } from 'node:module'
+const require = createRequire(import.meta.url)
 
 import config from './config.js'
 
@@ -52,6 +54,7 @@ const configs = {
   iife: {
     ...baseConfig,
 
+    entryPoints: [require.resolve('../src/browser.tsx')],
     plugins: [
       clean({
         patterns: ['./dist/world-id.js'],

@@ -1,5 +1,7 @@
 import { createServer, request } from 'http'
 import esbuild from 'esbuild'
+import { createRequire } from 'node:module'
+const require = createRequire(import.meta.url)
 
 import config from './config.js'
 
@@ -8,6 +10,8 @@ const clients = []
 esbuild
   .build({
     ...config,
+
+    entryPoints: [require.resolve('../src/browser.tsx')],
     banner: { js: '(() => new EventSource("/esbuild").onmessage = () => location.reload())();' },
     outfile: 'dist/world-id-dev.js',
     sourcemap: 'inline',

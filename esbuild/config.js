@@ -62,11 +62,9 @@ export default /** @type {import('esbuild').BuildOptions} */ ({
     global: 'window',
     worldIdJSVersion: JSON.stringify(packageJson.version),
   },
-  entryPoints: [require.resolve('../src/index.tsx')],
+  entryPoints: [require.resolve('../src/index.ts')],
   globalName: 'worldID',
-  // inject: [require.resolve('./preact-shim.js')],
-  jsxFactory: 'h',
-  jsxFragment: 'Fragment',
+  inject: [require.resolve('./react-shim.js')],
   target: ['chrome58', 'firefox57', 'safari11', 'edge18'],
   plugins: [
     NodeGlobalsPolyfillPlugin({
