@@ -3,7 +3,15 @@ import { useActions, useValues } from 'kea'
 import { worldLogic } from 'worldLogic'
 
 import { styled } from 'react-widget/stitches'
-import { IconCircleSuccess, IconClose, IconCode } from 'assets/icons'
+import {
+  DevModeDocsIcon,
+  DevModeSimulatorIcon,
+  DevModeTestingIcon,
+  DevModeWorldcoinAppIcon,
+  IconCircleSuccess,
+  IconClose,
+  IconCode,
+} from 'assets/icons'
 import { Qrcode } from 'react-widget/components/Qrcode'
 import { Typography } from 'react-widget/components/Typography'
 import { Dialog } from 'react-widget/components/Dialog'
@@ -14,6 +22,7 @@ import { Button } from 'react-widget/components/Button'
 import { useCallback, useEffect, useState } from 'react'
 import { WorldcoinApp } from 'assets/logos'
 import { verificationLogic } from 'verificationLogic'
+import { DevModeLink } from 'react-widget/components/DevModeButton'
 
 const SMain = styled(Dialog, {
   width: 500,
@@ -109,13 +118,37 @@ const SDev = styled(Dialog, {
   width: 500,
   marginTop: 8,
   display: 'grid',
+  rowGap: '12px',
 
   '@smDown': {
     display: 'none',
   },
 })
 
-const SDevHeader = styled('div', {})
+const SDevHeader = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: '1fr auto',
+  alignItems: 'center',
+})
+
+const SDevButtonsContainer = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '8px',
+})
+
+const SDevModeStamp = styled('div', {
+  background: '$primaryA10',
+  border: '1px solid',
+  borderColor: '$primaryA50',
+  borderRadius: '$md',
+  padding: '4px 10px',
+  display: 'grid',
+  gridTemplateColumns: 'auto 1fr',
+  columnGap: '8px',
+  alignItems: 'center',
+  color: '$primary',
+})
 
 export function AwaitingConnectionScene() {
   const { isDevMode } = useValues(worldLogic)
@@ -190,7 +223,43 @@ export function AwaitingConnectionScene() {
         <SDev>
           <SDevHeader>
             <Typography variant="h2">Running in dev mode</Typography>
+
+            <SDevModeStamp>
+              <IconCode />
+
+              <Typography variant="p1">Dev Mode</Typography>
+            </SDevModeStamp>
           </SDevHeader>
+
+          <SDevButtonsContainer>
+            {/* TODO add proper urls */}
+            <DevModeLink
+              href={'#'}
+              icon={<DevModeSimulatorIcon />}
+              heading="Simulator"
+              description={
+                <p style={{ margin: 0 }}>
+                  Open the simulator to <strong>scan the QR code</strong> and mock a verification.
+                </p>
+              }
+            />
+
+            <DevModeLink
+              href={'#'}
+              icon={<DevModeWorldcoinAppIcon />}
+              heading="Worldcoin app"
+              description="Open or install Worldcoin app to test in production"
+            />
+
+            <DevModeLink
+              href={'#'}
+              icon={<DevModeTestingIcon />}
+              heading="Testing"
+              description="Docs on how to test with the Staging network"
+            />
+
+            <DevModeLink href={'#'} icon={<DevModeDocsIcon />} heading="Docs" description="Docs for this widget" />
+          </SDevButtonsContainer>
         </SDev>
       )}
     </>

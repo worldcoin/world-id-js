@@ -6378,6 +6378,11 @@
   "resolved" "https://registry.npmjs.org/posthog-js-lite/-/posthog-js-lite-0.0.5.tgz"
   "version" "0.0.5"
 
+"preact@10.10.0":
+  "integrity" "sha512-fszkg1iJJjq68I4lI8ZsmBiaoQiQHbxf1lNq+72EmC/mZOsFF5zn3k1yv9QGoFgIXzgsdSKtYymLJsrJPoamjQ=="
+  "resolved" "https://registry.npmjs.org/preact/-/preact-10.10.0.tgz"
+  "version" "10.10.0"
+
 "prelude-ls@^1.2.1":
   "integrity" "sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g=="
   "resolved" "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz"

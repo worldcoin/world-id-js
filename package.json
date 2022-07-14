@@ -73,6 +73,7 @@
     "kea-test-utils": "0.2.2",
     "kea-typegen": "3.1.0",
     "meow": "10.1.2",
+    "preact": "10.10.0",
     "prettier": "2.6.0",
     "prettier-eslint": "13.0.0",
     "react": "18.2.0",
