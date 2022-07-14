@@ -138,9 +138,9 @@ const SDevButtonsContainer = styled('div', {
 })
 
 const SDevModeStamp = styled('div', {
-  background: '$primary10',
+  background: '$primaryA10',
   border: '1px solid',
-  borderColor: '$primary50',
+  borderColor: '$primaryA50',
   borderRadius: '$md',
   padding: '4px 10px',
   display: 'grid',
