@@ -1,6 +1,6 @@
 import { CSSProperties } from 'styled-components'
 
-export function IconClose({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconClose({ style }: { style?: CSSProperties }) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
       <path
@@ -13,7 +13,7 @@ export function IconClose({ style }: { style?: CSSProperties }): JSX.Element {
   )
 }
 
-export function IconHelpCircle({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconHelpCircle({ style }: { style?: CSSProperties }) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
       <path
@@ -31,7 +31,7 @@ export function IconHelpCircle({ style }: { style?: CSSProperties }): JSX.Elemen
   )
 }
 
-export function IconLeft({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconLeft({ style }: { style?: CSSProperties }) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
       <path d="M12.4647 15L7.5 10.0178L12.5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
@@ -60,7 +60,7 @@ export function IconSuccess() {
   )
 }
 
-export function IconCircleSuccess({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconCircleSuccess({ style }: { style?: CSSProperties }) {
   return (
     <svg
       width="1em"
@@ -80,7 +80,7 @@ export function IconCircleSuccess({ style }: { style?: CSSProperties }): JSX.Ele
   )
 }
 
-export function IconCircleFailure({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconCircleFailure({ style }: { style?: CSSProperties }) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
       <rect x="2" y="2" width="20" height="20" rx="10" fill="#FF6848" />
@@ -95,7 +95,7 @@ export function IconCircleFailure({ style }: { style?: CSSProperties }): JSX.Ele
   )
 }
 
-export function IconArrowUp({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconArrowUp({ style }: { style?: CSSProperties }) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
       <path
@@ -106,11 +106,11 @@ export function IconArrowUp({ style }: { style?: CSSProperties }): JSX.Element {
   )
 }
 
-export function IconArrowDown({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconArrowDown({ style }: { style?: CSSProperties }) {
   return <IconArrowUp style={{ transform: 'rotate(180deg)', ...style }} />
 }
 
-export function IconCode({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconCode({ style }: { style?: CSSProperties }) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
       <path
@@ -138,7 +138,7 @@ export function IconCode({ style }: { style?: CSSProperties }): JSX.Element {
   )
 }
 
-export function MaximizeIcon({ style }: { style?: CSSProperties }): JSX.Element {
+export function MaximizeIcon({ style }: { style?: CSSProperties }) {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
       <path
@@ -159,7 +159,7 @@ export function MaximizeIcon({ style }: { style?: CSSProperties }): JSX.Element 
   )
 }
 
-export function DevModeSimulatorIcon(): JSX.Element {
+export function DevModeSimulatorIcon() {
   return (
     <svg width="27" height="24" viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -216,7 +216,7 @@ export function DevModeSimulatorIcon(): JSX.Element {
   )
 }
 
-export function DevModeWorldcoinAppIcon(): JSX.Element {
+export function DevModeWorldcoinAppIcon() {
   return (
     <svg width="24" height="34" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect
@@ -247,7 +247,7 @@ export function DevModeWorldcoinAppIcon(): JSX.Element {
   )
 }
 
-export function DevModeTestingIcon(): JSX.Element {
+export function DevModeTestingIcon() {
   return (
     <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -319,7 +319,7 @@ export function DevModeTestingIcon(): JSX.Element {
     </svg>
   )
 }
-export function DevModeDocsIcon(): JSX.Element {
+export function DevModeDocsIcon() {
   return (
     <svg width="24" height="34" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg">
       <mask id="path-1-inside-1_1_2" fill="white">
