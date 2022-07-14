@@ -1,8 +1,7 @@
 // import { AppProps } from 'types'
-import { styled } from '@stitches/react'
+import { styled, lightTheme, darkTheme } from 'react-widget/stitches'
 import { WorldIDBox } from './WorldIDBox'
-import { Modal } from './Modal'
-import { useState } from 'react'
+import { PrincipalScene } from 'react-widget/scenes/PrincipalScene'
 
 // type Props = {
 //   appProps: AppProps
@@ -18,13 +17,11 @@ const Wrapper = styled('div', {
   maxWidth: '300px',
 })
 
-export function Widget(): JSX.Element {
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
-
+export function Widget(props: { theme?: 'dark' | 'light' }): JSX.Element {
   return (
-    <Wrapper>
-      <WorldIDBox setIsModalVisible={setIsModalVisible} />
-      <Modal isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
+    <Wrapper className={props.theme === 'dark' ? darkTheme : lightTheme}>
+      <WorldIDBox />
+      <PrincipalScene />
     </Wrapper>
   )
 }

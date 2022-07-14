@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Widget } from './Widget'
 
-import { styled } from '@stitches/react'
+import { styled } from 'react-widget/stitches'
 
 const Container = styled('div', {
   width: '100%',

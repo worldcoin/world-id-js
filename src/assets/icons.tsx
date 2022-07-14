@@ -39,15 +39,18 @@ export function IconLeft({ style }: { style?: CSSProperties }): JSX.Element {
   )
 }
 
-export function IconFailure({ style }: { style?: CSSProperties }): JSX.Element {
+export function IconFailure() {
   return (
-    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
-      <path
-        d="M6.5 6.5L17.5 17.5M17.5 6.5L6.5 17.5"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
+    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+      <path d="M6.5 6.5L17.5 17.5M17.5 6.5L6.5 17.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+export function IconSuccess() {
+  return (
+    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+      <path d="M4 11.8438L9.66667 17.6875L21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   )
 }

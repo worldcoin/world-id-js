@@ -1,70 +1,88 @@
+import { VerificationState } from 'types'
+import { useActions, useValues } from 'kea'
+import { verificationLogic } from 'verificationLogic'
+import { worldLogic } from 'worldLogic'
+
+import { styled } from 'react-widget/stitches'
 import { WIDLogo } from 'assets/logos'
-// import { useActions, useValues } from 'kea'
-// import { worldLogic } from 'worldLogic'
-import { Checkbox } from './Checkbox'
-// import { verificationLogic } from 'verificationLogic'
-// import { MouseEvent as ReactMouseEvent } from 'react'
-import { styled } from '@stitches/react'
-import { Dispatch, SetStateAction } from 'react'
+import { Box } from 'react-widget/components/Box'
+import { IconCircleSuccess } from 'assets/icons'
 
-const SWorldIDBox = styled('div', {
-  display: 'grid',
-  padding: 'var(--wld-box-border-width)',
-  background: 'linear-gradient(to right, var(--wld-box-border-gradient-from), var(--wld-box-border-gradient-to))',
-  borderRadius: '12px',
-  height: '56px',
-  width: '100%',
-  maxWidth: '350px',
-  minWidth: '250px',
-  boxSizing: 'border-box',
-})
-
-const Container = styled('div', {
+const SCaptcha = styled('button', {
   display: 'grid',
   gridTemplateColumns: 'auto 1fr auto',
+  gridGap: '8px',
   alignItems: 'center',
-  justifyContent: 'center',
+  boxSizing: 'border-box',
+  height: 56,
+  width: '100%',
+  maxWidth: 350,
+  minWidth: 250,
   padding: '0 16px',
-  color: 'var(--wld-box-color);',
-  backgroundColor: 'var(--wld-box-bg)',
-  borderRadius: 'calc(12px - var(--wld-box-border-width))',
+  textAlign: 'left',
+  color: '$captchaColor',
+  background: `
+    linear-gradient(to right, $background, $background) padding-box,
+    linear-gradient(to right, $captchaGradientFrom, $captchaGradientTo) border-box
+  `,
+  border: '2px solid transparent',
+  borderRadius: '$lg',
+  cursor: 'pointer',
+
+  '&:disabled': {
+    cursor: 'not-allowed',
+  },
 })
 
-const MainContainer = styled('div', {
+const SCheckbox = styled('div', {
+  boxSizing: 'border-box',
+  width: 20,
+  height: 20,
+  fontSize: '20px',
+  border: '1px solid',
+  borderRadius: '50%',
+
+  variants: {
+    checked: {
+      true: {
+        border: 0,
+      },
+    },
+  },
+})
+
+const SText = styled('div', {
   fontSize: '14px',
   fontWeight: '600',
   lineHeight: '18px',
 })
 
-const LogoContainer = styled('div', {
-  '--gradient-from': 'var(--wld-box-logo-gradient-from)',
-  '--gradient-to': 'var(--wld-box-logo-gradient-to)',
+const SLogo = styled('div', {
+  '--gradient-from': '$colors$gradientFrom',
+  '--gradient-to': '$colors$gradientTo',
   display: 'grid',
   alignItems: 'center',
   justifyContent: 'center',
 })
 
-export function WorldIDBox(props: { setIsModalVisible: Dispatch<SetStateAction<boolean>> }): JSX.Element {
-  // const { activate, showLearnMore } = useActions(worldLogic)
-  // const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
-  // const { verificationState } = useValues(verificationLogic)
-
-  // const handleLearnMore = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-  //   if (isAppEnabled && !isAppTerminated) {
-  //     e.stopPropagation()
-  //     showLearnMore()
-  //   }
-  // }
+export function WorldIDBox() {
+  const { activate, showLearnMore } = useActions(worldLogic)
+  const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
+  //const { verificationState } = useValues(verificationLogic)
 
   return (
-    <SWorldIDBox data-testId="world-id-box" onClick={() => props.setIsModalVisible(true)}>
-      <Container>
-        <Checkbox isChecked={false} />
-        <MainContainer>I&apos;m doing this once</MainContainer>
-        <LogoContainer>
+    <Box css={{ width: 254 }}>
+      <SCaptcha onClick={activate} data-testId="world-id-box">
+        <SCheckbox checked={true}>
+          {true && (
+            <IconCircleSuccess />
+          )}
+        </SCheckbox>
+        <SText>I&apos;m a unique person</SText>
+        <SLogo>
           <WIDLogo />
-        </LogoContainer>
-      </Container>
-    </SWorldIDBox>
+        </SLogo>
+      </SCaptcha>
+    </Box>
   )
 }
