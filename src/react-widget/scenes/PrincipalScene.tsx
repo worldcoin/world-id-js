@@ -16,15 +16,10 @@ export function PrincipalScene() {
 
   return (
     <Overlay open={isAppActive} onClose={terminate}>
-      {verificationState === VerificationState.Failed ? (
-        <ErrorScene />
-      ) : verificationState === VerificationState.Confirmed ? (
-        <ConfirmedScene />
-      ) : verificationState === VerificationState.AwaitingVerification ? (
-        <AwaitingVerificationScene />
-      ) : (
-        <AwaitingConnectionScene />
-      )}
+      {verificationState === VerificationState.Failed && <ErrorScene />}
+      {verificationState === VerificationState.Confirmed && <ConfirmedScene />}
+      {verificationState === VerificationState.AwaitingVerification && <AwaitingVerificationScene />}
+      {verificationState === VerificationState.AwaitingConnection && <AwaitingConnectionScene />}
     </Overlay>
   )
 }
