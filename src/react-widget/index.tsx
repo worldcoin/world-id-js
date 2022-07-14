@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <Container>
-      <Widget />
+      <Widget theme="dark" />
     </Container>
   </React.StrictMode>
 )
