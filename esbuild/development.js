@@ -25,7 +25,6 @@ const variants = {
     serveDir: './',
   },
 }
-console.log(variants[cli.flags.variant])
 
 esbuild
   .build({
