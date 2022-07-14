@@ -41,10 +41,11 @@ export function ConfirmedScene() {
       <SCircle color="primary">
         <IconSuccess />
       </SCircle>
-      <STitle as="h1" variant="h3" centered>
+      {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+      <STitle variant="h3" centered>
         Identity Confirmed!
       </STitle>
-      <SText as="p" variant="p1" centered>
+      <SText variant="p1" centered>
         Yay! Your identity has been successfully confirmed. You can start using your WorldID.
       </SText>
       <Button color="primary" size="lg" fullWidth onClick={terminate}>

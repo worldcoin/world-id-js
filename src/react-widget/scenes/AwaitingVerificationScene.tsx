@@ -38,10 +38,11 @@ export function AwaitingVerificationScene() {
         <DialogHeaderLogo centered />
       </DialogHeader>
       <SLoader />
-      <STitle as="h1" variant="h3" centered>
+      {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+      <STitle variant="h3" centered>
         Confirm Identity
       </STitle>
-      <SText as="p" variant="p1" centered>
+      <SText variant="p1" centered>
         Please confirm your identity inside your Worldcoin mobile app.
       </SText>
       <Button size="lg" fullWidth onClick={terminate}>

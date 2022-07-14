@@ -144,32 +144,29 @@ export function AwaitingConnectionScene() {
         </DialogHeader>
         <SMainContent>
           <SMainText>
-            <SMainTextTitle as="h1" variant="h1" color="gradient">
+            {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+            <SMainTextTitle variant="h1" color="gradient">
               Prove you haven’t done this before with World ID
             </SMainTextTitle>
-            <SMainTextCaption as="p" variant="p1">
+            <SMainTextCaption variant="p1">
               Scan or copy this QR code with your phone’s camera or Worldcoin mobile app.
             </SMainTextCaption>
           </SMainText>
           <SMainCopy>
-            {media === 'desktop' && (
-              <CopyToClipboard size="sm" data={qrCodeContent} />
-            )}
+            {media === 'desktop' && <CopyToClipboard size="sm" data={qrCodeContent} />}
             {media !== 'desktop' && !codeShown && (
               <Button variant="link" color="default" size="xl" onClick={toggleCodeShown}>
                 Show QR code instead
               </Button>
             )}
-            {media !== 'desktop' && codeShown && (
-              <CopyToClipboard variant="link" size="xl" data={qrCodeContent} />
-            )}
+            {media !== 'desktop' && codeShown && <CopyToClipboard variant="link" size="xl" data={qrCodeContent} />}
           </SMainCopy>
           <SMainCode>
             {media !== 'desktop' && !codeShown ? (
               <WorldcoinApp />
-            ) : (
-              qrCodeContent ? <Qrcode data={qrCodeContent} /> : null
-            )}
+            ) : qrCodeContent ? (
+              <Qrcode data={qrCodeContent} />
+            ) : null}
           </SMainCode>
           <SMainCta>
             <Button color="gradient" size="xl" fullWidth>
@@ -228,11 +225,7 @@ function CopyToClipboard(props: CopyToClipboardProps) {
   }, [props.data])
 
   return (
-    <Button
-      variant={props.variant}
-      size={props.size}
-      onClick={onClick}
-    >
+    <Button variant={props.variant} size={props.size} onClick={onClick}>
       {isCopied ? (
         <>
           <IconCircleSuccess style={{ marginRight: 4 }} /> Copied!

@@ -1,6 +1,6 @@
-import { VerificationState } from 'types'
-import { useActions, useValues } from 'kea'
-import { verificationLogic } from 'verificationLogic'
+// import { VerificationState } from 'types'
+import { useActions } from 'kea'
+// import { verificationLogic } from 'verificationLogic'
 import { worldLogic } from 'worldLogic'
 
 import { styled } from 'react-widget/stitches'
@@ -66,18 +66,14 @@ const SLogo = styled('div', {
 })
 
 export function WorldIDBox() {
-  const { activate, showLearnMore } = useActions(worldLogic)
-  const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
+  const { activate } = useActions(worldLogic)
+  // const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
   //const { verificationState } = useValues(verificationLogic)
 
   return (
     <Box css={{ width: 254 }}>
       <SCaptcha onClick={activate} data-testId="world-id-box">
-        <SCheckbox checked={true}>
-          {true && (
-            <IconCircleSuccess />
-          )}
-        </SCheckbox>
+        <SCheckbox checked={true}>{true && <IconCircleSuccess />}</SCheckbox>
         <SText>I&apos;m a unique person</SText>
         <SLogo>
           <WIDLogo />

@@ -44,10 +44,11 @@ export function ErrorScene() {
       <SCircle color={endUserError?.noRetry ? 'default' : 'primary'}>
         <IconFailure />
       </SCircle>
-      <STitle as="h1" variant="h3" centered>
+      {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+      <STitle variant="h3" centered>
         {endUserError?.title || 'Something went wrong'}
       </STitle>
-      <SText as="p" variant="p1" centered>
+      <SText variant="p1" centered>
         {endUserError?.caption || 'Sorry, there was a problem with your request, please try again.'}
       </SText>
       {endUserError?.noRetry ? (

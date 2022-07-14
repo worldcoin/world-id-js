@@ -37,12 +37,14 @@ export interface OverlayProps extends ComponentProps<typeof Root> {
   onClose: () => void
 }
 export function Overlay(props: OverlayProps) {
-
-  const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>((event) => {
-    if (event.currentTarget === event.target) {
-      props.onClose()
-    }
-  },[props.onClose])
+  const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
+    (event) => {
+      if (event.currentTarget === event.target) {
+        props.onClose()
+      }
+    },
+    [props.onClose]
+  )
 
   return (
     <Root open={props.open} onClick={handleClick}>
