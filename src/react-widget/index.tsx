@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Widget } from './Widget'
 
-import { styled, lightTheme, darkTheme } from 'react-widget/stitches'
+import { styled } from 'react-widget/stitches'
 
 const Container = styled('div', {
   width: '100%',
@@ -12,12 +12,10 @@ const Container = styled('div', {
   alignItems: 'center',
 })
 
-const isDark = false
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <Container className={isDark ? darkTheme : lightTheme}>
+    <Container>
       <Widget />
     </Container>
   </React.StrictMode>

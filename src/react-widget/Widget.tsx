@@ -1,5 +1,5 @@
 // import { AppProps } from 'types'
-import { styled } from 'react-widget/stitches'
+import { styled, lightTheme, darkTheme } from 'react-widget/stitches'
 import { WorldIDBox } from './WorldIDBox'
 import { PrincipalScene } from 'react-widget/scenes/PrincipalScene'
 
@@ -17,9 +17,9 @@ const Wrapper = styled('div', {
   maxWidth: '300px',
 })
 
-export function Widget(): JSX.Element {
+export function Widget(props: { theme?: 'dark' | 'light' }): JSX.Element {
   return (
-    <Wrapper>
+    <Wrapper className={props.theme === 'dark' ? darkTheme : lightTheme}>
       <WorldIDBox />
       <PrincipalScene />
     </Wrapper>
