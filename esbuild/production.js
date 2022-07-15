@@ -15,7 +15,7 @@ const cli = meow({
 /** @type {import('esbuild').BuildOptions} */
 const baseConfig = {
   ...config,
-  minify: false,
+  minify: true,
   treeShaking: true,
   define: {
     ...config.define,
@@ -29,7 +29,10 @@ const configs = {
   esm: {
     ...baseConfig,
     plugins: [
-      nodeExternalsPlugin({ packagePath: require.resolve('../package.json') }),
+      nodeExternalsPlugin({
+        packagePath: require.resolve('../package.json'),
+        allowList: ['@walletconnect/client'],
+      }),
       clean({
         patterns: ['./dist/index.js'],
       }),
@@ -56,7 +59,7 @@ const configs = {
   iife: {
     ...baseConfig,
 
-    entryPoints: [require.resolve('../src/browser.tsx')],
+    entryPoints: [require.resolve('../src/react-widget/browser.tsx')],
     plugins: [
       clean({
         patterns: ['./dist/world-id.js'],
