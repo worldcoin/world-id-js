@@ -1,7 +1,4 @@
 export enum ModalView {
-  AwaitingConnection,
-  AwaitingVerification,
-  Confirmed,
-  Failed,
+  VerificationFlow,
   LearnMore,
 }

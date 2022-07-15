@@ -55,7 +55,7 @@ export const widgetLogic = kea<widgetLogicType>([
     ],
 
     modalView: [
-      ModalView.AwaitingConnection as ModalView,
+      ModalView.VerificationFlow as ModalView,
       {
         setModalView: (_, { view }) => view,
       },
