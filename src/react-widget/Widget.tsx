@@ -3,9 +3,10 @@ import { styled, lightTheme, darkTheme } from 'react-widget/stitches'
 import { WorldIDBox } from './WorldIDBox'
 import { PrincipalScene } from 'react-widget/scenes/PrincipalScene'
 import { AppProps } from 'types'
-import { loadingLogic } from './logic/loadingLogic'
+import { verificationLogic } from './logic/verificationLogic'
 import { useValues } from 'kea'
 import { widgetLogic } from './logic/widgetLogic'
+import { useEffect } from 'react'
 
 // type Props = {
 //   appProps: AppProps
@@ -22,8 +23,15 @@ const Wrapper = styled('div', {
 })
 
 export function Widget(props: { appProps: AppProps; theme?: 'dark' | 'light' }): JSX.Element {
-  const builtLoadingLogic = loadingLogic(props.appProps)
-  builtLoadingLogic.mount()
+  const builtVerificationLogic = verificationLogic(props.appProps)
+
+  useEffect(() => {
+    if (builtVerificationLogic.isMounted()) {
+      return
+    }
+    builtVerificationLogic.mount()
+    console.log('mounted')
+  }, [])
   const { widgetLoading } = useValues(widgetLogic)
 
   return (

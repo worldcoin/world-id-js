@@ -6,7 +6,6 @@ export const DialogHeaderButton = styled('button', {
   width: 40,
   height: 40,
   margin: 0,
-  marginLeft: 12,
   padding: 0,
   fontSize: '24px',
   color: '$color',

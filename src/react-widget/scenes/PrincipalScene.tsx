@@ -9,19 +9,27 @@ import { AwaitingConnectionScene } from './AwaitingConnectionScene'
 import { ConfirmedScene } from './ConfirmedScene'
 import { ErrorScene } from './ErrorScene'
 import { widgetLogic } from 'react-widget/logic/widgetLogic'
-import { ModalView } from 'react-widget/types/modal-view'
+import { VerificationState } from 'react-widget/types/verification-state'
+import { verificationLogic } from 'react-widget/logic/verificationLogic'
 
 export function PrincipalScene() {
-  const { isModalVisible, modalView } = useValues(widgetLogic)
+  const { isModalVisible } = useValues(widgetLogic)
+  const { verificationState } = useValues(verificationLogic)
+  const { terminate } = useActions(verificationLogic)
   const { disableModal } = useActions(widgetLogic)
-  // const { verificationState } = useValues(verificationLogic)
 
   return (
-    <Overlay open={isModalVisible} onClose={disableModal}>
-      {modalView === ModalView.Failed && <ErrorScene />}
-      {modalView === ModalView.Confirmed && <ConfirmedScene />}
-      {modalView === ModalView.AwaitingVerification && <AwaitingVerificationScene />}
-      {modalView === ModalView.AwaitingConnection && <AwaitingConnectionScene />}
+    <Overlay
+      open={isModalVisible}
+      onClose={() => {
+        terminate()
+        disableModal()
+      }}
+    >
+      {verificationState === VerificationState.Failed && <ErrorScene />}
+      {verificationState === VerificationState.Confirmed && <ConfirmedScene />}
+      {verificationState === VerificationState.AwaitingVerification && <AwaitingVerificationScene />}
+      {verificationState === VerificationState.AwaitingConnection && <AwaitingConnectionScene />}
     </Overlay>
   )
 }

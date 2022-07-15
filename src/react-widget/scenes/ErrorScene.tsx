@@ -1,7 +1,5 @@
 import { useActions, useValues } from 'kea'
-import { verificationLogic } from 'verificationLogic'
-import { worldLogic } from 'worldLogic'
-
+import { verificationLogic } from 'react-widget/logic/verificationLogic'
 import { styled } from 'react-widget/stitches'
 import { Dialog } from 'react-widget/components/Dialog'
 import { DialogHeader } from 'react-widget/components/DialogHeader'
@@ -33,8 +31,7 @@ const SText = styled(Typography, {
 
 export function ErrorScene() {
   const { endUserError } = useValues(verificationLogic)
-  const { tryAgain } = useActions(verificationLogic)
-  const { terminate } = useActions(worldLogic)
+  const { tryAgain, terminate } = useActions(verificationLogic)
 
   return (
     <SRoot>

@@ -10,6 +10,7 @@ import {
   IconCircleSuccess,
   IconClose,
   IconCode,
+  IconLeft,
 } from 'assets/icons'
 import { Qrcode } from 'react-widget/components/Qrcode'
 import { Typography } from 'react-widget/components/Typography'
@@ -18,10 +19,29 @@ import { DialogHeader } from 'react-widget/components/DialogHeader'
 import { DialogHeaderLogo } from 'react-widget/components/DialogHeaderLogo'
 import { DialogHeaderButton } from 'react-widget/components/DialogHeaderButton'
 import { Button } from 'react-widget/components/Button'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { WorldcoinApp } from 'assets/logos'
 import { DevModeLink } from 'react-widget/components/DevModeButton'
 import { widgetLogic } from 'react-widget/logic/widgetLogic'
+import { verificationLogic } from 'react-widget/logic/verificationLogic'
+import { LearnMoreScene } from './LearnMoreScene'
+import { ModalView } from 'react-widget/types/modal-view'
+
+const SModal = styled('div', {
+  transitionProperty: 'max-height',
+  transition: '1000ms',
+
+  variants: {
+    centered: {
+      true: {
+        maxHeight: '320px',
+      },
+      false: {
+        maxHeight: '562px',
+      },
+    },
+  },
+})
 
 const SMain = styled(Dialog, {
   width: 500,
@@ -98,10 +118,29 @@ const SMainCta = styled('div', {
     width: '100%',
   },
 })
-
-const SCta = styled(Dialog, {
+const SBottomDialog = styled(Dialog, {
   width: 500,
-  marginTop: 8,
+  marginTop: '8px',
+  transitionProperty: 'opacity, transform, visibility',
+  transition: '1000ms',
+
+  variants: {
+    hidden: {
+      true: {
+        opacity: '0',
+        visibility: 'hidden',
+        transform: 'translateY(100%)',
+      },
+    },
+  },
+
+  '@smDown': {
+    display: 'none',
+  },
+})
+
+const SCta = styled('div', {
+  width: '100%',
   display: 'grid',
   gridTemplateColumns: '1fr auto',
   gridTemplateRows: 'auto auto',
@@ -113,15 +152,10 @@ const SCtaHeader = styled('div', {
   gridColumn: '1 / 3',
 })
 
-const SDev = styled(Dialog, {
-  width: 500,
-  marginTop: 8,
+const SDev = styled('div', {
+  width: '100%',
   display: 'grid',
   rowGap: '12px',
-
-  '@smDown': {
-    display: 'none',
-  },
 })
 
 const SDevHeader = styled('div', {
@@ -150,8 +184,9 @@ const SDevModeStamp = styled('div', {
 })
 
 export function AwaitingConnectionScene() {
-  const { qrCodeContent, isDevMode } = useValues(widgetLogic)
-  const { disableModal } = useActions(widgetLogic)
+  const { qrCodeContent, isDevMode, modalView } = useValues(widgetLogic)
+  const { disableModal, setModalView } = useActions(widgetLogic)
+  const { terminate } = useActions(verificationLogic)
 
   const { media } = useMedia()
   const [codeShown, setCodeShown] = useState(false) // Used for mobile
@@ -159,108 +194,131 @@ export function AwaitingConnectionScene() {
     setCodeShown((codeShown) => !codeShown)
   }, [])
 
+  const isVerificationFlow = useMemo(() => modalView === ModalView.VerificationFlow, [modalView])
+
   return (
-    <>
+    <SModal centered={!isVerificationFlow}>
       <SMain>
-        <DialogHeader>
+        <DialogHeader extended={!isVerificationFlow}>
+          {!isVerificationFlow && (
+            <DialogHeaderButton onClick={() => setModalView(ModalView.VerificationFlow)} bordered>
+              <IconLeft />
+            </DialogHeaderButton>
+          )}
           <DialogHeaderLogo />
           {media === 'desktop' && isDevMode && (
             <DialogHeaderButton>
               <IconCode />
             </DialogHeaderButton>
           )}
-          <DialogHeaderButton bordered onClick={disableModal}>
+          <DialogHeaderButton
+            bordered
+            onClick={() => {
+              terminate()
+              disableModal()
+            }}
+          >
             <IconClose />
           </DialogHeaderButton>
         </DialogHeader>
         <SMainContent>
-          <SMainText>
-            {/* TODO make Typography components be able to be rendered as different tags, not only div */}
-            <SMainTextTitle variant="h1" color="gradient">
-              Prove you haven’t done this before with World ID
-            </SMainTextTitle>
-            <SMainTextCaption variant="p1">
-              Scan or copy this QR code with your phone’s camera or Worldcoin mobile app.
-            </SMainTextCaption>
-          </SMainText>
-          <SMainCopy>
-            {media === 'desktop' && <CopyToClipboard size="sm" data={qrCodeContent} />}
-            {media !== 'desktop' && !codeShown && (
-              <Button variant="link" color="default" size="xl" onClick={toggleCodeShown}>
-                Show QR code instead
-              </Button>
-            )}
-            {media !== 'desktop' && codeShown && <CopyToClipboard variant="link" size="xl" data={qrCodeContent} />}
-          </SMainCopy>
-          <SMainCode>
-            {media !== 'desktop' && !codeShown ? (
-              <WorldcoinApp />
-            ) : qrCodeContent ? (
-              <Qrcode data={qrCodeContent} />
-            ) : null}
-          </SMainCode>
-          <SMainCta>
-            <Button color="gradient" size="xl" fullWidth>
-              Get Worldcoin app
-            </Button>
-          </SMainCta>
+          {isVerificationFlow && (
+            <>
+              <SMainText>
+                {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+                <SMainTextTitle variant="h1" color="gradient">
+                  Prove you haven’t done this before with World ID
+                </SMainTextTitle>
+                <SMainTextCaption variant="p1">
+                  Scan or copy this QR code with your phone’s camera or Worldcoin mobile app.
+                </SMainTextCaption>
+              </SMainText>
+              <SMainCopy>
+                {media === 'desktop' && <CopyToClipboard size="sm" data={qrCodeContent} />}
+                {media !== 'desktop' && !codeShown && (
+                  <Button variant="link" color="default" size="xl" onClick={toggleCodeShown}>
+                    Show QR code instead
+                  </Button>
+                )}
+                {media !== 'desktop' && codeShown && <CopyToClipboard variant="link" size="xl" data={qrCodeContent} />}
+              </SMainCopy>
+              <SMainCode>
+                {media !== 'desktop' && !codeShown ? (
+                  <WorldcoinApp />
+                ) : qrCodeContent ? (
+                  <Qrcode data={qrCodeContent} />
+                ) : null}
+              </SMainCode>
+              <SMainCta>
+                <Button color="gradient" size="xl" fullWidth>
+                  Get Worldcoin app
+                </Button>
+              </SMainCta>
+            </>
+          )}
+
+          {!isVerificationFlow && <LearnMoreScene />}
         </SMainContent>
       </SMain>
 
-      {media === 'desktop' && !isDevMode && (
-        <SCta>
-          <SCtaHeader>
-            <Typography variant="h2">Don’t have the Worldcoin app yet?</Typography>
-          </SCtaHeader>
-          <Typography variant="p1">Proving unique-humanness through biometrics, without intruding privacy.</Typography>
-          <Button color="gradient">Install now</Button>
-        </SCta>
-      )}
+      <SBottomDialog hidden={!isVerificationFlow}>
+        {media === 'desktop' && !isDevMode && (
+          <SCta>
+            <SCtaHeader>
+              <Typography variant="h2">Don’t have the Worldcoin app yet?</Typography>
+            </SCtaHeader>
+            <Typography variant="p1">
+              Proving unique-humanness through biometrics, without intruding privacy.
+            </Typography>
+            <Button color="gradient">Install now</Button>
+          </SCta>
+        )}
 
-      {media === 'desktop' && isDevMode && (
-        <SDev>
-          <SDevHeader>
-            <Typography variant="h2">Running in dev mode</Typography>
+        {media === 'desktop' && isDevMode && (
+          <SDev>
+            <SDevHeader>
+              <Typography variant="h2">Running in dev mode</Typography>
 
-            <SDevModeStamp>
-              <IconCode />
+              <SDevModeStamp>
+                <IconCode />
 
-              <Typography variant="p1">Dev Mode</Typography>
-            </SDevModeStamp>
-          </SDevHeader>
+                <Typography variant="p1">Dev Mode</Typography>
+              </SDevModeStamp>
+            </SDevHeader>
 
-          <SDevButtonsContainer>
-            {/* TODO add proper urls */}
-            <DevModeLink
-              href={'#'}
-              icon={<DevModeSimulatorIcon />}
-              heading="Simulator"
-              description={
-                <p style={{ margin: 0 }}>
-                  Open the simulator to <strong>scan the QR code</strong> and mock a verification.
-                </p>
-              }
-            />
+            <SDevButtonsContainer>
+              {/* TODO add proper urls */}
+              <DevModeLink
+                href={'#'}
+                icon={<DevModeSimulatorIcon />}
+                heading="Simulator"
+                description={
+                  <p style={{ margin: 0 }}>
+                    Open the simulator to <strong>scan the QR code</strong> and mock a verification.
+                  </p>
+                }
+              />
 
-            <DevModeLink
-              href={'#'}
-              icon={<DevModeWorldcoinAppIcon />}
-              heading="Worldcoin app"
-              description="Open or install Worldcoin app to test in production"
-            />
+              <DevModeLink
+                href={'#'}
+                icon={<DevModeWorldcoinAppIcon />}
+                heading="Worldcoin app"
+                description="Open or install Worldcoin app to test in production"
+              />
 
-            <DevModeLink
-              href={'#'}
-              icon={<DevModeTestingIcon />}
-              heading="Testing"
-              description="Docs on how to test with the Staging network"
-            />
+              <DevModeLink
+                href={'#'}
+                icon={<DevModeTestingIcon />}
+                heading="Testing"
+                description="Docs on how to test with the Staging network"
+              />
 
-            <DevModeLink href={'#'} icon={<DevModeDocsIcon />} heading="Docs" description="Docs for this widget" />
-          </SDevButtonsContainer>
-        </SDev>
-      )}
-    </>
+              <DevModeLink href={'#'} icon={<DevModeDocsIcon />} heading="Docs" description="Docs for this widget" />
+            </SDevButtonsContainer>
+          </SDev>
+        )}
+      </SBottomDialog>
+    </SModal>
   )
 }
 

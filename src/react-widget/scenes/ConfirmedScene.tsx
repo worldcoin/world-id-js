@@ -1,6 +1,4 @@
 import { useActions } from 'kea'
-import { worldLogic } from 'worldLogic'
-
 import { styled } from 'react-widget/stitches'
 import { Dialog } from 'react-widget/components/Dialog'
 import { DialogHeader } from 'react-widget/components/DialogHeader'
@@ -9,6 +7,8 @@ import { Typography } from 'react-widget/components/Typography'
 import { Button } from 'react-widget/components/Button'
 import { Circle } from 'react-widget/components/Circle'
 import { IconSuccess } from 'assets/icons'
+import { verificationLogic } from 'react-widget/logic/verificationLogic'
+import { widgetLogic } from 'react-widget/logic/widgetLogic'
 
 const SRoot = styled(Dialog, {
   display: 'flex',
@@ -31,7 +31,8 @@ const SText = styled(Typography, {
 })
 
 export function ConfirmedScene() {
-  const { terminate } = useActions(worldLogic)
+  const { terminate } = useActions(verificationLogic)
+  const { disableModal } = useActions(widgetLogic)
 
   return (
     <SRoot>
@@ -48,7 +49,15 @@ export function ConfirmedScene() {
       <SText variant="p1" centered>
         Yay! Your identity has been successfully confirmed. You can start using your WorldID.
       </SText>
-      <Button color="primary" size="lg" fullWidth onClick={terminate}>
+      <Button
+        color="primary"
+        size="lg"
+        fullWidth
+        onClick={() => {
+          terminate()
+          disableModal()
+        }}
+      >
         Continue
       </Button>
     </SRoot>

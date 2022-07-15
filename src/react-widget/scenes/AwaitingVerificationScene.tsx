@@ -1,6 +1,4 @@
 import { useActions } from 'kea'
-import { worldLogic } from 'worldLogic'
-
 import { styled } from 'react-widget/stitches'
 import { Dialog } from 'react-widget/components/Dialog'
 import { DialogHeader } from 'react-widget/components/DialogHeader'
@@ -8,6 +6,7 @@ import { DialogHeaderLogo } from 'react-widget/components/DialogHeaderLogo'
 import { Loader } from 'react-widget/components/Loader'
 import { Typography } from 'react-widget/components/Typography'
 import { Button } from 'react-widget/components/Button'
+import { verificationLogic } from 'react-widget/logic/verificationLogic'
 
 const SRoot = styled(Dialog, {
   display: 'flex',
@@ -30,7 +29,7 @@ const SText = styled(Typography, {
 })
 
 export function AwaitingVerificationScene() {
-  const { terminate } = useActions(worldLogic)
+  const { terminate } = useActions(verificationLogic)
 
   return (
     <SRoot>

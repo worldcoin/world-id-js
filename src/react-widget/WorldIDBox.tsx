@@ -8,6 +8,11 @@ import { Box } from 'react-widget/components/Box'
 import { IconCircleSuccess } from 'assets/icons'
 import { widgetLogic } from './logic/widgetLogic'
 import { keyframes } from '@stitches/react'
+import { verificationLogic } from './logic/verificationLogic'
+import { VerificationState } from 'types'
+import { useMemo } from 'react'
+import { ModalView } from './types/modal-view'
+import { MouseEvent as ReactMouseEvent } from 'react'
 
 const SCaptcha = styled('button', {
   display: 'grid',
@@ -33,7 +38,14 @@ const SCaptcha = styled('button', {
   '&:disabled': {
     cursor: 'not-allowed',
     opacity: '0.6',
-    gridTemplateColumns: 'auto',
+  },
+
+  variants: {
+    grid: {
+      false: {
+        gridTemplateColumns: 'auto',
+      },
+    },
   },
 })
 
@@ -60,12 +72,16 @@ const SText = styled('div', {
   lineHeight: '18px',
 })
 
-const SLogo = styled('div', {
+const SLogo = styled('button', {
   '--gradient-from': '$colors$gradientFrom',
   '--gradient-to': '$colors$gradientTo',
   display: 'grid',
   alignItems: 'center',
   justifyContent: 'center',
+  background: 'none',
+  border: 'none',
+  padding: '0',
+  cursor: 'pointer',
 })
 
 const SErrorMessage = styled('h1', {
@@ -87,17 +103,36 @@ const Preloader = styled('div', {
 
 export function WorldIDBox() {
   const { isWidgetAvailable, widgetLoading } = useValues(widgetLogic)
-  const { activateModal } = useActions(widgetLogic)
-  // const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
-  //const { verificationState } = useValues(verificationLogic)
+  const { activateModal, setModalView } = useActions(widgetLogic)
+  const { verificationState } = useValues(verificationLogic)
+
+  const isVerified = useMemo(() => verificationState === VerificationState.Confirmed, [verificationState])
+
+  const showLearnMore = (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (!isWidgetAvailable || widgetLoading) {
+      return
+    }
+
+    event.stopPropagation()
+    setModalView(ModalView.LearnMore)
+    activateModal()
+  }
 
   return (
     <Box>
       {isWidgetAvailable && !widgetLoading && (
-        <SCaptcha onClick={activateModal} data-testId="world-id-box">
-          <SCheckbox checked={true}>{true && <IconCircleSuccess />}</SCheckbox>
+        <SCaptcha
+          onClick={() => {
+            setModalView(ModalView.VerificationFlow)
+            activateModal()
+          }}
+          data-testId="world-id-box"
+          disabled={isVerified}
+          grid
+        >
+          <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
           <SText>I&apos;m a unique person</SText>
-          <SLogo>
+          <SLogo onClick={showLearnMore}>
             <WIDLogo />
           </SLogo>
         </SCaptcha>
