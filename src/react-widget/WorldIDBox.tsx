@@ -1,12 +1,13 @@
 // import { VerificationState } from 'types'
-import { useActions } from 'kea'
+import { useActions, useValues } from 'kea'
 // import { verificationLogic } from 'verificationLogic'
-import { worldLogic } from 'worldLogic'
 
 import { styled } from 'react-widget/stitches'
-import { WIDLogo } from 'assets/logos'
+import { WIDLogo, WorldcoinLogomark } from 'assets/logos'
 import { Box } from 'react-widget/components/Box'
 import { IconCircleSuccess } from 'assets/icons'
+import { widgetLogic } from './logic/widgetLogic'
+import { keyframes } from '@stitches/react'
 
 const SCaptcha = styled('button', {
   display: 'grid',
@@ -31,6 +32,8 @@ const SCaptcha = styled('button', {
 
   '&:disabled': {
     cursor: 'not-allowed',
+    opacity: '0.6',
+    gridTemplateColumns: 'auto',
   },
 })
 
@@ -65,20 +68,52 @@ const SLogo = styled('div', {
   justifyContent: 'center',
 })
 
+const SErrorMessage = styled('h1', {
+  fontSize: '14px',
+  textAlign: 'center',
+})
+
+const rotate = keyframes({
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' },
+})
+
+const Preloader = styled('div', {
+  width: '24px',
+  height: '24px',
+  margin: '0px auto',
+  animation: `${rotate} 2000ms linear infinite`,
+})
+
 export function WorldIDBox() {
-  const { activate } = useActions(worldLogic)
+  const { isWidgetAvailable, widgetLoading } = useValues(widgetLogic)
+  const { activateModal } = useActions(widgetLogic)
   // const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
   //const { verificationState } = useValues(verificationLogic)
 
   return (
-    <Box css={{ width: 254 }}>
-      <SCaptcha onClick={activate} data-testId="world-id-box">
-        <SCheckbox checked={true}>{true && <IconCircleSuccess />}</SCheckbox>
-        <SText>I&apos;m a unique person</SText>
-        <SLogo>
-          <WIDLogo />
-        </SLogo>
-      </SCaptcha>
+    <Box>
+      {isWidgetAvailable && !widgetLoading && (
+        <SCaptcha onClick={activateModal} data-testId="world-id-box">
+          <SCheckbox checked={true}>{true && <IconCircleSuccess />}</SCheckbox>
+          <SText>I&apos;m a unique person</SText>
+          <SLogo>
+            <WIDLogo />
+          </SLogo>
+        </SCaptcha>
+      )}
+      {!isWidgetAvailable && !widgetLoading && (
+        <SCaptcha disabled>
+          <SErrorMessage>Widget is unavailable</SErrorMessage>
+        </SCaptcha>
+      )}
+      {widgetLoading && (
+        <SCaptcha disabled>
+          <Preloader>
+            <WorldcoinLogomark style={{ width: '100%', height: '100%' }} />
+          </Preloader>
+        </SCaptcha>
+      )}
     </Box>
   )
 }

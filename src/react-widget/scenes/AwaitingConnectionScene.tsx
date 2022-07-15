@@ -1,6 +1,5 @@
 import { useMedia } from 'react-widget/hooks/useMedia'
 import { useActions, useValues } from 'kea'
-import { worldLogic } from 'worldLogic'
 
 import { styled } from 'react-widget/stitches'
 import {
@@ -21,8 +20,8 @@ import { DialogHeaderButton } from 'react-widget/components/DialogHeaderButton'
 import { Button } from 'react-widget/components/Button'
 import { useCallback, useEffect, useState } from 'react'
 import { WorldcoinApp } from 'assets/logos'
-import { verificationLogic } from 'verificationLogic'
 import { DevModeLink } from 'react-widget/components/DevModeButton'
+import { widgetLogic } from 'react-widget/logic/widgetLogic'
 
 const SMain = styled(Dialog, {
   width: 500,
@@ -151,9 +150,8 @@ const SDevModeStamp = styled('div', {
 })
 
 export function AwaitingConnectionScene() {
-  const { isDevMode } = useValues(worldLogic)
-  const { qrCodeContent } = useValues(verificationLogic)
-  const { terminate } = useActions(worldLogic)
+  const { qrCodeContent, isDevMode } = useValues(widgetLogic)
+  const { disableModal } = useActions(widgetLogic)
 
   const { media } = useMedia()
   const [codeShown, setCodeShown] = useState(false) // Used for mobile
@@ -171,7 +169,7 @@ export function AwaitingConnectionScene() {
               <IconCode />
             </DialogHeaderButton>
           )}
-          <DialogHeaderButton bordered onClick={terminate}>
+          <DialogHeaderButton bordered onClick={disableModal}>
             <IconClose />
           </DialogHeaderButton>
         </DialogHeader>

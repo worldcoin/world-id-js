@@ -16,7 +16,17 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <Container>
-      <Widget theme="light" />
+      <Widget
+        appProps={{
+          enable_telemetry: true,
+          action_id: 'wid_staging_PCNQeDC5CX',
+          signal: 'user-id-1',
+          app_name: 'candyApp',
+          signal_description: 'Receive initial airdrop April 2022',
+          theme: 'light',
+        }}
+        theme="light"
+      />
     </Container>
   </React.StrictMode>
 )
