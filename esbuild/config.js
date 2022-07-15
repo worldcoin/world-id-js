@@ -34,17 +34,17 @@ const babelTransforms = {
       const result = await babelTransformFileAsync(args.path, {
         plugins: [
           ['@babel/plugin-syntax-typescript', { isTSX: true }],
-          [
-            'babel-plugin-styled-components',
-            {
-              ssr: false,
-              displayName: false,
-              fileName: false,
-              minify: true,
-              transpileTemplateLiterals: false,
-              pure: true,
-            },
-          ],
+          // [
+          //   'babel-plugin-styled-components',
+          //   {
+          //     ssr: false,
+          //     displayName: false,
+          //     fileName: false,
+          //     minify: true,
+          //     transpileTemplateLiterals: false,
+          //     pure: true,
+          //   },
+          // ],
         ],
         configFile: false,
         babelrc: false,

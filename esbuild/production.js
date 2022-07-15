@@ -3,6 +3,7 @@ import { clean } from 'esbuild-plugin-clean'
 import meow from 'meow'
 import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
+import { nodeExternalsPlugin } from 'esbuild-node-externals'
 
 import config from './config.js'
 
@@ -14,7 +15,7 @@ const cli = meow({
 /** @type {import('esbuild').BuildOptions} */
 const baseConfig = {
   ...config,
-  minify: true,
+  minify: false,
   treeShaking: true,
   define: {
     ...config.define,
@@ -28,6 +29,7 @@ const configs = {
   esm: {
     ...baseConfig,
     plugins: [
+      nodeExternalsPlugin({ packagePath: require.resolve('../package.json') }),
       clean({
         patterns: ['./dist/index.js'],
       }),
