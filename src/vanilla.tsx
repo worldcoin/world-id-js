@@ -1,5 +1,5 @@
 import { useValues } from 'kea'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { AppProps } from 'types/app-props'
 import { vanillaWidgetLogic } from './logic/vanillaWidgetLogic'
 import { Widget } from './Widget'
@@ -18,7 +18,7 @@ export * as utils from 'utils'
  * @param elementInput ID of HTML element or DOM node to mount World ID on
  * @param props See `AppProps` for details
  */
-export const init = (elementInput: string | HTMLElement, props: AppProps): void => {
+export const init = (elementInput: string | Element | DocumentFragment, props: AppProps): void => {
   const mountNode = typeof elementInput === 'string' ? document.getElementById(elementInput) : elementInput
 
   const startApp = () => {
@@ -44,18 +44,9 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
 
     vanillaWidgetLogic.actions.updateParams(props)
 
-    if (!props.disableRemoteFonts) {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = 'https://fonts.googleapis.com/css2?family=Rubik:wght@400&family=Sora:wght@600&display=swap'
-      const headElementMatch = document.getElementsByTagName('head')
-      if (headElementMatch && headElementMatch[0]) {
-        headElementMatch[0].appendChild(link)
-      }
-    }
-
     try {
-      render(<VanillaWidget />, mountNode as HTMLElement)
+      const root = createRoot(mountNode as Element)
+      root.render(<VanillaWidget />)
     } catch (error) {
       console.log(error)
 
