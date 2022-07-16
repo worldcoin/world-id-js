@@ -15,7 +15,6 @@ export const Button = styled('button', {
     variant: {
       default: {},
       link: {
-        //height: 56,
         fontFamily: '"Rubik"',
         fontSize: '18px',
         fontWeight: 500,
@@ -61,7 +60,7 @@ export const Button = styled('button', {
       variant: 'default',
       color: 'default',
       css: {
-        color: '$buttonDefaultColor',
+        color: '$color',
         background: '$buttonDefaultBg',
       },
     },
@@ -77,11 +76,12 @@ export const Button = styled('button', {
       variant: 'default',
       color: 'gradient',
       css: {
+        color: '$color',
         position: 'relative',
         minHeight: 44,
         padding: '0 24px',
-        fontFamily: '"Sora"',
-        fontSize: '14px',
+        fontFamily: 'Sora',
+        fontSize: '16px',
         fontWeight: 600,
         lineHeight: '18px',
         textTransform: 'uppercase',
@@ -90,23 +90,36 @@ export const Button = styled('button', {
           linear-gradient(to right, $buttonGradientFrom, $buttonGradientTo) border-box
         `,
         border: '2px solid transparent',
+
+        '@smDown': {
+          transition: 'box-shadow 200ms',
+          boxShadow: '0px 10px 20px rgba(255, 104, 72, 0.2);',
+
+          '&:hover': {
+            boxShadow: '0px 10px 20px rgba(255, 104, 72, 0.4);',
+          },
+        },
       },
     },
-    //{
-    //  variant: 'link',
-    //  color: 'default',
-    //  muted: false,
-    //  css: {
-    //    color: 'grey6',
-    //  },
-    //},
-    //{
-    //  variant: 'link',
-    //  color: 'default',
-    //  muted: 'true',
-    //  css: {
-    //    color: 'grey5',
-    //  },
-    //},
+    {
+      variant: 'link',
+      color: 'default',
+      css: {
+        '@smDown': {
+          fontWeight: 500,
+          color: '$grey5',
+        },
+      },
+    },
+    {
+      variant: 'link',
+      color: 'primary',
+      css: {
+        '@smDown': {
+          fontWeight: 500,
+          color: '$primary',
+        },
+      },
+    },
   ],
 })

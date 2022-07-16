@@ -196,6 +196,47 @@ export function AwaitingConnectionScene() {
 
   const isVerificationFlow = useMemo(() => modalView === ModalView.VerificationFlow, [modalView])
 
+  interface CopyToClipboardProps {
+    variant?: 'link'
+    size?: 'sm' | 'xl'
+    muted?: boolean
+    data?: string | null
+    color?: 'primary' | 'default'
+  }
+
+  function CopyToClipboard(props: CopyToClipboardProps) {
+    const [isCopied, setIsCopied] = useState<boolean>(false)
+
+    useEffect(() => {
+      if (isCopied) {
+        const timer = setTimeout(() => setIsCopied(false), 2000)
+        return () => clearTimeout(timer)
+      }
+      return () => null
+    }, [isCopied])
+
+    const onClick = useCallback(() => {
+      if (!props.data) {
+        return
+      }
+      navigator.clipboard.writeText(props.data).then(() => {
+        setIsCopied(true)
+      })
+    }, [props.data])
+
+    return (
+      <Button variant={props.variant} size={props.size} color={props.color} onClick={onClick}>
+        {isCopied ? (
+          <>
+            <IconCircleSuccess style={{ marginRight: 4 }} /> Copied!
+          </>
+        ) : (
+          'Copy QR code'
+        )}
+      </Button>
+    )
+  }
+
   return (
     <SModal centered={!isVerificationFlow}>
       <SMain>
@@ -234,13 +275,15 @@ export function AwaitingConnectionScene() {
                 </SMainTextCaption>
               </SMainText>
               <SMainCopy>
-                {media === 'desktop' && <CopyToClipboard size="sm" data={qrCodeContent} />}
+                {media === 'desktop' && <CopyToClipboard color="default" size="sm" data={qrCodeContent} />}
                 {media !== 'desktop' && !codeShown && (
                   <Button variant="link" color="default" size="xl" onClick={toggleCodeShown}>
                     Show QR code instead
                   </Button>
                 )}
-                {media !== 'desktop' && codeShown && <CopyToClipboard variant="link" size="xl" data={qrCodeContent} />}
+                {media !== 'desktop' && codeShown && (
+                  <CopyToClipboard variant="link" color="primary" size="xl" data={qrCodeContent} />
+                )}
               </SMainCopy>
               <SMainCode>
                 {media !== 'desktop' && !codeShown ? (
@@ -319,45 +362,5 @@ export function AwaitingConnectionScene() {
         )}
       </SBottomDialog>
     </SModal>
-  )
-}
-
-interface CopyToClipboardProps {
-  variant?: 'link'
-  size?: 'sm' | 'xl'
-  muted?: boolean
-  data?: string | null
-}
-
-function CopyToClipboard(props: CopyToClipboardProps) {
-  const [isCopied, setIsCopied] = useState<boolean>(false)
-
-  useEffect(() => {
-    if (isCopied) {
-      const timer = setTimeout(() => setIsCopied(false), 2000)
-      return () => clearTimeout(timer)
-    }
-    return () => null
-  }, [isCopied])
-
-  const onClick = useCallback(() => {
-    if (!props.data) {
-      return
-    }
-    navigator.clipboard.writeText(props.data).then(() => {
-      setIsCopied(true)
-    })
-  }, [props.data])
-
-  return (
-    <Button variant={props.variant} size={props.size} onClick={onClick}>
-      {isCopied ? (
-        <>
-          <IconCircleSuccess style={{ marginRight: 4 }} /> Copied!
-        </>
-      ) : (
-        'Copy QR code'
-      )}
-    </Button>
   )
 }
