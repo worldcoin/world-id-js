@@ -2,6 +2,8 @@ import { render } from 'react-dom'
 import { AppProps } from 'types'
 import { Widget } from './Widget'
 
+export * as utils from 'utils'
+
 export const init = (elementInput: string | HTMLElement, props: AppProps) => {
   const mountNode = typeof elementInput === 'string' ? document.getElementById(elementInput) : elementInput
 
