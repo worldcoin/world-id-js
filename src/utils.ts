@@ -1,4 +1,4 @@
-import { AppProps, VerificationRequest, VerificationRequestParams } from 'types'
+import { ConnectionProps, VerificationRequest, VerificationRequestParams } from 'types'
 import sha3 from 'js-sha3'
 import { arrayify, concat, hexlify } from '@ethersproject/bytes'
 
@@ -12,7 +12,7 @@ export const randomNumber = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-export const buildVerificationRequest = (props: AppProps): VerificationRequest => {
+export const buildVerificationRequest = (props: ConnectionProps): VerificationRequest => {
   if (!props.signal) {
     throw new Error('Unexpectedly trying to build verification request without a `signal`.')
   }
@@ -72,7 +72,7 @@ export const validateABILikeEncoding = (value: string): boolean => {
  * @param params `AppProps`
  * @returns `true` if parameters are valid; error is raised otherwise.
  */
-export const validateInputParams = (params: AppProps): { valid: boolean; error?: string } => {
+export const validateInputParams = (params: ConnectionProps): { valid: boolean; error?: string } => {
   if (!params.action_id) {
     return { valid: false, error: 'The `action_id` parameter is always required.' }
   }

@@ -16,7 +16,6 @@ import { MouseEvent as ReactMouseEvent } from 'react'
 
 const SCaptcha = styled('button', {
   display: 'grid',
-  gridTemplateColumns: 'auto 1fr auto',
   gridGap: '8px',
   alignItems: 'center',
   boxSizing: 'border-box',
@@ -44,6 +43,9 @@ const SCaptcha = styled('button', {
     grid: {
       false: {
         gridTemplateColumns: 'auto',
+      },
+      true: {
+        gridTemplateColumns: 'auto 1fr auto',
       },
     },
   },
@@ -89,6 +91,7 @@ const SErrorMessage = styled('h1', {
   fontSize: '14px',
   textAlign: 'center',
   fontFamily: 'Rubik',
+  color: '$color',
 })
 
 const rotate = keyframes({

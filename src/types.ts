@@ -15,16 +15,22 @@ export interface EndUserErrorDisplay {
   noRetry?: boolean
 }
 
-export interface AppProps {
+export interface ConnectionProps {
   action_id: string
   signal?: string
   theme?: 'light' | 'dark'
   enable_telemetry?: boolean
   app_name?: string
   signal_description?: string
-  disable_remote_fonts?: boolean
   advanced_use_raw_signal?: boolean
   advanced_use_raw_action_id?: boolean
+}
+
+export type AppProps = {
+  connectionProps: ConnectionProps
+  disableRemoteFonts?: boolean
+  theme?: 'light' | 'dark'
+  debug?: boolean
 }
 
 export interface CallbackInterface {

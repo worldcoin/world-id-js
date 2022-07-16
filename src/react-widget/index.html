@@ -1,21 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
-    <title>React App</title>
-
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
+      html,
       body {
         margin: 0;
-        padding: 0;
+        background-color: #ecf0f3;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+          'Helvetica Neue', sans-serif;
+      }
+
+      .root {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        min-height: 100vh;
+      }
+
+      h1 {
+        text-align: center;
+        color: #d4641c;
+      }
+
+      .wrapper {
+        margin: auto;
+        background-color: white;
+        padding: 32px;
+        border-radius: 6px;
+      }
+
+      p {
+        color: #505050;
+      }
+
+      .btn {
+        margin-top: 16px;
+        width: 100%;
+        background-color: #d4641c;
+        cursor: pointer;
+        color: white;
+        border: 0;
+        border-radius: 6px;
+        padding: 10px 0;
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     </style>
+    <title>World ID - JS Example</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div class="root">
+      <h1>World ID - JS Example</h1>
+
+      <div class="wrapper">
+        <p>Click below to test World ID verification.</p>
+        <div id="world-id-container"></div>
+        <button class="btn" id="change-theme-button">Change theme</button>
+        <button class="btn" id="pass-invalid-button">Pass invalid props</button>
+      </div>
+    </div>
+
     <script src="dist/world-id-dev.js"></script>
+    <script>
+      let isWidgetAvailable = null
+      const appProps = {
+        connectionProps: {
+          enable_telemetry: true,
+          action_id: 'wid_staging_PCNQeDC5CX',
+          signal: 'user-id-1',
+          app_name: 'candyApp',
+          signal_description: 'Receive initial airdrop April 2022',
+        },
+        theme: 'light',
+        debug: true,
+      }
+
+      const changeThemeButton = document.querySelector('#change-theme-button')
+      const passInvalidPropsButton = document.querySelector('#pass-invalid-button')
+
+      changeThemeButton.addEventListener('click', (event) => {
+        event.preventDefault()
+
+        const currentProps = worldID.getProps()
+        worldID.update({ theme: currentProps.theme === 'light' ? 'dark' : 'light' })
+      })
+
+      passInvalidPropsButton.addEventListener('click', (event) => {
+        event.preventDefault()
+
+        if (isWidgetAvailable) {
+          worldID.update({ connectionProps: { action_id: '' } })
+          event.target.innerText = 'Pass valid props'
+          return (isWidgetAvailable = false)
+        }
+
+        if (!isWidgetAvailable) {
+          worldID.update(appProps)
+          event.target.innerText = 'Pass invalid props'
+          return (isWidgetAvailable = true)
+        }
+      })
+
+      worldID.init('world-id-container', appProps)
+      isWidgetAvailable = true
+      console.log('Random number from utils: ', worldID.utils.randomNumber(1, 100))
+    </script>
   </body>
 </html>

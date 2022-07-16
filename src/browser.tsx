@@ -1,7 +1,7 @@
 import { App } from 'App'
 import { RenderError } from 'components/RenderError'
 import { render } from 'react-dom'
-import { AppProps, VerificationResponse, CallbackInterface } from 'types'
+import { ConnectionProps, VerificationResponse, CallbackInterface } from 'types'
 import { validateInputParams } from 'utils'
 import { worldLogic } from 'worldLogic'
 import * as utils from 'utils'
@@ -17,8 +17,8 @@ let mountNode: HTMLElement | null = null
  * @param elementInput ID of HTML element or DOM node to mount World ID on
  * @param props See `AppProps` for details
  */
-export const init = (elementInput: string | HTMLElement, props: AppProps): void => {
-  const logic = worldLogic(props as AppProps)
+export const init = (elementInput: string | HTMLElement, props: ConnectionProps): void => {
+  const logic = worldLogic(props as ConnectionProps)
 
   const startApp = () => {
     if (!logic.isMounted()) {
@@ -31,15 +31,15 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
 
     validate(props)
 
-    if (!props.disable_remote_fonts) {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = 'https://fonts.googleapis.com/css2?family=Rubik:wght@400&family=Sora:wght@600&display=swap'
-      const headElementMatch = document.getElementsByTagName('head')
-      if (headElementMatch && headElementMatch[0]) {
-        headElementMatch[0].appendChild(link)
-      }
-    }
+    // if (!props.disable_remote_fonts) {
+    //   const link = document.createElement('link')
+    //   link.rel = 'stylesheet'
+    //   link.href = 'https://fonts.googleapis.com/css2?family=Rubik:wght@400&family=Sora:wght@600&display=swap'
+    //   const headElementMatch = document.getElementsByTagName('head')
+    //   if (headElementMatch && headElementMatch[0]) {
+    //     headElementMatch[0].appendChild(link)
+    //   }
+    // }
 
     render(<App />, mountNode as HTMLElement) // `mountNode` is already validated not to be `null` on `validate`
   }
@@ -58,7 +58,7 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
  * Updates the parameters used for World ID (e.g. `signal` or `action_id`).
  * @param propsToUpdate
  */
-export const update = (propsToUpdate: Partial<AppProps>): void => {
+export const update = (propsToUpdate: Partial<ConnectionProps>): void => {
   const updatedParams = { ...worldLogic.props, ...propsToUpdate }
   validate(updatedParams)
   worldLogic(updatedParams)
@@ -99,7 +99,7 @@ export const isEnabled = (): boolean => {
   return worldLogic.isMounted() && worldLogic.values.isAppEnabled
 }
 
-const validate = (props: AppProps): void => {
+const validate = (props: ConnectionProps): void => {
   if (!mountNode) {
     throw new Error('Element to mount World ID not found. Please make sure the element is valid.')
   }

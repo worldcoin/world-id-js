@@ -1,12 +1,12 @@
 import { actions, connect, events, kea, listeners, path, props, reducers, selectors } from 'kea'
 import { initTelemetry, telemetryVerificationLaunched } from 'telemetry'
-import { CTAShownState, ErrorCodes, ModalView, VerificationState, AppProps, CallbackInterface } from 'types'
+import { CTAShownState, ErrorCodes, ModalView, VerificationState, ConnectionProps, CallbackInterface } from 'types'
 import { verificationLogic } from 'verificationLogic'
 import type { worldLogicType } from './worldLogicType'
 
 export const worldLogic = kea<worldLogicType>([
   path(['worldId', 'worldLogic']),
-  props({} as AppProps),
+  props({} as ConnectionProps),
   actions({
     activate: true,
     terminate: true,

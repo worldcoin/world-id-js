@@ -4,7 +4,7 @@ import { kea, actions, reducers, path, listeners, props, events, connect, select
 import { VerificationState } from 'react-widget/types/verification-state'
 // import { telemetryConnectionEstablished } from 'telemetry'
 import {
-  AppProps,
+  ConnectionProps,
   EndUserErrorDisplay,
   ErrorCodes,
   ExpectedErrorResponse,
@@ -29,7 +29,7 @@ try {
 export const verificationLogic = kea<verificationLogicType>([
   path(['react-widget', 'logic', 'loadingLogic']),
   props(
-    {} as AppProps & {
+    {} as ConnectionProps & {
       onSuccess?: (result: VerificationResponse) => void
       onError?: (error: VerificationErrorResponse) => void
     }
