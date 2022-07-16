@@ -21,17 +21,25 @@ export * as utils from 'utils'
 export const init = (elementInput: string | HTMLElement, props: AppProps): void => {
   const mountNode = typeof elementInput === 'string' ? document.getElementById(elementInput) : elementInput
 
-  if (!mountNode) {
-    throw new Error('Element to mount World ID not found. Please make sure the element is valid.')
-  }
-
-  if (!(mountNode instanceof HTMLElement)) {
-    throw new Error('The passed element parameter does not look like a valid HTML element.')
-  }
-
   const startApp = () => {
     if (!vanillaWidgetLogic.isMounted()) {
       vanillaWidgetLogic.mount()
+    }
+
+    if (!mountNode) {
+      const errorMessage = 'Element to mount World ID not found. Please make sure the element is valid.'
+
+      if (props.onInitError) {
+        props.onInitError({ error: { message: errorMessage } })
+      }
+    }
+
+    if (!(mountNode instanceof HTMLElement)) {
+      const errorMessage = 'The passed element parameter does not look like a valid HTML element.'
+
+      if (props.onInitError) {
+        props.onInitError({ error: { message: errorMessage } })
+      }
     }
 
     vanillaWidgetLogic.actions.updateParams(props)
@@ -46,7 +54,19 @@ export const init = (elementInput: string | HTMLElement, props: AppProps): void 
       }
     }
 
-    render(<VanillaWidget />, mountNode as HTMLElement)
+    try {
+      render(<VanillaWidget />, mountNode as HTMLElement)
+    } catch (error) {
+      console.log(error)
+
+      if (props.onInitError) {
+        props.onInitError({ error: { message: 'Error while rendering Widget component at node', original: error } })
+      }
+    }
+
+    if (props.onInitSuccess) {
+      props.onInitSuccess()
+    }
   }
 
   if (/complete|interactive|loaded/.test(document.readyState)) {
@@ -71,6 +91,6 @@ export const update = (propsToUpdate: Partial<AppProps>) => {
   vanillaWidgetLogic.actions.updateParams(propsToUpdate)
 }
 /**
- * Returns actual world ID props
+ * Returns actual World ID props
  */
 export const getProps = () => vanillaWidgetLogic.values.params

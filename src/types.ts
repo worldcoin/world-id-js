@@ -18,19 +18,22 @@ export interface EndUserErrorDisplay {
 export interface ConnectionProps {
   action_id: string
   signal?: string
-  theme?: 'light' | 'dark'
   enable_telemetry?: boolean
   app_name?: string
   signal_description?: string
   advanced_use_raw_signal?: boolean
   advanced_use_raw_action_id?: boolean
+  onVerificationSuccess: (result: VerificationResponse) => void
+  onVerificationError: (error: VerificationErrorResponse) => void
 }
 
-export type AppProps = {
+export interface AppProps {
   connectionProps: ConnectionProps
   disableRemoteFonts?: boolean
   theme?: 'light' | 'dark'
   debug?: boolean
+  onInitSuccess?: () => void
+  onInitError?: (error: { error: { message: string; original?: string | Record<string, unknown> | unknown } }) => void
 }
 
 export interface CallbackInterface {

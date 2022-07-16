@@ -76,9 +76,13 @@
           signal: 'user-id-1',
           app_name: 'candyApp',
           signal_description: 'Receive initial airdrop April 2022',
+          onVerificationError: ({ code, detail }) => console.log({ code, detail }),
+          onVerificationSuccess: (result) => console.log(result),
         },
         theme: 'light',
         debug: true,
+        onInitSuccess: () => console.log('Init successful'),
+        onInitError: ({ error }) => console.log('Error while initialization World ID', error),
       }
 
       const changeThemeButton = document.querySelector('#change-theme-button')

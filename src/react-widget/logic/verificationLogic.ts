@@ -3,14 +3,7 @@ import { END_USER_ERROR_MESSAGES, ERROR_MESSAGES } from 'const'
 import { kea, actions, reducers, path, listeners, props, events, connect, selectors } from 'kea'
 import { VerificationState } from 'react-widget/types/verification-state'
 // import { telemetryConnectionEstablished } from 'telemetry'
-import {
-  ConnectionProps,
-  EndUserErrorDisplay,
-  ErrorCodes,
-  ExpectedErrorResponse,
-  VerificationErrorResponse,
-  VerificationResponse,
-} from 'types'
+import { ConnectionProps, EndUserErrorDisplay, ErrorCodes, ExpectedErrorResponse, VerificationResponse } from 'types'
 import { buildVerificationRequest, verifyVerificationResponse } from 'utils'
 import { widgetLogic } from './widgetLogic'
 
@@ -28,12 +21,7 @@ try {
 
 export const verificationLogic = kea<verificationLogicType>([
   path(['react-widget', 'logic', 'loadingLogic']),
-  props(
-    {} as ConnectionProps & {
-      onSuccess?: (result: VerificationResponse) => void
-      onError?: (error: VerificationErrorResponse) => void
-    }
-  ),
+  props({} as ConnectionProps),
   actions({
     //ANCHOR connection actions
     initConnection: true,
@@ -160,7 +148,6 @@ export const verificationLogic = kea<verificationLogicType>([
           console.error(ERROR_MESSAGES[ErrorCodes.UnexpectedResponse], result)
         }
       } catch (error: unknown) {
-        console.log('HERE')
         // Verification was unsuccessful. Attempt to determine the specific error, or return a generic error otherwise.
         let errorCode = ErrorCodes.GenericError
         const errorMessage = (error as ExpectedErrorResponse).message
@@ -190,11 +177,11 @@ export const verificationLogic = kea<verificationLogicType>([
         return
       }
 
-      if (props.onSuccess && values.verificationState === VerificationState.Confirmed && values.successResult) {
-        props.onSuccess(values.successResult)
+      if (values.verificationState === VerificationState.Confirmed && values.successResult) {
+        props.onVerificationSuccess(values.successResult)
       }
-      if (props.onError && (values.verificationState !== VerificationState.Confirmed || !values.successResult)) {
-        props.onError({
+      if (values.verificationState !== VerificationState.Confirmed || !values.successResult) {
+        props.onVerificationError({
           code: values.errorResult || ErrorCodes.GenericError,
           detail: values.internalError,
         })
