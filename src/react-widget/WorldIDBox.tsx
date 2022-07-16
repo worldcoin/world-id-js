@@ -70,6 +70,7 @@ const SText = styled('div', {
   fontSize: '14px',
   fontWeight: '600',
   lineHeight: '18px',
+  fontFamily: 'Rubik',
 })
 
 const SLogo = styled('button', {
@@ -87,6 +88,7 @@ const SLogo = styled('button', {
 const SErrorMessage = styled('h1', {
   fontSize: '14px',
   textAlign: 'center',
+  fontFamily: 'Rubik',
 })
 
 const rotate = keyframes({

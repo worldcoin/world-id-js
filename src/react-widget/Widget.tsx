@@ -1,5 +1,5 @@
 // import { AppProps } from 'types'
-import { styled, lightTheme, darkTheme } from 'react-widget/stitches'
+import { styled, lightTheme, darkTheme, globalStyles } from 'react-widget/stitches'
 import { WorldIDBox } from './WorldIDBox'
 import { PrincipalScene } from 'react-widget/scenes/PrincipalScene'
 import { AppProps } from 'types'
@@ -22,8 +22,15 @@ const Wrapper = styled('div', {
   maxWidth: '300px',
 })
 
-export function Widget(props: { appProps: AppProps; theme?: 'dark' | 'light' }): JSX.Element {
+export function Widget(props: {
+  appProps: AppProps
+  theme?: 'dark' | 'light'
+  disableRemoteFonts?: boolean
+}): JSX.Element {
   const builtVerificationLogic = verificationLogic(props.appProps)
+  if (!props.disableRemoteFonts) {
+    globalStyles()
+  }
 
   useEffect(() => {
     if (builtVerificationLogic.isMounted()) {

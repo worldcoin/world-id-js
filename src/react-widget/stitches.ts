@@ -1,4 +1,12 @@
-import { createStitches, createTheme } from '@stitches/react'
+import { createStitches, createTheme, globalCss } from '@stitches/react'
+
+export const globalStyles = globalCss({
+  '@import': 'https://fonts.googleapis.com/css2?family=Rubik:wght@400&family=Sora:wght@600&display=swap',
+
+  '*': {
+    fontFamily: '"Rubick", Arial, Helvetica, sans-serif',
+  },
+})
 
 export const { styled, css, getCssText } = createStitches({
   theme: {
