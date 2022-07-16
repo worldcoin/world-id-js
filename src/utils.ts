@@ -1,4 +1,6 @@
-import { ConnectionProps, VerificationRequest, VerificationRequestParams } from 'types'
+import { ConnectionProps } from 'types/connection-props'
+import { VerificationRequest } from 'types/verification-request'
+import { VerificationRequestParams } from 'types/verification-request-params'
 import sha3 from 'js-sha3'
 import { arrayify, concat, hexlify } from '@ethersproject/bytes'
 

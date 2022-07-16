@@ -59,7 +59,7 @@ const configs = {
   iife: {
     ...baseConfig,
 
-    entryPoints: [require.resolve('../src/react-widget/browser.tsx')],
+    entryPoints: [require.resolve('../src/vanilla.tsx')],
     plugins: [
       clean({
         patterns: ['./dist/world-id.js'],

@@ -1,51 +1,52 @@
-import { Button } from 'components/Button'
-import { Loader } from 'components/Loader'
-import { H3, P } from 'components/text'
-import { breakpoints } from 'const'
 import { useActions } from 'kea'
-import styled from 'styled-components'
-import { worldLogic } from 'worldLogic'
+import { styled } from 'stitches'
+import { Dialog } from 'components/Dialog'
+import { DialogHeader } from 'components/DialogHeader'
+import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
+import { Loader } from 'components/Loader'
+import { Typography } from 'components/Typography'
+import { Button } from 'components/Button'
+import { verificationLogic } from 'logic/verificationLogic'
 
-const SWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (max-width: ${breakpoints.sm}) {
-    justify-content: center;
-  }
-`
+const SRoot = styled(Dialog, {
+  display: 'flex',
+  flexFlow: 'column',
+  alignItems: 'center',
+  width: 400,
+})
 
-const SLoaderWrapper = styled.div`
-  margin: 72px 0 72px 0;
-  font-size: 4em;
-`
+const SLoader = styled(Loader, {
+  margin: '64px',
+})
 
-const SHeader = styled(H3)`
-  text-align: center;
-`
+const STitle = styled(Typography, {
+  marginBottom: 8,
+})
 
-const SText = styled(P)`
-  margin-top: 8px;
-  margin-bottom: 24px;
-  text-align: center;
-  max-width: 240px;
-  @media (max-width: ${breakpoints.sm}) {
-    max-width: none;
-  }
-`
+const SText = styled(Typography, {
+  maxWidth: 240,
+  marginBottom: 24,
+})
 
-export function AwaitingVerificationScene(): JSX.Element {
-  const { terminate } = useActions(worldLogic)
+export function AwaitingVerificationScene() {
+  const { terminate } = useActions(verificationLogic)
+
   return (
-    <SWrapper>
-      <SLoaderWrapper>
-        <Loader />
-      </SLoaderWrapper>
-      <SHeader>Confirm Request</SHeader>
-      <SText>Please confirm the request in your Worldcoin app.</SText>
-      <Button block onClick={terminate}>
+    <SRoot>
+      <DialogHeader>
+        <DialogHeaderLogo centered />
+      </DialogHeader>
+      <SLoader />
+      {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+      <STitle variant="h3" centered>
+        Confirm Identity
+      </STitle>
+      <SText variant="p1" centered>
+        Please confirm your identity inside your Worldcoin mobile app.
+      </SText>
+      <Button size="lg" fullWidth onClick={terminate}>
         Cancel
       </Button>
-    </SWrapper>
+    </SRoot>
   )
 }

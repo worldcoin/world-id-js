@@ -1,50 +1,65 @@
-import { Button } from 'components/Button'
-import { StatefulIcon } from 'components/StatefulIcon'
-import { H3, P } from 'components/text'
-import { breakpoints } from 'const'
 import { useActions } from 'kea'
-import styled from 'styled-components'
-import { worldLogic } from 'worldLogic'
+import { styled } from 'stitches'
+import { Dialog } from 'components/Dialog'
+import { DialogHeader } from 'components/DialogHeader'
+import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
+import { Typography } from 'components/Typography'
+import { Button } from 'components/Button'
+import { Circle } from 'components/Circle'
+import { IconSuccess } from 'assets/icons'
+import { verificationLogic } from 'logic/verificationLogic'
+import { widgetLogic } from 'logic/widgetLogic'
 
-const SWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (max-width: ${breakpoints.sm}) {
-    justify-content: center;
-  }
-`
+const SRoot = styled(Dialog, {
+  display: 'flex',
+  flexFlow: 'column',
+  alignItems: 'center',
+  width: 400,
+})
 
-const SIconWrapper = styled.div`
-  margin: 60px 0 48px 0;
-`
+const SCircle = styled(Circle, {
+  margin: '60px 0 48px 0',
+})
 
-const SHeader = styled(H3)`
-  text-align: center;
-`
+const STitle = styled(Typography, {
+  marginBottom: 8,
+})
 
-const SText = styled(P)`
-  margin-top: 8px;
-  margin-bottom: 24px;
-  text-align: center;
-  max-width: 290px;
-  @media (max-width: ${breakpoints.sm}) {
-    max-width: none;
-  }
-`
+const SText = styled(Typography, {
+  maxWidth: 290,
+  marginBottom: 24,
+})
 
-export function ConfirmedScene(): JSX.Element {
-  const { terminate } = useActions(worldLogic)
+export function ConfirmedScene() {
+  const { terminate } = useActions(verificationLogic)
+  const { disableModal } = useActions(widgetLogic)
+
   return (
-    <SWrapper>
-      <SIconWrapper>
-        <StatefulIcon state="success" color="primary" />
-      </SIconWrapper>
-      <SHeader>Verification Confirmed!</SHeader>
-      <SText>Great! This World ID request has been successfully confirmed.</SText>
-      <Button color="primary" block onClick={terminate}>
+    <SRoot>
+      <DialogHeader>
+        <DialogHeaderLogo centered />
+      </DialogHeader>
+      <SCircle color="primary">
+        <IconSuccess />
+      </SCircle>
+      {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+      <STitle variant="h3" centered>
+        Identity Confirmed!
+      </STitle>
+      <SText variant="p1" centered>
+        Yay! Your identity has been successfully confirmed. You can start using your WorldID.
+      </SText>
+      <Button
+        color="primary"
+        size="lg"
+        fullWidth
+        onClick={() => {
+          terminate()
+          disableModal()
+        }}
+      >
         Continue
       </Button>
-    </SWrapper>
+    </SRoot>
   )
 }

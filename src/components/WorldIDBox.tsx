@@ -1,78 +1,156 @@
-import { WIDLogo } from 'assets/logos'
 import { useActions, useValues } from 'kea'
-import { worldLogic } from 'worldLogic'
-import styled from 'styled-components'
-import { VerificationState } from 'types'
-import { Checkbox } from './Checkbox'
-import { verificationLogic } from 'verificationLogic'
+import { styled } from 'stitches'
+import { WIDLogo, WorldcoinLogomark } from 'assets/logos'
+import { Box } from 'components/Box'
+import { IconCircleSuccess } from 'assets/icons'
+import { widgetLogic } from 'logic/widgetLogic'
+import { keyframes } from '@stitches/react'
+import { verificationLogic } from 'logic/verificationLogic'
+import { VerificationState } from 'types/verification-state'
+import { useMemo } from 'react'
+import { ModalView } from '../types/modal-view'
 import { MouseEvent as ReactMouseEvent } from 'react'
 
-const SWorldIDBox = styled.div<{ disabled: boolean; terminated: boolean }>`
-  user-select: none;
-  display: grid;
-  padding: var(--wld-box-border-width);
-  background: linear-gradient(to right, var(--wld-box-border-gradient-from), var(--wld-box-border-gradient-to));
-  border-radius: 12px;
-  height: 56px;
-  width: 100%;
-  max-width: 350px;
-  min-width: 250px;
-  box-sizing: border-box;
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : props.terminated ? 'default' : 'pointer')};
-  opacity: ${(props) => (props.disabled ? '0.5' : undefined)};
-`
+const SCaptcha = styled('button', {
+  display: 'grid',
+  gridGap: '8px',
+  alignItems: 'center',
+  boxSizing: 'border-box',
+  height: 56,
+  width: '100%',
+  maxWidth: 350,
+  minWidth: 250,
+  padding: '0 16px',
+  textAlign: 'left',
+  color: '$captchaColor',
+  background: `
+    linear-gradient(to right, $background, $background) padding-box,
+    linear-gradient(to right, $captchaGradientFrom, $captchaGradientTo) border-box
+  `,
+  border: '2px solid transparent',
+  borderRadius: '$lg',
+  cursor: 'pointer',
 
-const SContainer = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  justify-content: center;
-  padding: 0 16px;
-  color: var(--wid-box-color);
-  background-color: var(--wld-box-bg);
-  border-radius: calc(12px - var(--wld-box-border-width));
-`
+  '&:disabled': {
+    cursor: 'not-allowed',
+    opacity: '0.6',
+  },
 
-const SMainContainer = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 18px;
-`
+  variants: {
+    grid: {
+      false: {
+        gridTemplateColumns: 'auto',
+      },
+      true: {
+        gridTemplateColumns: 'auto 1fr auto',
+      },
+    },
+  },
+})
 
-const SLogoContainer = styled.div<{ onClick: (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => void }>`
-  --gradient-from: var(--wld-box-logo-gradient-from);
-  --gradient-to: var(--wld-box-logo-gradient-to);
-  display: grid;
-  align-items: center;
-  justify-content: center;
-`
+const SCheckbox = styled('div', {
+  boxSizing: 'border-box',
+  width: 20,
+  height: 20,
+  fontSize: '20px',
+  border: '1px solid',
+  borderRadius: '50%',
 
-export function WorldIDBox(): JSX.Element {
-  const { activate, showLearnMore } = useActions(worldLogic)
-  const { isAppEnabled, isAppTerminated } = useValues(worldLogic)
+  variants: {
+    checked: {
+      true: {
+        border: 0,
+      },
+    },
+  },
+})
+
+const SText = styled('div', {
+  fontSize: '14px',
+  fontWeight: '600',
+  lineHeight: '18px',
+  fontFamily: 'Rubik',
+})
+
+const SLogo = styled('button', {
+  '--gradient-from': '$colors$gradientFrom',
+  '--gradient-to': '$colors$gradientTo',
+  display: 'grid',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: 'none',
+  border: 'none',
+  padding: '0',
+  cursor: 'pointer',
+})
+
+const SErrorMessage = styled('h1', {
+  fontSize: '14px',
+  textAlign: 'center',
+  fontFamily: 'Rubik',
+  color: '$color',
+})
+
+const rotate = keyframes({
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' },
+})
+
+const Preloader = styled('div', {
+  width: '24px',
+  height: '24px',
+  margin: '0px auto',
+  animation: `${rotate} 2000ms linear infinite`,
+})
+
+export function WorldIDBox() {
+  const { isWidgetAvailable, widgetLoading } = useValues(widgetLogic)
+  const { activateModal, setModalView } = useActions(widgetLogic)
   const { verificationState } = useValues(verificationLogic)
 
-  const handleLearnMore = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (isAppEnabled && !isAppTerminated) {
-      e.stopPropagation()
-      showLearnMore()
+  const isVerified = useMemo(() => verificationState === VerificationState.Confirmed, [verificationState])
+
+  const showLearnMore = (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (!isWidgetAvailable || widgetLoading) {
+      return
     }
+
+    event.stopPropagation()
+    setModalView(ModalView.LearnMore)
+    activateModal()
   }
 
   return (
-    <SWorldIDBox
-      onClick={isAppEnabled && !isAppTerminated ? activate : undefined}
-      disabled={!isAppEnabled}
-      terminated={isAppTerminated}
-      data-testId="world-id-box"
-    >
-      <SContainer>
-        <Checkbox isChecked={verificationState === VerificationState.Confirmed} />
-        <SMainContainer>I&apos;m doing this once</SMainContainer>
-        <SLogoContainer onClick={handleLearnMore}>
-          <WIDLogo />
-        </SLogoContainer>
-      </SContainer>
-    </SWorldIDBox>
+    <Box>
+      {isWidgetAvailable && !widgetLoading && (
+        <SCaptcha
+          onClick={() => {
+            setModalView(ModalView.VerificationFlow)
+            activateModal()
+          }}
+          data-testId="world-id-box"
+          disabled={isVerified}
+          grid
+        >
+          <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
+          <SText>I&apos;m a unique person</SText>
+          <SLogo onClick={showLearnMore}>
+            <WIDLogo />
+          </SLogo>
+        </SCaptcha>
+      )}
+      {!isWidgetAvailable && !widgetLoading && (
+        <SCaptcha disabled>
+          <SErrorMessage>Widget is unavailable</SErrorMessage>
+        </SCaptcha>
+      )}
+      {widgetLoading && (
+        <SCaptcha disabled>
+          <Preloader>
+            <WorldcoinLogomark style={{ width: '100%', height: '100%' }} />
+          </Preloader>
+        </SCaptcha>
+      )}
+    </Box>
   )
 }

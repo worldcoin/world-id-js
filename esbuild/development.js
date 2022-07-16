@@ -11,7 +11,7 @@ esbuild
   .build({
     ...config,
 
-    entryPoints: [require.resolve('../src/react-widget/vanilla.tsx')],
+    entryPoints: [require.resolve('../src/vanilla.tsx')],
     banner: { js: '(() => new EventSource("/esbuild").onmessage = () => location.reload())();' },
     outfile: 'dist/world-id-dev.js',
     sourcemap: 'inline',
@@ -48,7 +48,7 @@ esbuild.serve({ servedir: './' }, {}).then(() => {
           headers,
           hostname: '0.0.0.0',
           method,
-          path: ~url.split('/').pop().indexOf('.') ? url : '/src/react-widget/index.html',
+          path: ~url.split('/').pop().indexOf('.') ? url : '/src/index.html',
           port: 8000,
         },
         (proxyResponse) => {

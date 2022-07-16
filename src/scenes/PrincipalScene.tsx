@@ -1,25 +1,31 @@
-import { VerificationState } from 'types'
-import { ErrorScene } from './ErrorScene'
-import { AwaitingConnectionScene } from './AwaitingConnectionScene'
+import { useActions, useValues } from 'kea'
+import { Overlay } from 'components/Overlay'
 import { AwaitingVerificationScene } from './AwaitingVerificationScene'
+import { AwaitingConnectionScene } from './AwaitingConnectionScene'
 import { ConfirmedScene } from './ConfirmedScene'
-import { useValues } from 'kea'
-import { verificationLogic } from 'verificationLogic'
+import { ErrorScene } from './ErrorScene'
+import { widgetLogic } from 'logic/widgetLogic'
+import { VerificationState } from 'types/verification-state'
+import { verificationLogic } from 'logic/verificationLogic'
 
-export function PrincipalScene(): JSX.Element {
+export function PrincipalScene() {
+  const { isModalVisible } = useValues(widgetLogic)
   const { verificationState } = useValues(verificationLogic)
+  const { terminate } = useActions(verificationLogic)
+  const { disableModal } = useActions(widgetLogic)
 
-  if (verificationState === VerificationState.AwaitingVerification) {
-    return <AwaitingVerificationScene />
-  }
-
-  if (verificationState === VerificationState.Failed) {
-    return <ErrorScene />
-  }
-
-  if (verificationState === VerificationState.Confirmed) {
-    return <ConfirmedScene />
-  }
-
-  return <AwaitingConnectionScene />
+  return (
+    <Overlay
+      open={isModalVisible}
+      onClose={() => {
+        terminate()
+        disableModal()
+      }}
+    >
+      {verificationState === VerificationState.Failed && <ErrorScene />}
+      {verificationState === VerificationState.Confirmed && <ConfirmedScene />}
+      {verificationState === VerificationState.AwaitingVerification && <AwaitingVerificationScene />}
+      {verificationState === VerificationState.AwaitingConnection && <AwaitingConnectionScene />}
+    </Overlay>
+  )
 }
