@@ -8,23 +8,6 @@ const packageJson = require('../package.json')
 /**
  * @type {import('esbuild').Plugin}
  */
-// const preactCompatPlugin = {
-//   name: 'preact-compat',
-//   setup(build) {
-//     build.onResolve({ filter: /^(react-dom|react)$/ }, async (args) => {
-//       const preact = await build.resolve('preact/compat', {
-//         resolveDir: args.resolveDir,
-//         importer: args.importer,
-//         kind: args.kind,
-//       })
-//       return { path: preact.path, sideEffects: false }
-//     })
-//   },
-// }
-
-/**
- * @type {import('esbuild').Plugin}
- */
 const babelTransforms = {
   name: 'babelTransformations',
   setup(build) {
@@ -32,20 +15,7 @@ const babelTransforms = {
 
     build.onLoad({ filter: /\.tsx/i }, async (args) => {
       const result = await babelTransformFileAsync(args.path, {
-        plugins: [
-          ['@babel/plugin-syntax-typescript', { isTSX: true }],
-          [
-            'babel-plugin-styled-components',
-            {
-              ssr: false,
-              displayName: false,
-              fileName: false,
-              minify: true,
-              transpileTemplateLiterals: false,
-              pure: true,
-            },
-          ],
-        ],
+        plugins: [['@babel/plugin-syntax-typescript', { isTSX: true }]],
         configFile: false,
         babelrc: false,
       })
@@ -71,7 +41,6 @@ export default /** @type {import('esbuild').BuildOptions} */ ({
       process: false,
       buffer: true,
     }),
-    // preactCompatPlugin,
     babelTransforms,
   ],
 })

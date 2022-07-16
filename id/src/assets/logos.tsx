@@ -1,4 +1,4 @@
-import { CSSProperties } from 'styled-components'
+import { CSSProperties } from '@stitches/react'
 
 export function WIDLogo({ style }: { style?: CSSProperties }): JSX.Element {
   return (

@@ -1,4 +1,4 @@
-import { CSSProperties } from 'styled-components'
+import { CSSProperties } from '@stitches/react'
 
 export function IconClose({ style }: { style?: CSSProperties }) {
   return (

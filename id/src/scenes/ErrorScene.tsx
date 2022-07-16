@@ -1,62 +1,62 @@
-import { Button } from 'components/Button'
-import { StatefulIcon } from 'components/StatefulIcon'
-import { H3, P } from 'components/text'
-import { breakpoints } from 'const'
 import { useActions, useValues } from 'kea'
-import styled from 'styled-components'
-import { verificationLogic } from 'verificationLogic'
-import { worldLogic } from 'worldLogic'
+import { verificationLogic } from 'logic/verificationLogic'
+import { styled } from 'stitches'
+import { Dialog } from 'components/Dialog'
+import { DialogHeader } from 'components/DialogHeader'
+import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
+import { Typography } from 'components/Typography'
+import { Button } from 'components/Button'
+import { Circle } from 'components/Circle'
+import { IconFailure } from 'assets/icons'
 
-const SWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (max-width: ${breakpoints.sm}) {
-    justify-content: center;
-  }
-`
+const SRoot = styled(Dialog, {
+  display: 'flex',
+  flexFlow: 'column',
+  alignItems: 'center',
+  width: 400,
+})
 
-const SIconWrapper = styled.div`
-  margin: 60px 0 48px 0;
-`
+const SCircle = styled(Circle, {
+  margin: '60px 0 48px 0',
+})
 
-const SHeader = styled(H3)`
-  text-align: center;
-`
+const STitle = styled(Typography, {
+  marginBottom: 8,
+})
 
-const SText = styled(P)`
-  margin-top: 8px;
-  margin-bottom: 24px;
-  text-align: center;
-  max-width: 230px;
-  @media (max-width: ${breakpoints.sm}) {
-    max-width: none;
-  }
-`
+const SText = styled(Typography, {
+  maxWidth: 290,
+  marginBottom: 24,
+})
 
-export function ErrorScene(): JSX.Element {
+export function ErrorScene() {
   const { endUserError } = useValues(verificationLogic)
-  const { terminate } = useActions(worldLogic)
-  const { tryAgain } = useActions(verificationLogic)
-
-  const actionButtons = endUserError?.noRetry ? (
-    <Button block onClick={terminate}>
-      Close
-    </Button>
-  ) : (
-    <Button color="primary" block onClick={tryAgain}>
-      Try again
-    </Button>
-  )
+  const { tryAgain, terminate } = useActions(verificationLogic)
 
   return (
-    <SWrapper>
-      <SIconWrapper>
-        <StatefulIcon color={endUserError?.noRetry ? undefined : 'primary'} />
-      </SIconWrapper>
-      <SHeader>{endUserError?.title || 'Something went wrong!'}</SHeader>
-      <SText>{endUserError?.caption || 'Sorry, there was a problem with your request, please try again.'}</SText>
-      {actionButtons}
-    </SWrapper>
+    <SRoot>
+      <DialogHeader>
+        <DialogHeaderLogo centered />
+      </DialogHeader>
+      <SCircle color={endUserError?.noRetry ? 'default' : 'primary'}>
+        <IconFailure />
+      </SCircle>
+      {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+      <STitle variant="h3" centered>
+        {endUserError?.title || 'Something went wrong'}
+      </STitle>
+      <SText variant="p1" centered>
+        {endUserError?.caption || 'Sorry, there was a problem with your request, please try again.'}
+      </SText>
+      {endUserError?.noRetry ? (
+        <Button size="lg" fullWidth onClick={terminate}>
+          Close
+        </Button>
+      ) : (
+        <Button color="primary" size="lg" fullWidth onClick={tryAgain}>
+          Try again
+        </Button>
+      )}
+    </SRoot>
   )
 }

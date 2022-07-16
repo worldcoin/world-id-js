@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom'
-import { h, Fragment } from 'preact'
-global.h = h
-global.Fragment = Fragment
+import React from 'react'
+
+//REVIEW add global react to avoid "ReferenceError: React is not defined" error
+global.React = React
 global.fetch = {
   bind: jest.fn(),
 }
