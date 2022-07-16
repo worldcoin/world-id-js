@@ -2,7 +2,13 @@ import WalletConnect from '@walletconnect/client'
 import { END_USER_ERROR_MESSAGES, ERROR_MESSAGES } from 'const'
 import { kea, actions, reducers, path, listeners, props, events, connect, selectors } from 'kea'
 import { VerificationState } from 'react-widget/types/verification-state'
-// import { telemetryConnectionEstablished } from 'telemetry'
+import {
+  initTelemetry,
+  telemetryConnectionEstablished,
+  telemetryVerificationFailed,
+  telemetryVerificationLaunched,
+  telemetryVerificationSuccess,
+} from 'telemetry'
 import { ConnectionProps, EndUserErrorDisplay, ErrorCodes, ExpectedErrorResponse, VerificationResponse } from 'types'
 import { buildVerificationRequest, verifyVerificationResponse } from 'utils'
 import { widgetLogic } from './widgetLogic'
@@ -36,6 +42,9 @@ export const verificationLogic = kea<verificationLogicType>([
     terminate: true,
     tryAgain: true,
     reset: true,
+
+    //ANCHOR telemetry actions
+    initTelemetry: true,
   }),
   connect({
     actions: [widgetLogic, ['finishWidgetLoading', 'setQrCodeContent', 'enableWidget', 'disableModal']],
@@ -49,7 +58,7 @@ export const verificationLogic = kea<verificationLogicType>([
       },
     ],
     connectionStartTime: [
-      // We store the moment the connection process begins to measure how much time it takes to complete
+      //NOTE  We store the moment the connection process begins to measure how much time it takes to complete
       null as number | null,
       {
         setConnectionStartTime: (_, { startTime }) => startTime,
@@ -114,6 +123,8 @@ export const verificationLogic = kea<verificationLogicType>([
           actions.handleConnectionEstablished()
         }
       })
+
+      telemetryVerificationLaunched()
     },
     setConnectorUri: ({ connectorUri }) => {
       if (!connectorUri) {
@@ -135,9 +146,9 @@ export const verificationLogic = kea<verificationLogicType>([
     //ANCHOR verification listeners
     handleConnectionEstablished: async () => {
       actions.setVerificationState(VerificationState.AwaitingVerification)
-      // telemetryConnectionEstablished(
-      //   values.connectionStartTime ? (performance.now() - values.connectionStartTime) / 1000 : undefined
-      // )
+      telemetryConnectionEstablished(
+        values.connectionStartTime ? (performance.now() - values.connectionStartTime) / 1000 : undefined
+      )
 
       try {
         const result = await connector.sendCustomRequest(buildVerificationRequest(props))
@@ -157,7 +168,7 @@ export const verificationLogic = kea<verificationLogicType>([
         actions.setError(errorCode)
       }
 
-      // Terminate the session; we only use WalletConnect for one-off transactions
+      //NOTE Terminate the session; we only use WalletConnect for one-off transactions
       try {
         try {
           await connector.killSession()
@@ -166,8 +177,11 @@ export const verificationLogic = kea<verificationLogicType>([
         }
       } catch {}
     },
+    setSuccess: async () => {
+      telemetryVerificationSuccess()
+    },
     setError: ({ errorCode }) => {
-      console.log(errorCode)
+      telemetryVerificationFailed(errorCode)
     },
     terminate: async (_, breakpoint) => {
       breakpoint()
@@ -199,16 +213,15 @@ export const verificationLogic = kea<verificationLogicType>([
       }
     },
     tryAgain: () => {
-      // `tryAgain` is almost an alias to `reset`, with the distinction we start a new connection right away
+      //NOTE `tryAgain` is almost an alias to `reset`, with the distinction we start a new connection right away
       actions.reset()
       actions.initConnection()
     },
-    // setVerificationState: async ({ verificationState }) => {
-    //   // After the verification flow progresses, hide the CTA modal if it's still shown
-    //   if (verificationState !== VerificationState.Awaiting && worldLogic.values.ctaShownState === CTAShownState.Show) {
-    //     worldLogic.actions.toggleCTAShown()
-    //   }
-    // },
+
+    //ANCHOR telemetry listeners
+    initTelemetry: async () => {
+      initTelemetry(props.enable_telemetry)
+    },
   })),
   selectors({
     endUserError: [
@@ -222,6 +235,6 @@ export const verificationLogic = kea<verificationLogicType>([
     ],
   }),
   events(({ actions }) => ({
-    afterMount: [actions.initConnection, () => actions.initConnection()],
+    afterMount: [actions.initConnection, () => actions.initConnection(), actions.initTelemetry],
   })),
 ])
