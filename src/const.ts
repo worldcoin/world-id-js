@@ -1,4 +1,5 @@
-import { EndUserErrorDisplay, ErrorCodes } from 'types'
+import { EndUserErrorDisplay } from 'types/end-user-error-display'
+import { ErrorCodes } from 'types/error-codes'
 
 /**
  * Included in thrown exceptions to the client app when the process fails.

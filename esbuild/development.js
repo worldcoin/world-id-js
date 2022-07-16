@@ -2,35 +2,16 @@ import { createServer, request } from 'http'
 import esbuild from 'esbuild'
 import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
-import meow from 'meow'
 
 import config from './config.js'
 
 const clients = []
 
-const cli = meow({
-  flags: { variant: { type: 'string', alias: 'v', isRequired: false, default: 'browser' } },
-  importMeta: import.meta,
-})
-
-const variants = {
-  react: {
-    entryPoint: require.resolve('../src/react-widget/index.tsx'),
-    html: '/src/react-widget/index.html',
-    serveDir: './',
-  },
-  browser: {
-    entryPoint: require.resolve('../src/browser.tsx'),
-    html: '/src/index.html',
-    serveDir: './',
-  },
-}
-
 esbuild
   .build({
     ...config,
 
-    entryPoints: [variants[cli.flags.variant].entryPoint],
+    entryPoints: [require.resolve('../src/vanilla.tsx')],
     banner: { js: '(() => new EventSource("/esbuild").onmessage = () => location.reload())();' },
     outfile: 'dist/world-id-dev.js',
     sourcemap: 'inline',
@@ -47,7 +28,7 @@ esbuild
   })
   .catch(() => process.exit(1))
 
-esbuild.serve({ servedir: variants[cli.flags.variant].serveDir }, {}).then(() => {
+esbuild.serve({ servedir: './' }, {}).then(() => {
   createServer((serverRequest, serverResponse) => {
     const { url, method, headers } = serverRequest
 
@@ -67,7 +48,7 @@ esbuild.serve({ servedir: variants[cli.flags.variant].serveDir }, {}).then(() =>
           headers,
           hostname: '0.0.0.0',
           method,
-          path: ~url.split('/').pop().indexOf('.') ? url : variants[cli.flags.variant].html,
+          path: ~url.split('/').pop().indexOf('.') ? url : '/src/index.html',
           port: 8000,
         },
         (proxyResponse) => {

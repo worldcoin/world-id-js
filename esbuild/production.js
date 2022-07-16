@@ -3,6 +3,7 @@ import { clean } from 'esbuild-plugin-clean'
 import meow from 'meow'
 import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
+import { nodeExternalsPlugin } from 'esbuild-node-externals'
 
 import config from './config.js'
 
@@ -28,6 +29,10 @@ const configs = {
   esm: {
     ...baseConfig,
     plugins: [
+      nodeExternalsPlugin({
+        packagePath: require.resolve('../package.json'),
+        allowList: ['@walletconnect/client'],
+      }),
       clean({
         patterns: ['./dist/index.js'],
       }),
@@ -54,7 +59,7 @@ const configs = {
   iife: {
     ...baseConfig,
 
-    entryPoints: [require.resolve('../src/browser.tsx')],
+    entryPoints: [require.resolve('../src/vanilla.tsx')],
     plugins: [
       clean({
         patterns: ['./dist/world-id.js'],

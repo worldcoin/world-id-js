@@ -1,57 +1,125 @@
-import styled from 'styled-components'
-import { breakpoints } from 'const'
+import { styled } from 'stitches'
 
-export const Button = styled.button<{ block?: boolean }>`
-  width: ${(props) => (props.block ? '100%' : undefined)};
-  height: 54px;
-  font-family: 'Sora', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: ${(props) => (props.color === 'primary' ? 'var(--button-primary-color)' : 'var(--button-color)')};
-  background-color: ${(props) => (props.color === 'primary' ? 'var(--button-primary-bg)' : 'var(--button-bg)')};
-  border-radius: 12px;
-  border: 0;
-  outline: 0;
-  cursor: pointer;
+export const Button = styled('button', {
+  display: 'inline-grid',
+  gridAutoFlow: 'column',
+  alignItems: 'center',
+  padding: 0,
+  border: 0,
+  outline: 0,
+  background: 'transparent',
+  borderRadius: '$lg',
+  cursor: 'pointer',
 
-  &:hover {
-    background-color: ${(props) =>
-      props.color === 'primary' ? 'var(--button-primary-hover-bg)' : 'var(--button-hover-bg)'};
-  }
+  variants: {
+    variant: {
+      default: {},
+      link: {
+        fontFamily: '"Rubik"',
+        fontSize: '18px',
+        fontWeight: 500,
+      },
+    },
+    size: {
+      sm: {
+        height: 24,
+        padding: '0 10px',
+        borderRadius: '$sm',
+      },
+      lg: {
+        height: 54,
+        fontFamily: '"Sora"',
+        fontSize: '14px',
+        fontWeight: 600,
+        lineHeight: '18px',
+        textTransform: 'uppercase',
+      },
+      xl: {
+        height: 60,
+      },
+    },
+    color: {
+      default: {},
+      primary: {},
+      gradient: {},
+    },
+    fullWidth: {
+      true: {
+        width: '100%',
+      },
+    },
+  },
 
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-`
+  defaultVariants: {
+    variant: 'default',
+    color: 'default',
+  },
 
-export const StealthButton = styled(Button)<{ secondary?: boolean; onClick?: () => void }>`
-  height: 24px;
-  padding: 0 10px;
-  font-family: 'Rubik', sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  text-transform: none;
-  color: var(--button-stealth-color);
-  background-color: var(--button-stealth-bg);
-  border-radius: 8px;
+  compoundVariants: [
+    {
+      variant: 'default',
+      color: 'default',
+      css: {
+        color: '$color',
+        background: '$buttonDefaultBg',
+      },
+    },
+    {
+      variant: 'default',
+      color: 'primary',
+      css: {
+        color: '$buttonPrimaryColor',
+        background: '$buttonPrimaryBg',
+      },
+    },
+    {
+      variant: 'default',
+      color: 'gradient',
+      css: {
+        color: '$color',
+        position: 'relative',
+        minHeight: 44,
+        padding: '0 24px',
+        fontFamily: 'Sora',
+        fontSize: '16px',
+        fontWeight: 600,
+        lineHeight: '18px',
+        textTransform: 'uppercase',
+        background: `
+          linear-gradient(to right, $background, $background) padding-box,
+          linear-gradient(to right, $buttonGradientFrom, $buttonGradientTo) border-box
+        `,
+        border: '2px solid transparent',
 
-  &:hover {
-    background-color: var(--button-stealth-hover-bg);
-  }
+        '@smDown': {
+          transition: 'box-shadow 200ms',
+          boxShadow: '0px 10px 20px rgba(255, 104, 72, 0.2);',
 
-  @media (max-width: ${breakpoints.sm}) {
-    line-height: 22px;
-    font-size: 18px;
-    &,
-    &:hover {
-      font-weight: 500;
-      color: ${(props) => (props.secondary ? '#858494' : 'var(--button-stealth-mobile-color)')};
-      background: transparent;
-    }
-    &:hover {
-      opacity: 0.7;
-    }
-  }
-`
+          '&:hover': {
+            boxShadow: '0px 10px 20px rgba(255, 104, 72, 0.4);',
+          },
+        },
+      },
+    },
+    {
+      variant: 'link',
+      color: 'default',
+      css: {
+        '@smDown': {
+          fontWeight: 500,
+          color: '$grey5',
+        },
+      },
+    },
+    {
+      variant: 'link',
+      color: 'primary',
+      css: {
+        '@smDown': {
+          fontWeight: 500,
+          color: '$primary',
+        },
+      },
+    },
+  ],
+})
