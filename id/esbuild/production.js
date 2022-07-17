@@ -28,6 +28,9 @@ const baseConfig = {
 const configs = {
   esm: {
     ...baseConfig,
+
+    //NOTE banner fixes "window is not defined" error in next.js SSR
+    banner: { js: "if (typeof window === 'undefined') { return }" },
     plugins: [
       nodeExternalsPlugin({
         packagePath: require.resolve('../package.json'),
@@ -45,11 +48,16 @@ const configs = {
 
   cjs: {
     ...baseConfig,
+    //NOTE banner fixes "window is not defined" error in next.js SSR
+    banner: { js: "if (typeof window === 'undefined') { return }" },
     plugins: [
+      nodeExternalsPlugin({
+        packagePath: require.resolve('../package.json'),
+        allowList: ['@walletconnect/client'],
+      }),
       clean({
         patterns: ['./dist/index.cjs'],
       }),
-
       ...baseConfig.plugins,
     ],
     format: 'cjs',
