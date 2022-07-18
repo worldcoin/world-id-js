@@ -1,14 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { Widget } from "@worldcoin/id";
-// import dynamic from "next/dynamic";
-
-// const Widget = dynamic(() =>
-//   import("@worldcoin/id").then((mod) => mod.Widget), { ssr: false }
-// );
-
+import dynamic from "next/dynamic";
+import { utils } from "@worldcoin/id";
 import { AppProps } from "@worldcoin/id/dist/types/app-props";
+import { useEffect } from "react";
+
+const Widget = dynamic(
+  () => import("@worldcoin/id").then((mod) => mod.Widget),
+  { ssr: false }
+);
 
 const widgetProps: AppProps = {
   connectionProps: {
@@ -28,6 +29,10 @@ const widgetProps: AppProps = {
 };
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    console.log("Random Number from utils: ", utils.randomNumber(1, 100));
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
