@@ -3,6 +3,7 @@
   "private": true,
   "workspaces": [
     "id",
-    "id-example-react"
+    "id-example-react",
+    "id-example-react-nextjs"
   ]
 }
