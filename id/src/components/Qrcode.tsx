@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { renderToString } from 'react-dom/server'
 import { styled } from 'stitches'
 import { WorldcoinLogomark } from 'assets/logos'
-import QRCodeStyling from 'qr-code-styling'
+import QRCodeStyling from 'qr-code-styling-new'
 
 const logoB64 = window.btoa(renderToString(<WorldcoinLogomark />))
 

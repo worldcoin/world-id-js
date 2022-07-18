@@ -86,7 +86,7 @@
     "js-sha3": "0.8.0",
     "kea": "3.0.1",
     "posthog-js-lite": "0.0.5",
-    "qr-code-styling": "1.6.0-rc.1"
+    "qr-code-styling-new": "1.6.1"
   },
   "peerDependencies": {
     "react": "18.2.0",

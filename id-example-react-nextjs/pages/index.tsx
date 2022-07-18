@@ -1,11 +1,12 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import dynamic from 'next/dynamic'
+import type { NextPage } from "next";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import { Widget } from "@worldcoin/id";
+// import dynamic from "next/dynamic";
 
-const Widget = dynamic(() =>
-  import("@worldcoin/id").then((mod) => mod.Widget), { ssr: false }
-);
+// const Widget = dynamic(() =>
+//   import("@worldcoin/id").then((mod) => mod.Widget), { ssr: false }
+// );
 
 import { AppProps } from "@worldcoin/id/dist/types/app-props";
 
@@ -38,9 +39,8 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <Widget {...widgetProps} />
       </main>
-
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

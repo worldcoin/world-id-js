@@ -8,13 +8,15 @@ function factoryPostHogFetchError(error: unknown) {
   return { name: 'telemetry-error', error }
 }
 
-window.onunhandledrejection = function (event) {
-  return event.reason.name !== 'telemetry-error'
+if (typeof window !== 'undefined') {
+  window.onunhandledrejection = function (event) {
+    return event.reason.name !== 'telemetry-error'
+  }
 }
 
 async function posthogFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
   try {
-    return await window.fetch(input, init)
+    return await fetch(input, init)
   } catch (error) {
     throw factoryPostHogFetchError(error)
   }

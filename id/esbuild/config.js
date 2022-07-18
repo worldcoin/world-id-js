@@ -29,7 +29,7 @@ export default /** @type {import('esbuild').BuildOptions} */ ({
   loader: { '.svg': 'dataurl', '.png': 'dataurl' },
   logLevel: 'info',
   define: {
-    global: 'window',
+    global: 'globalThis',
     worldIdJSVersion: JSON.stringify(packageJson.version),
   },
   entryPoints: [require.resolve('../src/index.ts')],

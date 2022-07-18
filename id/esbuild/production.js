@@ -15,7 +15,7 @@ const cli = meow({
 /** @type {import('esbuild').BuildOptions} */
 const baseConfig = {
   ...config,
-  minify: true,
+  minify: false,
   treeShaking: true,
   define: {
     ...config.define,
@@ -29,6 +29,10 @@ const configs = {
   esm: {
     ...baseConfig,
 
+    define: {
+      ...baseConfig.define,
+      window: 'globalThis',
+    },
     plugins: [
       nodeExternalsPlugin({
         packagePath: require.resolve('../package.json'),
@@ -47,6 +51,10 @@ const configs = {
   cjs: {
     ...baseConfig,
 
+    define: {
+      ...baseConfig.define,
+      window: 'globalThis',
+    },
     plugins: [
       nodeExternalsPlugin({
         packagePath: require.resolve('../package.json'),
