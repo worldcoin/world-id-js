@@ -20,9 +20,11 @@ jobs:
         run: npm ci
 
       - name: Check formatting with Prettier
+        working-directory: ./id
         run: npm run format:check
 
       - name: Spellcheck
+        working-directory: ./id
         run: npm run spellcheck
 
   typecheck:
@@ -41,19 +43,21 @@ jobs:
         run: npm ci
 
       - name: Lint with ESLint
+        working-directory: ./id
         run: npm run lint
 
       - name: Generate Kea typing
+        working-directory: ./id
         run: npm run typegen
 
       - name: Check Typescript
+        working-directory: ./id
         run: |
           npm run typecheck
 
   test:
     name: Test
     runs-on: ubuntu-20.04
-
     steps:
       - uses: actions/checkout@v3
 
