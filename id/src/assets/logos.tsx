@@ -16,12 +16,12 @@ export function WIDLogo({ style }: { style?: CSSProperties }): JSX.Element {
         fill="#5E54FF"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M36.9968 6.59687C37.1899 6.59687 37.3477 6.75333 37.3477 6.94688C37.3477 7.14042 37.193 7.29687 37.0003 7.29687L36.9968 7.29687C36.8037 7.29687 36.6477 7.14042 36.6477 6.94687C36.6477 6.75332 36.8037 6.59687 36.9968 6.59687"
         fill="#5E54FF"
       />
-      <circle cx="36.9987" cy="5.0026" r="3.66667" stroke="#5E54FF" stroke-width="0.7" />
+      <circle cx="36.9987" cy="5.0026" r="3.66667" stroke="#5E54FF" strokeWidth="0.7" />
       <defs>
         <linearGradient
           id="paint0_linear_18_318"
@@ -31,8 +31,8 @@ export function WIDLogo({ style }: { style?: CSSProperties }): JSX.Element {
           y2="15.9999"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" style={{ stopColor: 'var(--gradient-from)' }} />
-          <stop offset="1" stop-color="#4940E0" style={{ stopColor: 'var(--gradient-to)' }} />
+          <stop stopColor="#FF6848" style={{ stopColor: 'var(--gradient-from)' }} />
+          <stop offset="1" stopColor="#4940E0" style={{ stopColor: 'var(--gradient-to)' }} />
         </linearGradient>
         <linearGradient
           id="paint1_linear_18_318"
@@ -42,8 +42,8 @@ export function WIDLogo({ style }: { style?: CSSProperties }): JSX.Element {
           y2="37"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" style={{ stopColor: 'var(--gradient-from)' }} />
-          <stop offset="1" stop-color="#4940E0" style={{ stopColor: 'var(--gradient-to)' }} />
+          <stop stopColor="#FF6848" style={{ stopColor: 'var(--gradient-from)' }} />
+          <stop offset="1" stopColor="#4940E0" style={{ stopColor: 'var(--gradient-to)' }} />
         </linearGradient>
       </defs>
     </svg>
@@ -155,8 +155,8 @@ export function WorldcoinLogomark({ style }: { style?: CSSProperties }): JSX.Ele
           y2="22.6957"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" />
-          <stop offset="1" stop-color="#4940E0" />
+          <stop stopColor="#FF6848" />
+          <stop offset="1" stopColor="#4940E0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_7302_161195"
@@ -166,8 +166,8 @@ export function WorldcoinLogomark({ style }: { style?: CSSProperties }): JSX.Ele
           y2="22.6957"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" />
-          <stop offset="1" stop-color="#4940E0" />
+          <stop stopColor="#FF6848" />
+          <stop offset="1" stopColor="#4940E0" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_7302_161195"
@@ -177,8 +177,8 @@ export function WorldcoinLogomark({ style }: { style?: CSSProperties }): JSX.Ele
           y2="22.6957"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" />
-          <stop offset="1" stop-color="#4940E0" />
+          <stop stopColor="#FF6848" />
+          <stop offset="1" stopColor="#4940E0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_7302_161195"
@@ -188,8 +188,8 @@ export function WorldcoinLogomark({ style }: { style?: CSSProperties }): JSX.Ele
           y2="22.6957"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" />
-          <stop offset="1" stop-color="#4940E0" />
+          <stop stopColor="#FF6848" />
+          <stop offset="1" stopColor="#4940E0" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_7302_161195"
@@ -199,8 +199,8 @@ export function WorldcoinLogomark({ style }: { style?: CSSProperties }): JSX.Ele
           y2="22.6957"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" />
-          <stop offset="1" stop-color="#4940E0" />
+          <stop stopColor="#FF6848" />
+          <stop offset="1" stopColor="#4940E0" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_7302_161195"
@@ -210,8 +210,8 @@ export function WorldcoinLogomark({ style }: { style?: CSSProperties }): JSX.Ele
           y2="22.6957"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" />
-          <stop offset="1" stop-color="#4940E0" />
+          <stop stopColor="#FF6848" />
+          <stop offset="1" stopColor="#4940E0" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_7302_161195"
@@ -221,8 +221,8 @@ export function WorldcoinLogomark({ style }: { style?: CSSProperties }): JSX.Ele
           y2="22.6957"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF6848" />
-          <stop offset="1" stop-color="#4940E0" />
+          <stop stopColor="#FF6848" />
+          <stop offset="1" stopColor="#4940E0" />
         </linearGradient>
       </defs>
     </svg>
@@ -261,8 +261,8 @@ export function WorldcoinApp() {
           y2="80"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F66751" />
-          <stop offset="1" stop-color="#5743D6" />
+          <stop stopColor="#F66751" />
+          <stop offset="1" stopColor="#5743D6" />
         </linearGradient>
       </defs>
     </svg>
