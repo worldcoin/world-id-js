@@ -24,36 +24,47 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
   const startApp = () => {
     if (!vanillaWidgetLogic.isMounted()) {
       vanillaWidgetLogic.mount()
+    } else {
+      if (props.onInitError) {
+        const message = 'World ID is already initialized. To update properties, please use `worldID.update` instead.'
+        props.onInitError({ error: { message } })
+        return
+      }
     }
 
     if (!mountNode) {
       const errorMessage = 'Element to mount World ID not found. Please make sure the element is valid.'
-
       if (props.onInitError) {
         props.onInitError({ error: { message: errorMessage } })
+        return
       }
     }
 
     if (!(mountNode instanceof HTMLElement)) {
       const errorMessage = 'The passed element parameter does not look like a valid HTML element.'
-
       if (props.onInitError) {
         props.onInitError({ error: { message: errorMessage } })
+        return
       }
     }
 
-    vanillaWidgetLogic.actions.updateParams(props)
+    if (!props.connectionProps.action_id) {
+      if (props.onInitError) {
+        const message = 'The `action_id` parameter is always required.'
+        props.onInitError({ error: { message } })
+        return
+      }
+    }
+
+    try {
+      vanillaWidgetLogic.actions.updateParams(props)
+    } catch (error) {
+    }
 
     try {
       const root = createRoot(mountNode as Element)
       root.render(<VanillaWidget />)
-    } catch (error) {
-      console.log(error)
-
-      if (props.onInitError) {
-        props.onInitError({ error: { message: 'Error while rendering Widget component at node', original: error } })
-      }
-    }
+    } catch (error) {}
 
     if (props.onInitSuccess) {
       props.onInitSuccess()
@@ -78,9 +89,12 @@ export const update = (propsToUpdate: Partial<AppProps>) => {
   if (!vanillaWidgetLogic.isMounted()) {
     return console.log('Init widget before updating')
   }
-
+  if (!propsToUpdate.connectionProps?.action_id) {
+    throw 'The `action_id` parameter is always required.'
+  }
   vanillaWidgetLogic.actions.updateParams(propsToUpdate)
 }
+
 /**
  * Returns actual World ID props
  */

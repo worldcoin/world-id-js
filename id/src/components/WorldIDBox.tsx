@@ -128,7 +128,7 @@ export function WorldIDBox() {
             setModalView(ModalView.VerificationFlow)
             activateModal()
           }}
-          data-testId="world-id-box"
+          data-testid="world-id-box"
           disabled={isVerified}
           grid
         >
