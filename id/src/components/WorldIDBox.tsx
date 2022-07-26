@@ -71,7 +71,7 @@ const SText = styled('div', {
   fontFamily: 'Sora',
 })
 
-const SLogo = styled('button', {
+const SLogo = styled('div', {
   '--gradient-from': '$colors$gradientFrom',
   '--gradient-to': '$colors$gradientTo',
   display: 'grid',
@@ -133,6 +133,8 @@ export function WorldIDBox() {
         >
           <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
           <SText>I&apos;m a unique person</SText>
+          {/* FIXME only the question mark icon should be clickable; fix typescript (make sure rendered HTML is valid) */}
+          {/* @ts-ignore */}
           <SLogo onClick={showLearnMore}>
             <WIDLogo />
           </SLogo>

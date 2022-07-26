@@ -29,7 +29,7 @@ const Heading = styled('h3', {
   alignSelf: 'end',
 })
 
-const Description = styled('p', {
+const Description = styled('div', {
   color: '$grey5',
   margin: '0',
   fontFamily: '"Rubik"',
