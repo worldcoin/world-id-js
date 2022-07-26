@@ -330,9 +330,8 @@ export function AwaitingConnectionScene() {
             </SDevHeader>
 
             <SDevButtonsContainer>
-              {/* TODO add proper urls */}
               <DevModeLink
-                href={'#'}
+                href="https://simulator.worldcoin.org"
                 icon={<DevModeSimulatorIcon />}
                 heading="Simulator"
                 description={
@@ -343,20 +342,25 @@ export function AwaitingConnectionScene() {
               />
 
               <DevModeLink
-                href={'#'}
+                href="https://worldcoin.org/verify"
                 icon={<DevModeWorldcoinAppIcon />}
                 heading="Worldcoin app"
                 description="Open or install Worldcoin app to test in production"
               />
 
               <DevModeLink
-                href={'#'}
+                href="https://id.worldcoin.org/test"
                 icon={<DevModeTestingIcon />}
                 heading="Testing"
                 description="Docs on how to test with the Staging network"
               />
 
-              <DevModeLink href={'#'} icon={<DevModeDocsIcon />} heading="Docs" description="Docs for this widget" />
+              <DevModeLink
+                href="https://id.worldcoin.org/docs/js"
+                icon={<DevModeDocsIcon />}
+                heading="Docs"
+                description="Docs for this widget"
+              />
             </SDevButtonsContainer>
           </SDev>
         )}

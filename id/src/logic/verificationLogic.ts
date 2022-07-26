@@ -64,7 +64,7 @@ export const verificationLogic = kea<verificationLogicType>([
       },
     ],
     connectionStartTime: [
-      // NOTE  We store the moment the connection process begins to measure how much time it takes to complete
+      // We store the moment the connection process begins to measure how much time it takes to complete
       null as number | null,
       {
         setConnectionStartTime: (_, { startTime }) => startTime,
@@ -99,7 +99,7 @@ export const verificationLogic = kea<verificationLogicType>([
     ],
   }),
   listeners(({ actions, values, props }) => ({
-    //ANCHOR connection listeners
+    // ANCHOR connection listeners
     initConnection: async () => {
       if (values.connectorUri) {
         return
@@ -150,7 +150,7 @@ export const verificationLogic = kea<verificationLogicType>([
       actions.enableWidget()
     },
 
-    //ANCHOR verification listeners
+    // ANCHOR verification listeners
     handleConnectionEstablished: async () => {
       actions.setVerificationState(VerificationState.AwaitingVerification)
       telemetryConnectionEstablished(

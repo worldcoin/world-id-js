@@ -50,7 +50,7 @@ export const DevModeLink = (props: {
   icon: ReactNode
 }): JSX.Element => {
   return (
-    <Link href={props.href}>
+    <Link href={props.href} target="_blank" rel="noopener">
       <Icon>{props.icon}</Icon>
       <Heading>{props.heading}</Heading>
       <Description>{props.description}</Description>
