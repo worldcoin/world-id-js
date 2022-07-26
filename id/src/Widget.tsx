@@ -21,15 +21,14 @@ export function Widget(props: AppProps): JSX.Element {
     const { valid, error } = validateInputParams(props)
 
     if (!valid && props.debug) {
-      console.log('Some widget appProps are invalid')
-      console.log(error)
+      console.error(error)
     }
     if (!valid) {
       return null
     }
 
     return verificationLogic(props)
-  }, [props, props.debug])
+  }, [props])
 
   useEffect(() => {
     if (!props.disableRemoteFonts) {

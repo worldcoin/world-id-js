@@ -73,7 +73,7 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
  */
 export const update = (propsToUpdate: Partial<AppProps>) => {
   if (!vanillaWidgetLogic.isMounted()) {
-    return console.log('Init widget before updating')
+    return console.warn('Widget must be initialized before updating.')
   }
 
   vanillaWidgetLogic.actions.updateParams(propsToUpdate)

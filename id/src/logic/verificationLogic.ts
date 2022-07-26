@@ -35,12 +35,12 @@ export const verificationLogic = kea<verificationLogicType>([
   path(['logic', 'verificationLogic']),
   props({} as AppProps),
   actions({
-    //ANCHOR connection actions
+    // ANCHOR connection actions
     initConnection: true,
     setConnectorUri: (connectorUri: string | null) => ({ connectorUri }),
     setConnectionStartTime: (startTime: null | number) => ({ startTime }),
 
-    //ANCHOR verification actions
+    // ANCHOR verification actions
     handleConnectionEstablished: true,
     setVerificationState: (verificationState: VerificationState) => ({ verificationState }),
     setError: (errorCode: ErrorCodes) => ({ errorCode }),
@@ -49,14 +49,14 @@ export const verificationLogic = kea<verificationLogicType>([
     tryAgain: true,
     reset: true,
 
-    //ANCHOR telemetry actions
+    // ANCHOR telemetry actions
     initTelemetry: true,
   }),
   connect({
     actions: [widgetLogic, ['finishWidgetLoading', 'setQrCodeContent', 'enableWidget', 'disableModal']],
   }),
   reducers({
-    //ANCHOR connection reducers
+    // ANCHOR connection reducers
     connectorUri: [
       null as string | null,
       {
@@ -64,13 +64,14 @@ export const verificationLogic = kea<verificationLogicType>([
       },
     ],
     connectionStartTime: [
-      //NOTE  We store the moment the connection process begins to measure how much time it takes to complete
+      // NOTE  We store the moment the connection process begins to measure how much time it takes to complete
       null as number | null,
       {
         setConnectionStartTime: (_, { startTime }) => startTime,
       },
     ],
-    //ANCHOR verification reducers
+
+    // ANCHOR verification reducers
     verificationState: [
       VerificationState.AwaitingConnection as VerificationState,
       {
@@ -219,12 +220,12 @@ export const verificationLogic = kea<verificationLogicType>([
       }
     },
     tryAgain: () => {
-      //NOTE `tryAgain` is almost an alias to `reset`, with the distinction we start a new connection right away
+      // NOTE `tryAgain` is almost an alias to `reset`, with the distinction we start a new connection right away
       actions.reset()
       actions.initConnection()
     },
 
-    //ANCHOR telemetry listeners
+    // ANCHOR telemetry listeners
     initTelemetry: async () => {
       initTelemetry(props.enable_telemetry)
     },

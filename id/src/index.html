@@ -95,7 +95,7 @@
         event.preventDefault()
 
         if (isWidgetAvailable) {
-          worldID.update({ connectionProps: { action_id: '' } })
+          worldID.update({ action_id: '' })
           event.target.innerText = 'Pass valid props'
           return (isWidgetAvailable = false)
         }
