@@ -1,5 +1,5 @@
 import { createInternalPostHogInstance } from 'posthog-js-lite'
-import { ErrorCodes } from 'types/error-codes'
+import { ErrorCodes } from 'types'
 
 // Set at build time
 declare const worldIdJSVersion: string

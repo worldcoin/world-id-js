@@ -1,8 +1,11 @@
 import { useValues } from 'kea'
 import { createRoot } from 'react-dom/client'
-import { AppProps } from 'types/app-props'
+import { AppProps } from 'types'
 import { vanillaWidgetLogic } from './logic/vanillaWidgetLogic'
 import { Widget } from './Widget'
+
+// Make utils available on the JS vanilla version
+export * as utils from 'utils'
 
 const VanillaWidget = (): JSX.Element => {
   const { params } = useValues(vanillaWidgetLogic)
@@ -10,7 +13,12 @@ const VanillaWidget = (): JSX.Element => {
   return <Widget {...params} />
 }
 
-export * as utils from 'utils'
+const handleInitError = (errorMessage: string, props: AppProps): void => {
+  console.error(errorMessage)
+  if (props.on_init_error) {
+    props.on_init_error(errorMessage)
+  }
+}
 
 /**
  * Initializes World ID, will render the World ID box on the provided element. The box will be
@@ -27,19 +35,11 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
     }
 
     if (!mountNode) {
-      const errorMessage = 'Element to mount World ID not found. Please make sure the element is valid.'
-
-      if (props.onInitError) {
-        props.onInitError({ error: { message: errorMessage } })
-      }
+      handleInitError('Element to mount World ID not found. Please make sure the element is valid.', props)
     }
 
     if (!(mountNode instanceof HTMLElement)) {
-      const errorMessage = 'The passed element parameter does not look like a valid HTML element.'
-
-      if (props.onInitError) {
-        props.onInitError({ error: { message: errorMessage } })
-      }
+      handleInitError('The passed element parameter does not look like a valid HTML element.', props)
     }
 
     vanillaWidgetLogic.actions.updateParams(props)
@@ -49,14 +49,11 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
       root.render(<VanillaWidget />)
     } catch (error) {
       console.log(error)
-
-      if (props.onInitError) {
-        props.onInitError({ error: { message: 'Error while rendering Widget component at node', original: error } })
-      }
+      handleInitError('Error while rendering Widget component at node', props)
     }
 
-    if (props.onInitSuccess) {
-      props.onInitSuccess()
+    if (props.on_init_success) {
+      props.on_init_success()
     }
   }
 

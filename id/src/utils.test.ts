@@ -54,8 +54,8 @@ describe('buildVerificationRequest', () => {
     const output = buildVerificationRequest({
       action_id: 'my_action',
       signal: 'my_signal',
-      onVerificationError: () => null,
-      onVerificationSuccess: () => null,
+      on_error: () => null,
+      on_success: () => null,
     })
     expect(output).toEqual(
       expect.objectContaining({
@@ -75,8 +75,8 @@ describe('buildVerificationRequest', () => {
       action_id: 'my_action',
       signal: '0x001578ed0de47522ad0b38e87031739c6a65caecc39ce3410bf3799e756a220f',
       advanced_use_raw_signal: true,
-      onVerificationError: () => null,
-      onVerificationSuccess: () => null,
+      on_error: () => null,
+      on_success: () => null,
     })
     expect(output).toEqual(
       expect.objectContaining({
@@ -96,8 +96,8 @@ describe('buildVerificationRequest', () => {
       action_id: '0x00613f81942f9596647024684e3e509c865678e13898086695dcf0cac0293b9c',
       signal: 'my_signal',
       advanced_use_raw_action_id: true,
-      onVerificationError: () => null,
-      onVerificationSuccess: () => null,
+      on_error: () => null,
+      on_success: () => null,
     })
     expect(output).toEqual(
       expect.objectContaining({

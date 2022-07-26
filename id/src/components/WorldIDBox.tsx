@@ -6,10 +6,9 @@ import { IconCircleSuccess } from 'assets/icons'
 import { widgetLogic } from 'logic/widgetLogic'
 import { keyframes } from '@stitches/react'
 import { verificationLogic } from 'logic/verificationLogic'
-import { VerificationState } from 'types/verification-state'
 import { useMemo } from 'react'
-import { ModalView } from '../types/modal-view'
 import { MouseEvent as ReactMouseEvent } from 'react'
+import { ModalView, VerificationState } from 'types'
 
 const SCaptcha = styled('button', {
   display: 'grid',
@@ -69,7 +68,7 @@ const SText = styled('div', {
   fontSize: '14px',
   fontWeight: '600',
   lineHeight: '18px',
-  fontFamily: 'Rubik',
+  fontFamily: 'Sora',
 })
 
 const SLogo = styled('button', {
@@ -128,7 +127,7 @@ export function WorldIDBox() {
             setModalView(ModalView.VerificationFlow)
             activateModal()
           }}
-          data-testId="world-id-box"
+          data-test-id="world-id-box"
           disabled={isVerified}
           grid
         >

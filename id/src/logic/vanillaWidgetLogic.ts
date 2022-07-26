@@ -1,5 +1,5 @@
 import { actions, kea, path, reducers } from 'kea'
-import { AppProps } from 'types/app-props'
+import { AppProps } from 'types'
 
 import type { vanillaWidgetLogicType } from './vanillaWidgetLogicType'
 

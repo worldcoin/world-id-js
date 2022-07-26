@@ -1,5 +1,5 @@
 import { kea, actions, reducers, path, events } from 'kea'
-import { ModalView } from 'types/modal-view'
+import { ModalView } from 'types'
 
 import type { widgetLogicType } from './widgetLogicType'
 

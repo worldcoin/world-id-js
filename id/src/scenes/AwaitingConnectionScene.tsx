@@ -25,7 +25,7 @@ import { DevModeLink } from 'components/DevModeButton'
 import { widgetLogic } from 'logic/widgetLogic'
 import { verificationLogic } from 'logic/verificationLogic'
 import { LearnMoreScene } from './LearnMoreScene'
-import { ModalView } from 'types/modal-view'
+import { ModalView } from 'types'
 
 const SModal = styled('div', {
   transitionProperty: 'max-height',

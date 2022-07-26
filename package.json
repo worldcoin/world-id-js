@@ -1,9 +1,7 @@
 {
-  "name": "worldcoin",
+  "name": "world-id-js",
   "private": true,
   "workspaces": [
-    "id",
-    "id-example-react",
-    "id-example-react-nextjs"
+    "id"
   ]
 }

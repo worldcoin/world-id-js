@@ -5,8 +5,8 @@ import { AwaitingConnectionScene } from './AwaitingConnectionScene'
 import { ConfirmedScene } from './ConfirmedScene'
 import { ErrorScene } from './ErrorScene'
 import { widgetLogic } from 'logic/widgetLogic'
-import { VerificationState } from 'types/verification-state'
 import { verificationLogic } from 'logic/verificationLogic'
+import { VerificationState } from 'types'
 
 export function PrincipalScene() {
   const { isModalVisible } = useValues(widgetLogic)

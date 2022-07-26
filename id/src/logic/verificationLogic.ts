@@ -1,7 +1,6 @@
 import WalletConnect from '@walletconnect/client'
 import { END_USER_ERROR_MESSAGES, ERROR_MESSAGES } from 'const'
 import { kea, actions, reducers, path, listeners, props, events, connect, selectors } from 'kea'
-import { VerificationState } from 'types/verification-state'
 import {
   initTelemetry,
   telemetryConnectionEstablished,
@@ -9,15 +8,18 @@ import {
   telemetryVerificationLaunched,
   telemetryVerificationSuccess,
 } from 'telemetry'
-import { ConnectionProps } from 'types/connection-props'
-import { EndUserErrorDisplay } from 'types/end-user-error-display'
-import { ErrorCodes } from 'types/error-codes'
-import { ExpectedErrorResponse } from 'types/expected-error-response'
-import { VerificationResponse } from 'types/verification-response'
 import { buildVerificationRequest, verifyVerificationResponse } from 'utils'
 import { widgetLogic } from './widgetLogic'
 
 import type { verificationLogicType } from './verificationLogicType'
+import {
+  AppProps,
+  EndUserErrorDisplay,
+  ErrorCodes,
+  ExpectedErrorResponse,
+  VerificationResponse,
+  VerificationState,
+} from 'types'
 
 let connector: WalletConnect
 
@@ -31,7 +33,7 @@ try {
 
 export const verificationLogic = kea<verificationLogicType>([
   path(['logic', 'verificationLogic']),
-  props({} as ConnectionProps),
+  props({} as AppProps),
   actions({
     //ANCHOR connection actions
     initConnection: true,
@@ -172,7 +174,7 @@ export const verificationLogic = kea<verificationLogicType>([
         actions.setError(errorCode)
       }
 
-      //NOTE Terminate the session; we only use WalletConnect for one-off transactions
+      // Terminate the session; we only use WalletConnect for one-off transactions
       try {
         try {
           await connector.killSession()
@@ -190,16 +192,16 @@ export const verificationLogic = kea<verificationLogicType>([
     terminate: async (_, breakpoint) => {
       breakpoint()
       if (values.verificationState === VerificationState.AwaitingConnection) {
-        //NOTE  If the user didn't get past the first step we don't terminate the flow (and resolve external promises),
+        // If the user didn't get past the first step we don't terminate the flow (and resolve external promises),
         // instead we let the user try again immediately.
         return
       }
 
       if (values.verificationState === VerificationState.Confirmed && values.successResult) {
-        props.onVerificationSuccess(values.successResult)
+        props.on_success(values.successResult)
       }
       if (values.verificationState !== VerificationState.Confirmed || !values.successResult) {
-        props.onVerificationError({
+        props.on_error({
           code: values.errorResult || ErrorCodes.GenericError,
           detail: values.internalError,
         })
