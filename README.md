@@ -19,10 +19,7 @@ yarn add @worldcoin/id
 To add the script directly in your HTML,
 
 ```html
-<script
-  type="text/javascript"
-  src="//unpkg.com/@worldcoin/id/dist/world-id.js"
-></script>
+<script type="text/javascript" src="//unpkg.com/@worldcoin/id/dist/world-id.js"></script>
 ```
 
 2. Add a `<div>` in your HTML where you'd like to include World ID.
