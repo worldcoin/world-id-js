@@ -2,7 +2,9 @@
   "name": "world-id-js",
   "private": true,
   "workspaces": [
-    "id"
+    "id",
+    "example-react",
+    "example-nextjs"
   ],
   "devDependencies": {
     "cspell": "6.1.3"
