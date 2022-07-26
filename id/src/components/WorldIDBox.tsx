@@ -109,7 +109,7 @@ export function WorldIDBox() {
 
   const isVerified = useMemo(() => verificationState === VerificationState.Confirmed, [verificationState])
 
-  const showLearnMore = (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const showLearnMore = (event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!isWidgetAvailable || widgetLoading) {
       return
     }
@@ -133,8 +133,7 @@ export function WorldIDBox() {
         >
           <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
           <SText>I&apos;m a unique person</SText>
-          {/* FIXME only the question mark icon should be clickable; fix typescript (make sure rendered HTML is valid) */}
-          {/* @ts-ignore */}
+          {/* FIXME only the question mark icon should open the learn more modal; fix typescript (make sure rendered HTML is valid) */}
           <SLogo onClick={showLearnMore}>
             <WIDLogo />
           </SLogo>
