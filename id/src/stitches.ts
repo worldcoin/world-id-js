@@ -43,6 +43,7 @@ export const lightTheme = createTheme({
     buttonPrimaryColor: '#ffffff',
     buttonGradientFrom: '#FF6848',
     buttonGradientTo: '#4940E0',
+    // TODO adjust style names to make it clearer what they are
     circleDefaultBg: '#f9f9f9',
     circleDefaultColor: '#4940e0',
     circlePrimaryBg: '#4940e0',

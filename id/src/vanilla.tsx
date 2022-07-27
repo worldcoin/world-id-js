@@ -1,8 +1,11 @@
 import { useValues } from 'kea'
 import { createRoot } from 'react-dom/client'
-import { AppProps } from 'types/app-props'
+import { AppProps } from 'types'
 import { vanillaWidgetLogic } from './logic/vanillaWidgetLogic'
 import { Widget } from './Widget'
+
+// Make utils available on the JS vanilla version
+export * as utils from 'utils'
 
 const VanillaWidget = (): JSX.Element => {
   const { params } = useValues(vanillaWidgetLogic)
@@ -10,8 +13,14 @@ const VanillaWidget = (): JSX.Element => {
   return <Widget {...params} />
 }
 
-export * as utils from 'utils'
 let isInitialized = false
+
+const handleInitError = (errorMessage: string, props: AppProps): void => {
+  console.error(errorMessage)
+  if (props.on_init_error) {
+    props.on_init_error(errorMessage)
+  }
+}
 
 /**
  * Initializes World ID, will render the World ID box on the provided element. The box will be
@@ -26,35 +35,22 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
     if (!vanillaWidgetLogic.isMounted()) {
       vanillaWidgetLogic.mount()
     } else {
-      if (props.onInitError) {
-        const message = 'World ID is already initialized. To update properties, please use `worldID.update` instead.'
-        props.onInitError({ error: { message } })
-        return
-      }
+      handleInitError(
+        'World ID is already initialized. To update properties, please use `worldID.update` instead.',
+        props
+      )
     }
 
     if (!mountNode) {
-      const errorMessage = 'Element to mount World ID not found. Please make sure the element is valid.'
-      if (props.onInitError) {
-        props.onInitError({ error: { message: errorMessage } })
-        return
-      }
+      handleInitError('Element to mount World ID not found. Please make sure the element is valid.', props)
     }
 
     if (!(mountNode instanceof HTMLElement)) {
-      const errorMessage = 'The passed element parameter does not look like a valid HTML element.'
-      if (props.onInitError) {
-        props.onInitError({ error: { message: errorMessage } })
-        return
-      }
+      handleInitError('The passed element parameter does not look like a valid HTML element.', props)
     }
 
-    if (!props.connectionProps.action_id) {
-      if (props.onInitError) {
-        const message = 'The `action_id` parameter is always required.'
-        props.onInitError({ error: { message } })
-        return
-      }
+    if (!props.action_id) {
+      handleInitError('The `action_id` parameter is always required.', props)
     }
 
     try {
@@ -67,14 +63,14 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
       if (!isInitialized) {
         const root = createRoot(mountNode as Element)
         root.render(<VanillaWidget />)
+        isInitialized = true
       }
-      isInitialized = true
     } catch (error) {
       console.error('Error while rendering Widget', error)
     }
 
-    if (props.onInitSuccess) {
-      props.onInitSuccess()
+    if (props.on_init_success) {
+      props.on_init_success()
     }
   }
 
@@ -94,7 +90,7 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
  */
 export const update = (propsToUpdate: Partial<AppProps>) => {
   if (!vanillaWidgetLogic.isMounted()) {
-    return console.log('Init widget before updating')
+    return console.warn('Widget must be initialized before updating.')
   }
 
   vanillaWidgetLogic.actions.updateParams(propsToUpdate)

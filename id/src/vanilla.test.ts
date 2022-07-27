@@ -58,12 +58,10 @@ describe('initialization', () => {
   it('Successful initialization', async () => {
     await act(() => {
       init('wld-container-test', {
-        connectionProps: {
-          action_id: SAMPLE_ACTION_ID,
-          signal: SAMPLE_SIGNAL,
-          onVerificationError: () => null,
-          onVerificationSuccess: () => null,
-        },
+        action_id: SAMPLE_ACTION_ID,
+        signal: SAMPLE_SIGNAL,
+        on_error: () => null,
+        on_success: () => null,
       })
     })
 
@@ -84,47 +82,47 @@ describe('initialization', () => {
   })
 
   it('cannot be initialized twice', () => {
-    const onInitError = jest.fn()
+    const on_init_error = jest.fn()
     init('wld-container-test', {
-      onInitError,
-      connectionProps: {
-        action_id: SAMPLE_ACTION_ID,
-        signal: SAMPLE_SIGNAL,
-        onVerificationError: () => null,
-        onVerificationSuccess: () => null,
-      },
+      on_init_error,
+      action_id: SAMPLE_ACTION_ID,
+      signal: SAMPLE_SIGNAL,
+      on_error: () => null,
+      on_success: () => null,
     })
-    expect(onInitError).not.toBeCalled()
+    expect(on_init_error).not.toBeCalled()
 
-    const onInitError1 = jest.fn()
+    const on_init_error1 = jest.fn()
+    const props = {
+      on_init_error: on_init_error1,
+      action_id: SAMPLE_ACTION_ID,
+      signal: SAMPLE_SIGNAL,
+      on_error: () => null,
+      on_success: () => null,
+    }
+
     init('wld-container-test', {
-      onInitError: onInitError1,
-      connectionProps: {
-        action_id: SAMPLE_ACTION_ID,
-        signal: SAMPLE_SIGNAL,
-        onVerificationError: () => null,
-        onVerificationSuccess: () => null,
-      },
+      on_init_error: on_init_error1,
+      action_id: SAMPLE_ACTION_ID,
+      signal: SAMPLE_SIGNAL,
+      on_error: () => null,
+      on_success: () => null,
     })
-    expect(onInitError1).toBeCalledWith({
-      error: {
-        message: 'World ID is already initialized. To update properties, please use `worldID.update` instead.',
-      },
-    })
+    expect(on_init_error1).toBeCalledWith(
+      'World ID is already initialized. To update properties, please use `worldID.update` instead.'
+    )
   })
 })
 
 describe('parameter validation', () => {
   it('validates action_id is non-empty', () => {
-    const onInitError = jest.fn()
+    const on_init_error = jest.fn()
     init('wld-container-test', {
-      onInitError,
-      connectionProps: {
-        action_id: '',
-        signal: '',
-        onVerificationError: () => null,
-        onVerificationSuccess: () => null,
-      },
+      on_init_error,
+      action_id: '',
+      signal: '',
+      on_error: () => null,
+      on_success: () => null,
     })
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
@@ -141,21 +139,17 @@ describe('parameter validation', () => {
 
   it('validates action_id is non-empty when updating', () => {
     init('wld-container-test', {
-      connectionProps: {
-        action_id: SAMPLE_ACTION_ID,
-        signal: '',
-        onVerificationError: () => null,
-        onVerificationSuccess: () => null,
-      },
+      action_id: SAMPLE_ACTION_ID,
+      signal: '',
+      on_error: () => null,
+      on_success: () => null,
     })
 
     update({
-      connectionProps: {
-        action_id: '',
-        signal: '',
-        onVerificationError: () => null,
-        onVerificationSuccess: () => null,
-      },
+      action_id: '',
+      signal: '',
+      on_error: () => null,
+      on_success: () => null,
     })
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
@@ -171,42 +165,32 @@ describe('parameter validation', () => {
   })
 
   it('validates action_id is non-null', () => {
-    const onInitError = jest.fn()
+    const on_init_error = jest.fn()
 
     init('wld-container-test', {
-      onInitError,
-      connectionProps: {
-        // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-        action_id: null,
-        onVerificationError: () => null,
-        onVerificationSuccess: () => null,
-      },
+      on_init_error,
+      // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+      action_id: null,
+      on_error: () => null,
+      on_success: () => null,
     })
 
-    expect(onInitError).toBeCalledWith({
-      error: {
-        message: 'The `action_id` parameter is always required.',
-      },
-    })
+    expect(on_init_error).toBeCalledWith('The `action_id` parameter is always required.')
   })
 
   it('validates action_id is non-null when updating', () => {
     init('wld-container-test', {
-      connectionProps: {
-        action_id: SAMPLE_ACTION_ID,
-        signal: '',
-        onVerificationError: () => null,
-        onVerificationSuccess: () => null,
-      },
+      action_id: SAMPLE_ACTION_ID,
+      signal: '',
+      on_error: () => null,
+      on_success: () => null,
     })
 
     update({
-      connectionProps: {
-        // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-        action_id: null,
-        onVerificationError: () => null,
-        onVerificationSuccess: () => null,
-      },
+      // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+      action_id: null,
+      on_error: () => null,
+      on_success: () => null,
     })
 
     const element = queryAllByTestId(document.body, 'world-id-box')[0]
@@ -222,10 +206,10 @@ describe('parameter validation', () => {
   })
 
   // it('can be initialized with empty `signal`', () => {
-  //   const onInitError = jest.fn()
+  //   const on_init_error = jest.fn()
   //   expect(() => {
   //     init('wld-container-test', {
-  //       onInitError,
+  //       on_init_error,
   //       connectionProps: {
   //         action_id: SAMPLE_ACTION_ID,
   //         signal: '',
@@ -236,7 +220,7 @@ describe('parameter validation', () => {
   //     console.log(getProps())
   //   }).not.toThrow()
 
-  //   expect(onInitError).toBeCalled()
+  //   expect(on_init_error).toBeCalled()
   // })
 
   // it('throws error if raw action ID does not look like a hex-encoded hash', () => {

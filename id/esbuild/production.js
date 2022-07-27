@@ -15,7 +15,7 @@ const cli = meow({
 /** @type {import('esbuild').BuildOptions} */
 const baseConfig = {
   ...config,
-  minify: false,
+  minify: true,
   treeShaking: true,
   define: {
     ...config.define,

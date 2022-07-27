@@ -2,7 +2,7 @@ import { MouseEventHandler, useCallback } from 'react'
 import { ComponentProps } from '@stitches/react'
 import { styled } from 'stitches'
 
-const Root = styled('div', {
+const OverlayRoot = styled('div', {
   width: '100%',
   height: '100vh',
   position: 'fixed',
@@ -33,7 +33,7 @@ const Root = styled('div', {
   },
 })
 
-export interface OverlayProps extends ComponentProps<typeof Root> {
+export interface OverlayProps extends ComponentProps<typeof OverlayRoot> {
   onClose: () => void
 }
 export function Overlay(props: OverlayProps) {
@@ -47,8 +47,8 @@ export function Overlay(props: OverlayProps) {
   )
 
   return (
-    <Root open={props.open} onClick={handleClick} data-testid="overlay">
+    <OverlayRoot open={props.open} onClick={handleClick} data-testid="overlay">
       {props.children}
-    </Root>
+    </OverlayRoot>
   )
 }

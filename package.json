@@ -1,9 +1,13 @@
 {
-  "name": "worldcoin",
+  "name": "world-id-js",
   "private": true,
   "workspaces": [
-    "id",
-    "id-example-react",
-    "id-example-react-nextjs"
-  ]
+    "id"
+  ],
+  "devDependencies": {
+    "cspell": "6.1.3"
+  },
+  "scripts": {
+    "spellcheck": "cspell **/*.{ts,js,tsx,json} -e **/dist/ -e **/node_modules/"
+  }
 }

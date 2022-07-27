@@ -6,10 +6,9 @@ import { IconCircleSuccess } from 'assets/icons'
 import { widgetLogic } from 'logic/widgetLogic'
 import { keyframes } from '@stitches/react'
 import { verificationLogic } from 'logic/verificationLogic'
-import { VerificationState } from 'types/verification-state'
 import { useMemo } from 'react'
-import { ModalView } from '../types/modal-view'
 import { MouseEvent as ReactMouseEvent } from 'react'
+import { ModalView, VerificationState } from 'types'
 
 const SCaptcha = styled('button', {
   display: 'grid',
@@ -69,7 +68,7 @@ const SText = styled('div', {
   fontSize: '14px',
   fontWeight: '600',
   lineHeight: '18px',
-  fontFamily: 'Rubik',
+  fontFamily: 'Sora',
 })
 
 const SLogo = styled('div', {
@@ -135,6 +134,7 @@ export function WorldIDBox() {
           <>
             <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
             <SText>I&apos;m a unique person</SText>
+            {/* FIXME only the question mark icon should open the learn more modal; fix typescript (make sure rendered HTML is valid) */}
             <SLogo onClick={showLearnMore}>
               <WIDLogo />
             </SLogo>

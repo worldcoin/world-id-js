@@ -70,22 +70,15 @@
     <script>
       let isWidgetAvailable = null
       const appProps = {
-        connectionProps: {
-          enable_telemetry: true,
-          action_id: 'wid_staging_PCNQeDC5CX',
-          signal: 'user-id-1',
-          app_name: 'candyApp',
-          signal_description: 'Receive initial airdrop April 2022',
-          onVerificationError: ({ code, detail }) => console.log({ code, detail }),
-          onVerificationSuccess: (result) => console.log(result),
-        },
+        enable_telemetry: true,
+        action_id: 'wid_staging_PCNQeDC5CX',
+        signal: 'user-id-1',
+        app_name: 'candyApp',
+        signal_description: 'Receive initial airdrop April 2022',
+        on_error: ({ code, detail }) => console.log({ code, detail }),
+        on_success: (result) => console.log(result),
         theme: 'light',
         debug: true,
-        onInitSuccess: () => {
-          console.log('Init successful')
-          isWidgetAvailable = true
-        },
-        onInitError: ({ error }) => console.log('Error while initialization World ID', error),
       }
 
       const changeThemeButton = document.querySelector('#change-theme-button')
@@ -102,7 +95,7 @@
         event.preventDefault()
         console.log(isWidgetAvailable)
         if (isWidgetAvailable) {
-          worldID.update({ connectionProps: { action_id: 'qwer', signal:  ''} })
+          worldID.update({ action_id: '' })
           event.target.innerText = 'Pass valid props'
           return (isWidgetAvailable = false)
         }

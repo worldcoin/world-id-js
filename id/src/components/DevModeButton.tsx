@@ -29,7 +29,7 @@ const Heading = styled('h3', {
   alignSelf: 'end',
 })
 
-const Description = styled('p', {
+const Description = styled('div', {
   color: '$grey5',
   margin: '0',
   fontFamily: '"Rubik"',
@@ -50,7 +50,7 @@ export const DevModeLink = (props: {
   icon: ReactNode
 }): JSX.Element => {
   return (
-    <Link href={props.href}>
+    <Link href={props.href} target="_blank" rel="noopener">
       <Icon>{props.icon}</Icon>
       <Heading>{props.heading}</Heading>
       <Description>{props.description}</Description>
