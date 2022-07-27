@@ -3,7 +3,7 @@ import { VerificationResponse } from './verification-response'
 
 export interface ConnectionProps {
   action_id: string
-  signal?: string
+  signal: string
   enable_telemetry?: boolean
   app_name?: string
   signal_description?: string

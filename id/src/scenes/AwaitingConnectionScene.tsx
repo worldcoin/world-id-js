@@ -336,9 +336,9 @@ export function AwaitingConnectionScene() {
                 icon={<DevModeSimulatorIcon />}
                 heading="Simulator"
                 description={
-                  <p style={{ margin: 0 }}>
+                  <span style={{ margin: 0 }}>
                     Open the simulator to <strong>scan the QR code</strong> and mock a verification.
-                  </p>
+                  </span>
                 }
               />
 

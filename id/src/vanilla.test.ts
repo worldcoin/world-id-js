@@ -1,8 +1,7 @@
-import { fireEvent, queryAllByTestId, getByTestId, waitFor, act } from '@testing-library/react'
+import { queryAllByTestId, getByTestId, waitFor, act, fireEvent } from '@testing-library/react'
 import { resetContext } from 'kea'
 import { testUtilsPlugin } from 'kea-test-utils'
-import { init, update } from 'vanilla'
-import { widgetLogic } from 'logic/widgetLogic'
+import { getProps, init, update } from 'vanilla'
 
 const SAMPLE_ACTION_ID = '0x330C8452C879506f313D1565702560435b0fee4C' // smart contract's address
 const SAMPLE_SIGNAL = '0x0000000000000000000000000000000000000000' // usually end user's wallet address
@@ -19,8 +18,15 @@ beforeEach(() => {
     element.remove()
   }
 })
+afterEach(() => {
+  window.location.reload()
+})
 
 beforeAll(() => {
+  const div = document.createElement('div')
+  div.setAttribute('id', 'wld-container-test')
+  document.body.appendChild(div)
+
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation((query) => ({
@@ -34,6 +40,12 @@ beforeAll(() => {
       dispatchEvent: jest.fn(),
     })),
   })
+
+  Object.defineProperty(window, 'location', {
+    value: {
+      reload: jest.fn(),
+    },
+  })
 })
 
 beforeAll(() => {
@@ -43,34 +55,34 @@ beforeAll(() => {
 })
 
 describe('initialization', () => {
-  // it('can be initialized', async () => {
-  //   await act(() => {
-  //     init('wld-container-test', {
-  //       connectionProps: {
-  //         action_id: SAMPLE_ACTION_ID,
-  //         signal: SAMPLE_SIGNAL,
-  //         onVerificationError: () => null,
-  //         onVerificationSuccess: () => null,
-  //       },
-  //     })
-  //   })
-  //
-  //   const element = queryAllByTestId(document.body, 'world-id-box')[0]
-  //
-  //   if (!element) {
-  //     throw new Error('Element not found.')
-  //   }
-  //
-  //   // Element is disabled
-  //   //const elementStyle = window.getComputedStyle(element)
-  //   //expect(elementStyle.opacity).toBe('0.5')
-  //   //expect(elementStyle.cursor).toBe('not-allowed')
-  //
-  //   // Click does not trigger anything
-  //   //fireEvent.click(element)
-  //   //const overlay = queryAllByTestId(document.body, 'overlay')[0]
-  //   //expect(overlay).not.toBeVisible()
-  // })
+  it('Successful initialization', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        connectionProps: {
+          action_id: SAMPLE_ACTION_ID,
+          signal: SAMPLE_SIGNAL,
+          onVerificationError: () => null,
+          onVerificationSuccess: () => null,
+        },
+      })
+    })
+
+    const element = queryAllByTestId(document.body, 'world-id-box')[0]
+
+    if (!element) {
+      throw new Error('Element not found.')
+    }
+
+    const elementStyle = window.getComputedStyle(element)
+    expect(elementStyle.opacity).not.toBe('0.6')
+    expect(elementStyle.cursor).not.toBe('not-allowed')
+
+    // Click does not trigger anything
+    fireEvent.click(element)
+    const overlay = queryAllByTestId(document.body, 'overlay')[0]
+    expect(overlay).toBeVisible()
+  })
+
   it('cannot be initialized twice', () => {
     const onInitError = jest.fn()
     init('wld-container-test', {
@@ -109,30 +121,58 @@ describe('parameter validation', () => {
       onInitError,
       connectionProps: {
         action_id: '',
+        signal: '',
         onVerificationError: () => null,
         onVerificationSuccess: () => null,
       },
     })
-    expect(onInitError).toBeCalledWith({
-      error: {
-        message: 'The `action_id` parameter is always required.',
-      },
-    })
+
+    const element = queryAllByTestId(document.body, 'world-id-box')[0]
+
+    if (!element) {
+      throw new Error('Element not found.')
+    }
+
+    const elementStyle = window.getComputedStyle(element)
+
+    expect(elementStyle.opacity).not.toBe('0.6')
+    expect(elementStyle.cursor).not.toBe('not-allowed')
   })
+
   it('validates action_id is non-empty when updating', () => {
     init('wld-container-test', {
       connectionProps: {
         action_id: SAMPLE_ACTION_ID,
+        signal: '',
         onVerificationError: () => null,
         onVerificationSuccess: () => null,
       },
     })
-    expect(() =>
-      update({ connectionProps: { action_id: '', onVerificationError: () => null, onVerificationSuccess: () => null } })
-    ).toThrow('The `action_id` parameter is always required.')
+
+    update({
+      connectionProps: {
+        action_id: '',
+        signal: '',
+        onVerificationError: () => null,
+        onVerificationSuccess: () => null,
+      },
+    })
+
+    const element = queryAllByTestId(document.body, 'world-id-box')[0]
+
+    if (!element) {
+      throw new Error('Element not found.')
+    }
+
+    const elementStyle = window.getComputedStyle(element)
+
+    expect(elementStyle.opacity).not.toBe('0.6')
+    expect(elementStyle.cursor).not.toBe('not-allowed')
   })
+
   it('validates action_id is non-null', () => {
     const onInitError = jest.fn()
+
     init('wld-container-test', {
       onInitError,
       connectionProps: {
@@ -142,53 +182,63 @@ describe('parameter validation', () => {
         onVerificationSuccess: () => null,
       },
     })
+
     expect(onInitError).toBeCalledWith({
       error: {
         message: 'The `action_id` parameter is always required.',
       },
     })
   })
+
   it('validates action_id is non-null when updating', () => {
     init('wld-container-test', {
       connectionProps: {
         action_id: SAMPLE_ACTION_ID,
+        signal: '',
         onVerificationError: () => null,
         onVerificationSuccess: () => null,
       },
     })
-    expect(() =>
-      update({
-        connectionProps: {
-          // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-          action_id: null,
-          onVerificationError: () => null,
-          onVerificationSuccess: () => null,
-        },
-      })
-    ).toThrow('The `action_id` parameter is always required.')
+
+    update({
+      connectionProps: {
+        // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+        action_id: null,
+        onVerificationError: () => null,
+        onVerificationSuccess: () => null,
+      },
+    })
+
+    const element = queryAllByTestId(document.body, 'world-id-box')[0]
+
+    if (!element) {
+      throw new Error('Element not found.')
+    }
+
+    const elementStyle = window.getComputedStyle(element)
+
+    expect(elementStyle.opacity).not.toBe('0.6')
+    expect(elementStyle.cursor).not.toBe('not-allowed')
   })
+
   // it('can be initialized with empty `signal`', () => {
-  //   expect(() =>
+  //   const onInitError = jest.fn()
+  //   expect(() => {
   //     init('wld-container-test', {
+  //       onInitError,
   //       connectionProps: {
   //         action_id: SAMPLE_ACTION_ID,
+  //         signal: '',
   //         onVerificationError: () => null,
   //         onVerificationSuccess: () => null,
   //       },
   //     })
-  //   ).not.toThrow()
-  //
-  //   const element = queryAllByTestId(document.body, 'world-id-box')[0]
-  //
-  //   if (!element) {
-  //     throw new Error('Element not found.')
-  //   }
-  //
-  //   // Element is disabled (because `signal` is not present)
-  //   const elementStyle = window.getComputedStyle(element)
-  //   expect(elementStyle.opacity).toBe('0.5')
-  //   expect(elementStyle.cursor).toBe('not-allowed')
+  //     console.log(getProps())
+  //   }).not.toThrow()
+
+  //   expect(onInitError).toBeCalled()
   // })
+
   // it('throws error if raw action ID does not look like a hex-encoded hash', () => {
   //   const invalid_action_ids = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg'] // cspell:disable-line
   //
@@ -275,7 +325,6 @@ describe('activation', () => {
   //
   //   expect(widgetLogic.values.isWidgetAvailable).toBeTruthy()
   // })
-
   // it('cannot be activated before init', () => {
   //   expect(() => enable()).toThrow(
   //     'World ID cannot be enabled before calling `.init()` or before the DOM is loaded. Please make sure you have called `.init()` and your DOM is ready.'
@@ -286,7 +335,6 @@ describe('activation', () => {
   //     'World ID cannot be enabled before calling `.init()` or before the DOM is loaded. Please make sure you have called `.init()` and your DOM is ready.'
   //   )
   // })
-
   //it('cannot be activated if `signal` is not present', () => {
   //  expect(() =>
   //    init('wld-container-test', {

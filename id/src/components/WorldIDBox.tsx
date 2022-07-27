@@ -72,7 +72,7 @@ const SText = styled('div', {
   fontFamily: 'Rubik',
 })
 
-const SLogo = styled('button', {
+const SLogo = styled('div', {
   '--gradient-from': '$colors$gradientFrom',
   '--gradient-to': '$colors$gradientTo',
   display: 'grid',
@@ -110,7 +110,7 @@ export function WorldIDBox() {
 
   const isVerified = useMemo(() => verificationState === VerificationState.Confirmed, [verificationState])
 
-  const showLearnMore = (event: ReactMouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const showLearnMore = (event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!isWidgetAvailable || widgetLoading) {
       return
     }
@@ -122,35 +122,33 @@ export function WorldIDBox() {
 
   return (
     <Box>
-      {isWidgetAvailable && !widgetLoading && (
-        <SCaptcha
-          onClick={() => {
-            setModalView(ModalView.VerificationFlow)
-            activateModal()
-          }}
-          data-testid="world-id-box"
-          disabled={isVerified}
-          grid
-        >
-          <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
-          <SText>I&apos;m a unique person</SText>
-          <SLogo onClick={showLearnMore}>
-            <WIDLogo />
-          </SLogo>
-        </SCaptcha>
-      )}
-      {!isWidgetAvailable && !widgetLoading && (
-        <SCaptcha disabled>
-          <SErrorMessage>Widget is unavailable</SErrorMessage>
-        </SCaptcha>
-      )}
-      {widgetLoading && (
-        <SCaptcha disabled>
+      <SCaptcha
+        onClick={() => {
+          setModalView(ModalView.VerificationFlow)
+          activateModal()
+        }}
+        data-testid="world-id-box"
+        disabled={isVerified || widgetLoading || (!isWidgetAvailable && !widgetLoading)}
+        grid={isWidgetAvailable && !widgetLoading}
+      >
+        {isWidgetAvailable && !widgetLoading && (
+          <>
+            <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
+            <SText>I&apos;m a unique person</SText>
+            <SLogo onClick={showLearnMore}>
+              <WIDLogo />
+            </SLogo>
+          </>
+        )}
+
+        {!isWidgetAvailable && !widgetLoading && <SErrorMessage>Widget is unavailable</SErrorMessage>}
+
+        {widgetLoading && (
           <Preloader>
             <WorldcoinLogomark style={{ width: '100%', height: '100%' }} />
           </Preloader>
-        </SCaptcha>
-      )}
+        )}
+      </SCaptcha>
     </Box>
   )
 }

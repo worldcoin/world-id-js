@@ -11,6 +11,7 @@ const VanillaWidget = (): JSX.Element => {
 }
 
 export * as utils from 'utils'
+let isInitialized = false
 
 /**
  * Initializes World ID, will render the World ID box on the provided element. The box will be
@@ -59,12 +60,18 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
     try {
       vanillaWidgetLogic.actions.updateParams(props)
     } catch (error) {
+      console.error('Error while updating props', error)
     }
 
     try {
-      const root = createRoot(mountNode as Element)
-      root.render(<VanillaWidget />)
-    } catch (error) {}
+      if (!isInitialized) {
+        const root = createRoot(mountNode as Element)
+        root.render(<VanillaWidget />)
+      }
+      isInitialized = true
+    } catch (error) {
+      console.error('Error while rendering Widget', error)
+    }
 
     if (props.onInitSuccess) {
       props.onInitSuccess()
@@ -89,9 +96,7 @@ export const update = (propsToUpdate: Partial<AppProps>) => {
   if (!vanillaWidgetLogic.isMounted()) {
     return console.log('Init widget before updating')
   }
-  if (!propsToUpdate.connectionProps?.action_id) {
-    throw 'The `action_id` parameter is always required.'
-  }
+
   vanillaWidgetLogic.actions.updateParams(propsToUpdate)
 }
 

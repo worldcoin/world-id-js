@@ -20,9 +20,13 @@ export function Widget(props: AppProps): JSX.Element {
   const builtVerificationLogic = useMemo(() => {
     const { valid, error } = validateInputParams(props.connectionProps)
 
-    if (!valid && props.debug) {
-      console.log('Some widget appProps are invalid')
-      console.log(error)
+    if (!valid) {
+      if (props.debug) {
+        console.log('Some widget appProps are invalid')
+        console.log(error)
+      }
+
+      props.onInitError?.({ error: { message: 'Some widget appProps are invalid', original: error } })
     }
     if (!valid) {
       return null

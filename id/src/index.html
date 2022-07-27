@@ -81,7 +81,10 @@
         },
         theme: 'light',
         debug: true,
-        onInitSuccess: () => console.log('Init successful'),
+        onInitSuccess: () => {
+          console.log('Init successful')
+          isWidgetAvailable = true
+        },
         onInitError: ({ error }) => console.log('Error while initialization World ID', error),
       }
 
@@ -97,12 +100,13 @@
 
       passInvalidPropsButton.addEventListener('click', (event) => {
         event.preventDefault()
-
+        console.log(isWidgetAvailable)
         if (isWidgetAvailable) {
-          worldID.update({ connectionProps: { action_id: '' } })
+          worldID.update({ connectionProps: { action_id: 'qwer', signal:  ''} })
           event.target.innerText = 'Pass valid props'
           return (isWidgetAvailable = false)
         }
+        console.log('here')
 
         if (!isWidgetAvailable) {
           worldID.update(appProps)
@@ -112,7 +116,7 @@
       })
 
       worldID.init('world-id-container', appProps)
-      isWidgetAvailable = true
+
       console.log('Random number from utils: ', worldID.utils.randomNumber(1, 100))
     </script>
   </body>
