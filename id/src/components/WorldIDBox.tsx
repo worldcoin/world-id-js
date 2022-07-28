@@ -103,14 +103,14 @@ const Preloader = styled('div', {
 })
 
 export function WorldIDBox() {
-  const { isWidgetAvailable, widgetLoading } = useValues(widgetLogic)
+  const { isWidgetEnabled, widgetLoading } = useValues(widgetLogic)
   const { activateModal, setModalView } = useActions(widgetLogic)
   const { verificationState } = useValues(verificationLogic)
 
   const isVerified = useMemo(() => verificationState === VerificationState.Confirmed, [verificationState])
 
   const showLearnMore = (event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!isWidgetAvailable || widgetLoading) {
+    if (!isWidgetEnabled || widgetLoading) {
       return
     }
 
@@ -121,7 +121,7 @@ export function WorldIDBox() {
 
   return (
     <Box>
-      {isWidgetAvailable && !widgetLoading && (
+      {isWidgetEnabled && !widgetLoading && (
         <SCaptcha
           onClick={() => {
             setModalView(ModalView.VerificationFlow)
@@ -139,7 +139,7 @@ export function WorldIDBox() {
           </SLogo>
         </SCaptcha>
       )}
-      {!isWidgetAvailable && !widgetLoading && (
+      {!isWidgetEnabled && !widgetLoading && (
         <SCaptcha disabled>
           <SErrorMessage>Widget is unavailable</SErrorMessage>
         </SCaptcha>
