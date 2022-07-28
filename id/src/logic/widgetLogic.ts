@@ -17,7 +17,7 @@ export const widgetLogic = kea<widgetLogicType>([
     setIsDevMode: (isDev: boolean) => ({ isDev }),
   }),
   reducers({
-    isWidgetAvailable: [
+    isWidgetEnabled: [
       false,
       {
         disableWidget: () => false,

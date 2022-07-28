@@ -103,14 +103,14 @@ const Preloader = styled('div', {
 })
 
 export function WorldIDBox() {
-  const { isWidgetAvailable, widgetLoading } = useValues(widgetLogic)
+  const { isWidgetEnabled, widgetLoading } = useValues(widgetLogic)
   const { activateModal, setModalView } = useActions(widgetLogic)
   const { verificationState } = useValues(verificationLogic)
 
   const isVerified = useMemo(() => verificationState === VerificationState.Confirmed, [verificationState])
 
   const showLearnMore = (event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!isWidgetAvailable || widgetLoading) {
+    if (!isWidgetEnabled || widgetLoading) {
       return
     }
 
@@ -127,10 +127,10 @@ export function WorldIDBox() {
           activateModal()
         }}
         data-testid="world-id-box"
-        disabled={isVerified || widgetLoading || (!isWidgetAvailable && !widgetLoading)}
-        grid={isWidgetAvailable && !widgetLoading}
+        disabled={isVerified || widgetLoading || (!isWidgetEnabled && !widgetLoading)}
+        grid={isWidgetEnabled && !widgetLoading}
       >
-        {isWidgetAvailable && !widgetLoading && (
+        {isWidgetEnabled && !widgetLoading && (
           <>
             <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
             <SText>I&apos;m a unique person</SText>
@@ -141,7 +141,7 @@ export function WorldIDBox() {
           </>
         )}
 
-        {!isWidgetAvailable && !widgetLoading && <SErrorMessage>Widget is unavailable</SErrorMessage>}
+        {!isWidgetEnabled && !widgetLoading && <SErrorMessage>Widget is unavailable</SErrorMessage>}
 
         {widgetLoading && (
           <Preloader>
