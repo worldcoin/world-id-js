@@ -15,12 +15,14 @@ describe('widgetLogic', () => {
   })
 
   test('initializes widget when `action_id` is passed', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const logic = widgetLogic({ action_id: 'wld_staging_12345678', on_success: () => {}, on_error: () => {} })
     logic.mount()
     await expectLogic(logic).toFinishAllListeners().toMatchValues({ isWidgetInitialized: true, isWidgetEnabled: false })
   })
 
   test('validates `action_id` is not empty', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const logic = widgetLogic({ action_id: '', on_success: () => {}, on_error: () => {} })
     logic.mount()
     await expectLogic(logic)
@@ -32,7 +34,9 @@ describe('widgetLogic', () => {
     const logic = widgetLogic({
       action_id: 'wld_staging_12345678',
       signal: 'mySignal',
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       on_success: () => {},
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       on_error: () => {},
     })
     logic.mount()

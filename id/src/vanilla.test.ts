@@ -81,6 +81,7 @@ describe('initialization', () => {
 
     const on_init_error_2 = jest.fn()
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     jest.spyOn(console, 'error').mockImplementation(() => {}) // Expected errors not logged on output
 
     init('wld-container-test', {
@@ -134,7 +135,7 @@ describe('parameter validation', () => {
     // FIXME: This should work
     //expect(element.disabled).toBeFalsy()
 
-    let elementStyle = window.getComputedStyle(element)
+    const elementStyle = window.getComputedStyle(element)
     expect(elementStyle.opacity).not.toBe('0.6')
 
     update({
@@ -153,6 +154,7 @@ describe('parameter validation', () => {
   it('validates action_id is non-null', () => {
     const on_init_error = jest.fn()
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     jest.spyOn(console, 'error').mockImplementation(() => {}) // Expected errors not logged on output
 
     init('wld-container-test', {
