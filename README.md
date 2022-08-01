@@ -1,6 +1,6 @@
 <img src="https://raw.githubusercontent.com/worldcoin/world-id-js/main/world-id-logo.svg" alt="World ID logo" width="300" />
 
-> Warning! This README is outdated. Update coming soon.
+> **Warning** This README is outdated. Update coming soon.
 
 # World ID Javascript Integration
 
