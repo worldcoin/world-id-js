@@ -9,7 +9,7 @@ export const widgetLogic = kea<widgetLogicType>([
   path(['logic', 'widgetLogic']),
   props({} as AppProps),
   actions({
-    processProps: true,
+    processProps: (props: AppProps) => ({ props }),
     disableWidget: true,
     enableWidget: true,
     initWidget: true,
@@ -79,8 +79,8 @@ export const widgetLogic = kea<widgetLogicType>([
       },
     ],
   }),
-  listeners(({ props, actions }) => ({
-    processProps: async () => {
+  listeners(({ actions }) => ({
+    processProps: async ({ props }) => {
       const { valid, error } = validateInputParams(props)
 
       if (!valid && props.debug) {
@@ -101,12 +101,12 @@ export const widgetLogic = kea<widgetLogicType>([
       initTelemetry(props.enable_telemetry)
     },
   })),
-  propsChanged(({ actions }) => {
-    actions.processProps()
+  propsChanged(({ actions, props }) => {
+    actions.processProps(props)
   }),
-  events(({ actions }) => ({
+  events(({ actions, props }) => ({
     afterMount: () => {
-      actions.processProps()
+      actions.processProps(props)
       actions.setIsDevMode(typeof window !== 'undefined' ? window.location.hostname === 'localhost' : false)
     },
   })),
