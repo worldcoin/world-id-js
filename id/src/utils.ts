@@ -77,10 +77,6 @@ export const validateInputParams = (params: AppProps): { valid: boolean; error?:
     return { valid: false, error: 'The `action_id` parameter cannot be empty.' }
   }
 
-  if (!params.signal) {
-    return { valid: false, error: 'The `signal` parameter is required.' }
-  }
-
   if (params.advanced_use_raw_action_id && !validateABILikeEncoding(params.action_id)) {
     return {
       valid: false,

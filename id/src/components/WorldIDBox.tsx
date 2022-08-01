@@ -103,7 +103,7 @@ const Preloader = styled('div', {
 })
 
 export function WorldIDBox() {
-  const { isWidgetEnabled, widgetLoading } = useValues(widgetLogic)
+  const { isWidgetEnabled, isWidgetInitialized, widgetLoading } = useValues(widgetLogic)
   const { activateModal, setModalView } = useActions(widgetLogic)
   const { verificationState } = useValues(verificationLogic)
 
@@ -127,10 +127,10 @@ export function WorldIDBox() {
           activateModal()
         }}
         data-testid="world-id-box"
-        disabled={isVerified || widgetLoading || (!isWidgetEnabled && !widgetLoading)}
-        grid={isWidgetEnabled && !widgetLoading}
+        disabled={isVerified || widgetLoading || !isWidgetInitialized || !isWidgetEnabled}
+        grid={isWidgetInitialized && !widgetLoading}
       >
-        {isWidgetEnabled && !widgetLoading && (
+        {isWidgetInitialized && !widgetLoading && (
           <>
             <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
             <SText>I&apos;m a unique person</SText>
@@ -141,7 +141,7 @@ export function WorldIDBox() {
           </>
         )}
 
-        {!isWidgetEnabled && !widgetLoading && <SErrorMessage>Widget is unavailable</SErrorMessage>}
+        {!isWidgetInitialized && !widgetLoading && <SErrorMessage>Widget is unavailable</SErrorMessage>}
 
         {widgetLoading && (
           <Preloader>

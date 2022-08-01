@@ -68,7 +68,7 @@
 
     <script src="dist/world-id-dev.js"></script>
     <script>
-      let isWidgetAvailable = null
+      let isWidgetAvailable = true
       const appProps = {
         enable_telemetry: true,
         action_id: 'wid_staging_PCNQeDC5CX',
@@ -93,13 +93,11 @@
 
       passInvalidPropsButton.addEventListener('click', (event) => {
         event.preventDefault()
-        console.log(isWidgetAvailable)
         if (isWidgetAvailable) {
           worldID.update({ action_id: '' })
           event.target.innerText = 'Pass valid props'
           return (isWidgetAvailable = false)
         }
-        console.log('here')
 
         if (!isWidgetAvailable) {
           worldID.update(appProps)

@@ -6,17 +6,10 @@ import { getProps, init, update } from 'vanilla'
 const SAMPLE_ACTION_ID = '0x330C8452C879506f313D1565702560435b0fee4C' // smart contract's address
 const SAMPLE_SIGNAL = '0x0000000000000000000000000000000000000000' // usually end user's wallet address
 
-// FIXME update tests
-
 beforeEach(() => {
   resetContext({
     plugins: [testUtilsPlugin],
   })
-
-  // Clear font stylesheet
-  for (const element of document.getElementsByTagName('link')) {
-    element.remove()
-  }
 })
 afterEach(() => {
   window.location.reload()
@@ -55,25 +48,22 @@ beforeAll(() => {
 })
 
 describe('initialization', () => {
-  it('Successful initialization', async () => {
+  it('initializes successfully', async () => {
     await act(() => {
       init('wld-container-test', {
         action_id: SAMPLE_ACTION_ID,
-        signal: SAMPLE_SIGNAL,
         on_error: () => null,
         on_success: () => null,
       })
     })
 
-    const element = queryAllByTestId(document.body, 'world-id-box')[0]
+    const element = queryAllByTestId(document.body, 'world-id-box')[0] as HTMLButtonElement | undefined
 
     if (!element) {
       throw new Error('Element not found.')
     }
 
-    const elementStyle = window.getComputedStyle(element)
-    expect(elementStyle.opacity).not.toBe('0.6')
-    expect(elementStyle.cursor).not.toBe('not-allowed')
+    expect(element.disabled).toBeTruthy()
 
     // Click does not trigger anything
     fireEvent.click(element)

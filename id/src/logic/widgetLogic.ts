@@ -1,27 +1,43 @@
-import { kea, actions, reducers, path, events } from 'kea'
-import { ModalView } from 'types'
+import { kea, actions, reducers, path, events, props, propsChanged, listeners } from 'kea'
+import { initTelemetry } from 'telemetry'
+import { AppProps, ModalView } from 'types'
+import { validateInputParams } from 'utils'
 
 import type { widgetLogicType } from './widgetLogicType'
 
 export const widgetLogic = kea<widgetLogicType>([
   path(['logic', 'widgetLogic']),
+  props({} as AppProps),
   actions({
     disableWidget: true,
     enableWidget: true,
+    initWidget: true,
+    unInitWidget: true,
     finishWidgetLoading: true,
     activateModal: true,
     disableModal: true,
     toggleModal: true,
+    initTelemetry: true,
     setModalView: (view: ModalView) => ({ view }),
     setQrCodeContent: (content: string) => ({ content }),
     setIsDevMode: (isDev: boolean) => ({ isDev }),
   }),
   reducers({
+    // Whether the widget is initialized with minimum valid parameters (i.e. action_id)
+    isWidgetInitialized: [
+      false,
+      {
+        initWidget: () => true,
+        unInitWidget: () => false,
+      },
+    ],
+
+    // Whether the widget is enabled and ready to be used (i.e. signal is properly set)
     isWidgetEnabled: [
       false,
       {
-        disableWidget: () => false,
         enableWidget: () => true,
+        disableWidget: () => false,
       },
     ],
 
@@ -38,6 +54,7 @@ export const widgetLogic = kea<widgetLogicType>([
         setQrCodeContent: (_, { content }) => content,
       },
     ],
+
     isDevMode: [
       false,
       {
@@ -61,9 +78,34 @@ export const widgetLogic = kea<widgetLogicType>([
       },
     ],
   }),
+  listeners(({ props }) => ({
+    initTelemetry: async () => {
+      initTelemetry(props.enable_telemetry)
+    },
+  })),
+  propsChanged(({ actions, props }) => {
+    const { valid, error } = validateInputParams(props)
+
+    if (!valid && props.debug) {
+      console.error(error)
+    }
+
+    if (valid) {
+      actions.initWidget()
+    } else {
+      actions.unInitWidget()
+    }
+
+    if (props.signal) {
+      actions.enableWidget()
+    } else {
+      actions.disableWidget()
+    }
+  }),
   events(({ actions }) => ({
-    // FIXME make dev mode detections with selectors (typegen not generates selectors)
-    afterMount: () =>
-      actions.setIsDevMode(typeof window !== 'undefined' ? window.location.hostname === 'localhost' : false),
+    afterMount: () => {
+      actions.setIsDevMode(typeof window !== 'undefined' ? window.location.hostname === 'localhost' : false)
+      actions.initTelemetry()
+    },
   })),
 ])
