@@ -1,8 +1,7 @@
 import WalletConnect from '@walletconnect/client'
 import { END_USER_ERROR_MESSAGES, ERROR_MESSAGES } from 'const'
-import { kea, actions, reducers, path, listeners, props, events, connect, selectors } from 'kea'
+import { kea, actions, reducers, path, listeners, events, connect, selectors } from 'kea'
 import {
-  initTelemetry,
   telemetryConnectionEstablished,
   telemetryVerificationFailed,
   telemetryVerificationLaunched,
@@ -12,14 +11,7 @@ import { buildVerificationRequest, verifyVerificationResponse } from 'utils'
 import { widgetLogic } from './widgetLogic'
 
 import type { verificationLogicType } from './verificationLogicType'
-import {
-  AppProps,
-  EndUserErrorDisplay,
-  ErrorCodes,
-  ExpectedErrorResponse,
-  VerificationResponse,
-  VerificationState,
-} from 'types'
+import { EndUserErrorDisplay, ErrorCodes, ExpectedErrorResponse, VerificationResponse, VerificationState } from 'types'
 
 let connector: WalletConnect
 
@@ -28,12 +20,11 @@ try {
     bridge: 'https://bridge.walletconnect.org',
   })
 } catch (error) {
-  console.log('Unable to create WalletConnect connector')
+  console.error('Unable to create WalletConnect connector')
 }
 
 export const verificationLogic = kea<verificationLogicType>([
   path(['logic', 'verificationLogic']),
-  props({} as AppProps),
   actions({
     // ANCHOR connection actions
     initConnection: true,
@@ -48,12 +39,9 @@ export const verificationLogic = kea<verificationLogicType>([
     terminate: true,
     tryAgain: true,
     reset: true,
-
-    // ANCHOR telemetry actions
-    initTelemetry: true,
   }),
   connect({
-    actions: [widgetLogic, ['finishWidgetLoading', 'setQrCodeContent', 'enableWidget', 'disableModal']],
+    actions: [widgetLogic, ['finishWidgetLoading', 'setQrCodeContent', 'disableModal']],
   }),
   reducers({
     // ANCHOR connection reducers
@@ -98,7 +86,7 @@ export const verificationLogic = kea<verificationLogicType>([
       },
     ],
   }),
-  listeners(({ actions, values, props }) => ({
+  listeners(({ actions, values }) => ({
     // ANCHOR connection listeners
     initConnection: async () => {
       if (values.connectorUri) {
@@ -118,12 +106,11 @@ export const verificationLogic = kea<verificationLogicType>([
         actions.setConnectorUri(connector.uri)
         actions.setConnectionStartTime(performance.now())
       } catch (error) {
-        console.log('Error while creating WalletConnect session', error)
+        console.error('Error while creating WalletConnect session', error)
       }
 
       connector.on('connect', async (error: unknown) => {
         if (error) {
-          console.log(error)
           actions.setError(ErrorCodes.ConnectionFailed)
           console.error(`Failed to establish connection to WLD app: ${error}`)
         } else {
@@ -147,7 +134,6 @@ export const verificationLogic = kea<verificationLogicType>([
 
       actions.setQrCodeContent(url.toString())
       actions.finishWidgetLoading()
-      actions.enableWidget()
     },
 
     // ANCHOR verification listeners
@@ -158,7 +144,7 @@ export const verificationLogic = kea<verificationLogicType>([
       )
 
       try {
-        const result = await connector.sendCustomRequest(buildVerificationRequest(props))
+        const result = await connector.sendCustomRequest(buildVerificationRequest(widgetLogic.props))
         if (verifyVerificationResponse(result)) {
           actions.setSuccess(result)
         } else {
@@ -199,10 +185,10 @@ export const verificationLogic = kea<verificationLogicType>([
       }
 
       if (values.verificationState === VerificationState.Confirmed && values.successResult) {
-        props.on_success(values.successResult)
+        widgetLogic.props.on_success(values.successResult)
       }
       if (values.verificationState !== VerificationState.Confirmed || !values.successResult) {
-        props.on_error({
+        widgetLogic.props.on_error({
           code: values.errorResult || ErrorCodes.GenericError,
           detail: values.internalError,
         })
@@ -224,11 +210,6 @@ export const verificationLogic = kea<verificationLogicType>([
       actions.reset()
       actions.initConnection()
     },
-
-    // ANCHOR telemetry listeners
-    initTelemetry: async () => {
-      initTelemetry(props.enable_telemetry)
-    },
   })),
   selectors({
     endUserError: [
@@ -242,6 +223,6 @@ export const verificationLogic = kea<verificationLogicType>([
     ],
   }),
   events(({ actions }) => ({
-    afterMount: [actions.initConnection, () => actions.initConnection(), actions.initTelemetry],
+    afterMount: [actions.initConnection],
   })),
 ])

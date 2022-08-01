@@ -13,6 +13,8 @@ const VanillaWidget = (): JSX.Element => {
   return <Widget {...params} />
 }
 
+let isInitialized = false
+
 const handleInitError = (errorMessage: string, props: AppProps): void => {
   console.error(errorMessage)
   if (props.on_init_error) {
@@ -32,6 +34,11 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
   const startApp = () => {
     if (!vanillaWidgetLogic.isMounted()) {
       vanillaWidgetLogic.mount()
+    } else {
+      handleInitError(
+        'World ID is already initialized. To update properties, please use `worldID.update` instead.',
+        props
+      )
     }
 
     if (!mountNode) {
@@ -42,14 +49,24 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
       handleInitError('The passed element parameter does not look like a valid HTML element.', props)
     }
 
-    vanillaWidgetLogic.actions.updateParams(props)
+    if (!props.action_id) {
+      handleInitError('The `action_id` parameter is always required.', props)
+    }
 
     try {
-      const root = createRoot(mountNode as Element)
-      root.render(<VanillaWidget />)
+      vanillaWidgetLogic.actions.updateParams(props)
     } catch (error) {
-      console.log(error)
-      handleInitError('Error while rendering Widget component at node', props)
+      console.error('Error while updating props', error)
+    }
+
+    try {
+      if (!isInitialized) {
+        const root = createRoot(mountNode as Element)
+        root.render(<VanillaWidget />)
+        isInitialized = true
+      }
+    } catch (error) {
+      console.error('Error while rendering Widget', error)
     }
 
     if (props.on_init_success) {
@@ -78,6 +95,7 @@ export const update = (propsToUpdate: Partial<AppProps>) => {
 
   vanillaWidgetLogic.actions.updateParams(propsToUpdate)
 }
+
 /**
  * Returns actual World ID props
  */

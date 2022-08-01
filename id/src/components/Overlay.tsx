@@ -47,7 +47,7 @@ export function Overlay(props: OverlayProps) {
   )
 
   return (
-    <OverlayRoot open={props.open} onClick={handleClick}>
+    <OverlayRoot open={props.open} onClick={handleClick} data-testid="overlay">
       {props.children}
     </OverlayRoot>
   )
