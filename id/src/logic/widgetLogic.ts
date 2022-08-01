@@ -9,6 +9,7 @@ export const widgetLogic = kea<widgetLogicType>([
   path(['logic', 'widgetLogic']),
   props({} as AppProps),
   actions({
+    processProps: true,
     disableWidget: true,
     enableWidget: true,
     initWidget: true,
@@ -78,34 +79,35 @@ export const widgetLogic = kea<widgetLogicType>([
       },
     ],
   }),
-  listeners(({ props }) => ({
-    initTelemetry: async () => {
+  listeners(({ props, actions }) => ({
+    processProps: async () => {
+      const { valid, error } = validateInputParams(props)
+
+      if (!valid && props.debug) {
+        console.error(error)
+      }
+
+      if (valid) {
+        actions.initWidget()
+        if (props.signal) {
+          actions.enableWidget()
+        } else {
+          actions.disableWidget()
+        }
+      } else {
+        actions.unInitWidget()
+      }
+
       initTelemetry(props.enable_telemetry)
     },
   })),
-  propsChanged(({ actions, props }) => {
-    const { valid, error } = validateInputParams(props)
-
-    if (!valid && props.debug) {
-      console.error(error)
-    }
-
-    if (valid) {
-      actions.initWidget()
-    } else {
-      actions.unInitWidget()
-    }
-
-    if (props.signal) {
-      actions.enableWidget()
-    } else {
-      actions.disableWidget()
-    }
+  propsChanged(({ actions }) => {
+    actions.processProps()
   }),
   events(({ actions }) => ({
     afterMount: () => {
+      actions.processProps()
       actions.setIsDevMode(typeof window !== 'undefined' ? window.location.hostname === 'localhost' : false)
-      actions.initTelemetry()
     },
   })),
 ])

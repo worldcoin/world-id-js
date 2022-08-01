@@ -20,7 +20,7 @@ try {
     bridge: 'https://bridge.walletconnect.org',
   })
 } catch (error) {
-  console.log('Unable to create WalletConnect connector')
+  console.error('Unable to create WalletConnect connector')
 }
 
 export const verificationLogic = kea<verificationLogicType>([
@@ -41,7 +41,7 @@ export const verificationLogic = kea<verificationLogicType>([
     reset: true,
   }),
   connect({
-    actions: [widgetLogic, ['finishWidgetLoading', 'setQrCodeContent', 'initWidget', 'disableModal']],
+    actions: [widgetLogic, ['finishWidgetLoading', 'setQrCodeContent', 'disableModal']],
   }),
   reducers({
     // ANCHOR connection reducers
@@ -134,7 +134,6 @@ export const verificationLogic = kea<verificationLogicType>([
 
       actions.setQrCodeContent(url.toString())
       actions.finishWidgetLoading()
-      actions.initWidget()
     },
 
     // ANCHOR verification listeners
