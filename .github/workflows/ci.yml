@@ -5,7 +5,7 @@ on:
 
 jobs:
   lint:
-    name: Code formatting & spellcheck
+    name: Source code formatting & spellcheck
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
@@ -14,15 +14,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Check formatting with Prettier
+        working-directory: ./id
         run: npm run format:check
 
-      - name: Spellcheck
+      - name: Spellcheck (entire repository)
         run: npm run spellcheck
 
   typecheck:
@@ -35,25 +36,27 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Lint with ESLint
+        working-directory: ./id
         run: npm run lint
 
       - name: Generate Kea typing
+        working-directory: ./id
         run: npm run typegen
 
       - name: Check Typescript
+        working-directory: ./id
         run: |
           npm run typecheck
 
   test:
     name: Test
     runs-on: ubuntu-20.04
-
     steps:
       - uses: actions/checkout@v3
 
@@ -61,9 +64,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies and run tests
+        working-directory: ./id
         run: npm install-ci-test
 
   test-build:
@@ -76,11 +80,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
+        working-directory: ./id
         run: |
           npm run build

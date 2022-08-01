@@ -46,7 +46,7 @@ worldID.init('world-id-container', {
 document.addEventListener('DOMContentLoaded', async function () {
   try {
     const result = await worldID.enable()
-    console.log('World ID verified succesfully:', result)
+    console.log('World ID verified successfully:', result)
   } catch (failure) {
     console.warn('World ID verification failed:', failure)
     // Re-activate here so your end user can try again
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
   worldID
     .enable()
     .then((result) => {
-      console.log('World ID verified succesfully:', result)
+      console.log('World ID verified successfully:', result)
     })
     .catch((failure) => {
       console.warn('World ID verification failed:', failure)

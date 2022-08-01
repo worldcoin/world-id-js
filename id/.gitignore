@@ -1,0 +1,4 @@
+dist/
+
+# kea types
+*Type.ts

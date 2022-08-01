@@ -1,0 +1,4 @@
+node_modules/**
+dist/**
+*Type.ts
+example-react/**
