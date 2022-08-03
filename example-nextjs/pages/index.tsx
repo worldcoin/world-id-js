@@ -6,8 +6,8 @@ import { utils } from "@worldcoin/id";
 import { AppProps } from "@worldcoin/id/dist/types/app-props";
 import { useEffect } from "react";
 
-const Widget = dynamic(
-  () => import("@worldcoin/id").then((mod) => mod.Widget),
+const WorldIDWidget = dynamic(
+  () => import("@worldcoin/id").then((mod) => mod.WorldIDWidget),
   { ssr: false }
 );
 
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <Widget {...widgetProps} />
+        <WorldIDWidget {...widgetProps} />
       </main>
     </div>
   );

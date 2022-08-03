@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Widget, utils, AppProps } from "@worldcoin/id";
+import { WorldIDWidget, utils, AppProps } from "@worldcoin/id";
 
 const widgetProps: AppProps = {
   action_id: "wid_staging_PCNQeDC5CX",
@@ -23,7 +23,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>World ID React Example</p>
         {/* ADD REACT COMPONENT HERE */}
-        <Widget {...widgetProps} />
+        <WorldIDWidget {...widgetProps} />
         <div
           style={{ marginTop: "16px" }}
         >{`Random number from utils ${utils.randomNumber(1, 100)}`}</div>

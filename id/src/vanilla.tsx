@@ -2,7 +2,7 @@ import { useValues } from 'kea'
 import { createRoot } from 'react-dom/client'
 import { AppProps } from 'types'
 import { vanillaWidgetLogic } from './logic/vanillaWidgetLogic'
-import { Widget } from './Widget'
+import { WorldIDWidget } from 'WorldIDWidget'
 
 // Make utils available on the JS vanilla version
 export * as utils from 'utils'
@@ -10,7 +10,7 @@ export * as utils from 'utils'
 const VanillaWidget = (): JSX.Element => {
   const { params } = useValues(vanillaWidgetLogic)
 
-  return <Widget {...params} />
+  return <WorldIDWidget {...params} />
 }
 
 const handleInitError = (errorMessage: string, props: AppProps): void => {
