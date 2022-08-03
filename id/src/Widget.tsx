@@ -11,7 +11,7 @@ const Wrapper = styled('div', {
   maxWidth: '300px',
 })
 
-export function WorldIDWidget(props: AppProps): JSX.Element {
+export function Widget(props: AppProps): JSX.Element {
   widgetLogic(props)
   const { widgetLoading } = useValues(widgetLogic)
 

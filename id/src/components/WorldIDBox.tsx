@@ -103,14 +103,14 @@ const Preloader = styled('div', {
 })
 
 export function WorldIDBox() {
-  const { isWidgetAvailable, widgetLoading } = useValues(widgetLogic)
+  const { isWidgetEnabled, isWidgetInitialized, widgetLoading } = useValues(widgetLogic)
   const { activateModal, setModalView } = useActions(widgetLogic)
   const { verificationState } = useValues(verificationLogic)
 
   const isVerified = useMemo(() => verificationState === VerificationState.Confirmed, [verificationState])
 
   const showLearnMore = (event: ReactMouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!isWidgetAvailable || widgetLoading) {
+    if (!isWidgetEnabled || widgetLoading) {
       return
     }
 
@@ -121,36 +121,34 @@ export function WorldIDBox() {
 
   return (
     <Box>
-      {isWidgetAvailable && !widgetLoading && (
-        <SCaptcha
-          onClick={() => {
-            setModalView(ModalView.VerificationFlow)
-            activateModal()
-          }}
-          data-test-id="world-id-box"
-          disabled={isVerified}
-          grid
-        >
-          <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
-          <SText>I&apos;m a unique person</SText>
-          {/* FIXME only the question mark icon should open the learn more modal; fix typescript (make sure rendered HTML is valid) */}
-          <SLogo onClick={showLearnMore}>
-            <WIDLogo />
-          </SLogo>
-        </SCaptcha>
-      )}
-      {!isWidgetAvailable && !widgetLoading && (
-        <SCaptcha disabled>
-          <SErrorMessage>Widget is unavailable</SErrorMessage>
-        </SCaptcha>
-      )}
-      {widgetLoading && (
-        <SCaptcha disabled>
+      <SCaptcha
+        onClick={() => {
+          setModalView(ModalView.VerificationFlow)
+          activateModal()
+        }}
+        data-testid="world-id-box"
+        disabled={isVerified || widgetLoading || !isWidgetInitialized || !isWidgetEnabled}
+        grid={isWidgetInitialized && !widgetLoading}
+      >
+        {isWidgetInitialized && !widgetLoading && (
+          <>
+            <SCheckbox checked={isVerified}>{isVerified && <IconCircleSuccess />}</SCheckbox>
+            <SText>I&apos;m a unique person</SText>
+            {/* FIXME only the question mark icon should open the learn more modal; fix typescript (make sure rendered HTML is valid) */}
+            <SLogo onClick={showLearnMore}>
+              <WIDLogo />
+            </SLogo>
+          </>
+        )}
+
+        {!isWidgetInitialized && !widgetLoading && <SErrorMessage>Widget is unavailable</SErrorMessage>}
+
+        {widgetLoading && (
           <Preloader>
             <WorldcoinLogomark style={{ width: '100%', height: '100%' }} />
           </Preloader>
-        </SCaptcha>
-      )}
+        )}
+      </SCaptcha>
     </Box>
   )
 }

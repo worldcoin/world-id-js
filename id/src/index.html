@@ -68,7 +68,7 @@
 
     <script src="dist/world-id-dev.js"></script>
     <script>
-      let isWidgetAvailable = null
+      let isWidgetAvailable = false
       const appProps = {
         enable_telemetry: true,
         action_id: 'wid_staging_PCNQeDC5CX',
@@ -109,6 +109,7 @@
 
       worldID.init('world-id-container', appProps)
       isWidgetAvailable = true
+
       console.log('Random number from utils: ', worldID.utils.randomNumber(1, 100))
     </script>
   </body>
