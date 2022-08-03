@@ -75,3 +75,16 @@ export enum VerificationState {
   Confirmed,
   Failed,
 }
+
+// REVIEW: Looks like it's no longer in use
+export enum CTAShownState {
+  Undisplayed, // Don't show the modal at all
+  Show,
+  Hide, // Hide the modal with an animated transition
+}
+
+// REVIEW: Looks like it's no longer in use
+export interface CallbackInterface {
+  successCallback: (result: VerificationResponse) => void
+  failureCallback: (error: VerificationErrorResponse) => void
+}

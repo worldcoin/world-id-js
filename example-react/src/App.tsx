@@ -1,23 +1,19 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Widget, utils } from "@worldcoin/id";
-import { AppProps } from "@worldcoin/id/dist/types/app-props";
+import { Widget, utils, AppProps } from "@worldcoin/id";
 
 const widgetProps: AppProps = {
-  connectionProps: {
-    enable_telemetry: true,
-    action_id: "wid_staging_PCNQeDC5CX",
-    signal: "user-id-1",
-    app_name: "candyApp",
-    signal_description: "Receive initial airdrop April 2022",
-    onVerificationError: ({ code, detail }) => console.log({ code, detail }),
-    onVerificationSuccess: (result) => console.log(result),
-  },
+  action_id: "wid_staging_PCNQeDC5CX",
+  signal: "user-id-1",
+  enable_telemetry: true,
+  app_name: "candyApp",
+  signal_description: "Receive initial airdrop April 2022",
   theme: "light",
   debug: true,
-  onInitSuccess: () => console.log("Init successful"),
-  onInitError: ({ error }) =>
-    console.log("Error while initialization World ID", error),
+  on_success: (result) => console.log(result),
+  on_error: ({ code, detail }) => console.log({ code, detail }),
+  on_init_success: () => console.log("Init successful"),
+  on_init_error: (error) => console.log("Error while initialization World ID", error),
 };
 
 function App() {

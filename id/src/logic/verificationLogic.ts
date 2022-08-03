@@ -233,12 +233,12 @@ export const verificationLogic = kea<verificationLogicType>([
   selectors({
     endUserError: [
       (s) => [s.errorResult],
-      (errorResult): EndUserErrorDisplay | null =>
+      (errorResult: ErrorCodes | null): EndUserErrorDisplay | null =>
         END_USER_ERROR_MESSAGES[errorResult || ErrorCodes.GenericError] ?? null,
     ],
     internalError: [
       (s) => [s.errorResult],
-      (errorResult): string => ERROR_MESSAGES[errorResult || ErrorCodes.GenericError] ?? '',
+      (errorResult: ErrorCodes | null): string => ERROR_MESSAGES[errorResult || ErrorCodes.GenericError] ?? '',
     ],
   }),
   events(({ actions }) => ({
