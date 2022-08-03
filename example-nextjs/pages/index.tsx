@@ -3,7 +3,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import dynamic from "next/dynamic";
 import { utils } from "@worldcoin/id";
-import { AppProps } from "@worldcoin/id/dist/types/app-props";
+import { AppProps } from "@worldcoin/id";
 import { useEffect } from "react";
 
 const WorldIDWidget = dynamic(
@@ -12,20 +12,17 @@ const WorldIDWidget = dynamic(
 );
 
 const widgetProps: AppProps = {
-  connectionProps: {
-    enable_telemetry: true,
-    action_id: "wid_staging_PCNQeDC5CX",
-    signal: "user-id-1",
-    app_name: "candyApp",
-    signal_description: "Receive initial airdrop April 2022",
-    onVerificationError: ({ code, detail }) => console.log({ code, detail }),
-    onVerificationSuccess: (result) => console.log(result),
-  },
+  action_id: "wid_staging_PCNQeDC5CX",
+  signal: "user-id-1",
+  enable_telemetry: true,
+  app_name: "candyApp",
+  signal_description: "Receive initial airdrop April 2022",
   theme: "light",
   debug: true,
-  onInitSuccess: () => console.log("Init successful"),
-  onInitError: ({ error }) =>
-    console.log("Error while initialization World ID", error),
+  on_success: (result) => console.log(result),
+  on_error: ({ code, detail }) => console.log({ code, detail }),
+  on_init_success: () => console.log("Init successful"),
+  on_init_error: (error) => console.log("Error while initialization World ID", error),
 };
 
 const Home: NextPage = () => {
