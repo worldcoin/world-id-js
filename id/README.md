@@ -18,18 +18,18 @@ To develop locally and contribute to this package, you can simply follow these i
   ```
 - Run tests
   ```bash
-  # should run on the /id folder
+  # runs in the /id folder
   cd id/
   npm run test
   ```
 - Run local test project
   ```bash
-  # should run on the /id folder
+  # runs in the /id folder
   npm run dev
   ```
 - Open browser at `http://localhost:3000`
 - To build the production bundle you can simply run.
   ```bash
-  # should run on the /id folder
+  # runs in the /id folder
   npm run build
   ```

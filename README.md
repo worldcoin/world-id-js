@@ -32,7 +32,7 @@ If your app is built on React, using the React widget is by far the easiest appr
 import { WorldIDWidget } from "@worldcoin/id";
 
 <WorldIDWidget
-  actionId="wid_staging_PN8fFL7V2N"
+  actionId="wid_staging_PN8fFL7V2N" // obtain this from developer.worldcoin.org
   signal="my_signal"
   enableTelemetry
   onSuccess={(proof) => console.log(proof)}
@@ -57,7 +57,7 @@ import worldID from "@worldcoin/id";
 worldID.init("world-id-container", {
   action_id: "wid_staging_PN8fFL7V2N", // obtain this from developer.worldcoin.org
   signal: "my_signal",
-  enableTelemetry: true, // optional, but recommended
+  enableTelemetry: true,
 });
 ```
 
