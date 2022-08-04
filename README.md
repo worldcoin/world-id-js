@@ -2,7 +2,7 @@
 
 > **Warning** This README is outdated. Update coming soon.
 
-# World ID Javascript Integration
+# World ID JS Widget
 
 The Javascript integration is the most flexible way to integrate [World ID](https://id.worldcoin.org) on the frontend. The package currently supports web applications and requires only a few lines of code.
 
@@ -10,7 +10,9 @@ The Javascript integration is the most flexible way to integrate [World ID](http
 
 Getting started with the Javascript package is really easy. Just follow the steps below.
 
-1. Install/include the package in your app (**recommended**) or add the code snippet from the UNPKG CDN.
+### Installation
+
+- Install the package in your app (**recommended**).
 
 ```bash
 npm install @worldcoin/id
@@ -18,59 +20,84 @@ npm install @worldcoin/id
 yarn add @worldcoin/id
 ```
 
-To add the script directly in your HTML,
+- **Alternatively**, you can add the standalone script directly in your HTML,
 
 ```html
 <script type="text/javascript" src="//unpkg.com/@worldcoin/id/dist/world-id.js"></script>
 ```
 
-2. Add a `<div>` in your HTML where you'd like to include World ID.
+### React apps
+
+If your app is built on React, using the React widget is by far the easiest approach.
+
+```jsx
+import { WorldIDWidget } from "@worldcoin/id";
+
+<WorldIDWidget
+  actionId="wid_staging_PN8fFL7V2N"
+  signal="my_signal"
+  enableTelemetry
+  onSuccess={(proof) => console.log(proof)}
+  onError={(error) => console.error(error)}
+/>;
+```
+
+### Generic JS apps
+
+If your app doesn't have a framework or doesn't use React, continue here.
+
+1. Add a `<div>` in your HTML where you'd like to include World ID.
 
 ```html
 <div id="world-id-container"></div>
 ```
 
-3. Initialize World ID (please refer to the docs for further customization details).
+2. Initialize World ID (please refer to the docs for further customization details).
 
 ```js
-worldID.init('world-id-container', {
-  action_id: 'wid_staging_PN8fFL7V2N', // obtain this from developer.worldcoin.org
-  signal: 'my_signal',
+import worldID from "@worldcoin/id";
+worldID.init("world-id-container", {
+  action_id: "wid_staging_PN8fFL7V2N", // obtain this from developer.worldcoin.org
+  signal: "my_signal",
   enableTelemetry: true, // optional, but recommended
-})
+});
 ```
 
-4. On document load, enable the World ID flow. When you call `.enable()` you will receive a promise to which you can subscribe to receive success or failure results. On failure, we recommend you call `.enable()` again to let the user try again (unless the failure code is a terminal one, e.g. `already_signed`).
+3. On document load, enable the World ID flow. When you call `.enable()` you will receive a promise to which you can subscribe to receive success or failure results. On failure, we recommend you call `.enable()` again to let the user try again (unless the failure code is a terminal one, e.g. `already_signed`).
 
 **With async/await:**
 
 ```js
-document.addEventListener('DOMContentLoaded', async function () {
+document.addEventListener("DOMContentLoaded", async function () {
   try {
-    const result = await worldID.enable()
-    console.log('World ID verified successfully:', result)
+    const result = await worldID.enable();
+    console.log("World ID verified successfully:", result);
   } catch (failure) {
-    console.warn('World ID verification failed:', failure)
+    console.warn("World ID verification failed:", failure);
     // Re-activate here so your end user can try again
   }
-})
+});
 ```
 
 **With promises:**
 
 ```js
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   worldID
     .enable()
     .then((result) => {
-      console.log('World ID verified successfully:', result)
+      console.log("World ID verified successfully:", result);
     })
     .catch((failure) => {
-      console.warn('World ID verification failed:', failure)
+      console.warn("World ID verification failed:", failure);
       // Re-activate here so your end user can try again
-    })
-})
+    });
+});
 ```
+
+## 🧑‍💻 Development & testing
+
+If you want to develop or contribute to this project, please refer to the development instructions in the `id` [README](/id/README.md).
 
 <!-- WORLD-ID-SHARED-README-TAG:START - Do not remove or modify this section directly -->
 <!-- The contents of this file are inserted to all World ID repositories to provide general context on World ID. -->
@@ -126,27 +153,5 @@ We have comprehensive docs for World ID at https://id.worldcoin.org/docs.
 </a>
 
 <!-- WORLD-ID-SHARED-README-TAG:END -->
-
-## 🧑‍💻 Development & testing
-
-To develop locally and contribute to this package, you can simply follow these instructions after clonning the repo.
-
-- Install dependencies
-  ```bash
-  npm install
-  ```
-- Run tests
-  ```bash
-  npm run test
-  ```
-- Run local test project
-  ```bash
-  npm run dev
-  ```
-- Open browser at `http://localhost:3000`
-- To build the production bundle you can simply run.
-  ```bash
-  npm run build
-  ```
 
 [docs]: https://id.worldcoin.org/docs/js
