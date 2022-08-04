@@ -1,7 +1,5 @@
 <img src="https://raw.githubusercontent.com/worldcoin/world-id-js/main/world-id-logo.svg" alt="World ID logo" width="300" />
 
-> **Warning** This README is outdated. Update coming soon.
-
 # World ID JS Widget
 
 The Javascript integration is the most flexible way to integrate [World ID](https://id.worldcoin.org) on the frontend. The package currently supports web applications and requires only a few lines of code.
