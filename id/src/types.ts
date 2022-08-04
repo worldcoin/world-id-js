@@ -18,7 +18,7 @@ export interface AppProps {
 }
 
 // Overrides the widget props to use camelCase (per React convention)
-export interface WidgetProps extends AppProps {
+export interface WidgetProps extends Pick<AppProps, 'theme' | 'debug' | 'signal'> {
   actionId: AppProps['action_id']
   enableTelemetry?: AppProps['enable_telemetry']
   appName?: AppProps['app_name']
@@ -26,8 +26,8 @@ export interface WidgetProps extends AppProps {
   advancedUseRawSignal?: AppProps['advanced_use_raw_signal']
   advancedUseRawActionId?: AppProps['advanced_use_raw_action_id']
   disableRemoteFonts?: AppProps['disable_remote_fonts']
-  onSuccess?: AppProps['on_success']
-  onError?: AppProps['on_error']
+  onSuccess: AppProps['on_success']
+  onError: AppProps['on_error']
   onInitSuccess?: AppProps['on_init_success']
   onInitError?: AppProps['on_init_error']
 }

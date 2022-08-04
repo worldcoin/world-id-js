@@ -31,10 +31,10 @@ export function WorldIDWidget(props: WidgetProps): JSX.Element {
   const { widgetLoading } = useValues(widgetLogic)
 
   useEffect(() => {
-    if (!props.disable_remote_fonts) {
+    if (!props.disableRemoteFonts) {
       globalStyles()
     }
-  }, [props.disable_remote_fonts])
+  }, [props.disableRemoteFonts])
 
   return (
     <Wrapper className={props.theme === 'dark' ? darkTheme : lightTheme}>
