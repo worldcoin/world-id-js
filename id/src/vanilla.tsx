@@ -2,15 +2,45 @@ import { useValues } from 'kea'
 import { createRoot } from 'react-dom/client'
 import { AppProps } from 'types'
 import { vanillaWidgetLogic } from './logic/vanillaWidgetLogic'
-import { Widget } from './Widget'
+import { WorldIDWidget } from './Widget'
 
 // Make utils available on the JS vanilla version
 export * as utils from 'utils'
 
 const VanillaWidget = (): JSX.Element => {
-  const { params } = useValues(vanillaWidgetLogic)
+  const {
+    params: {
+      action_id,
+      enable_telemetry,
+      app_name,
+      signal_description,
+      advanced_use_raw_signal,
+      advanced_use_raw_action_id,
+      disable_remote_fonts,
+      on_success,
+      on_error,
+      on_init_success,
+      on_init_error,
+      ...restOfParams
+    },
+  } = useValues(vanillaWidgetLogic)
 
-  return <Widget {...params} />
+  return (
+    <WorldIDWidget
+      actionId={action_id}
+      enableTelemetry={enable_telemetry}
+      appName={app_name}
+      signalDescription={signal_description}
+      advancedUseRawSignal={advanced_use_raw_signal}
+      advancedUseRawActionId={advanced_use_raw_action_id}
+      disableRemoteFonts={disable_remote_fonts}
+      onSuccess={on_success}
+      onError={on_error}
+      onInitSuccess={on_init_success}
+      onInitError={on_init_error}
+      {...restOfParams}
+    />
+  )
 }
 
 let isInitialized = false

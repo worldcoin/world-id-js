@@ -1,2 +1,2 @@
 export * as utils from 'utils'
-export { Widget } from 'Widget'
+export { WorldIDWidget } from 'Widget'
