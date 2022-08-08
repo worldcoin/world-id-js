@@ -2,6 +2,8 @@
   "name": "world-id-js",
   "private": true,
   "workspaces": [
+    "example-nextjs",
+    "example-react",
     "id"
   ],
   "devDependencies": {
