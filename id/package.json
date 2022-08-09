@@ -1,7 +1,7 @@
 {
   "name": "@worldcoin/id",
   "type": "module",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0-alpha.1",
   "description": "Integrate World ID (proof-of-personhood) into your Javascript apps.",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
