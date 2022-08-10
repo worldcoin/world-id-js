@@ -2,7 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [0.4.0](https://github.com/worldcoin/world-id-js/compare/v0.4.0-alpha.3...v0.4.0) (2022-08-10)
+## 0.4.0 (2022-08-10)
+
+Revamped UI, native React widget and much more!
+
+### ⚠ BREAKING CHANGES
+
+- Introducing React widget, some parameter names may have changed slightly (see updated README) (#33)
+
+### Features
+
+- React widget introduced. Recommended over vanilla implementation if you are using React! (#33) (#28)
+- New widget design (#17) (#25) (#24)
+- Updated READMEs to make it easier to use World ID (#38) (#36)
+- Telemetry errors are now gracefully handled (#29)
 
 ## 0.4.0-alpha.[1-3] (2022-08-10)
 
