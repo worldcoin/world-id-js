@@ -247,11 +247,6 @@ export function AwaitingConnectionScene() {
             </DialogHeaderButton>
           )}
           <DialogHeaderLogo />
-          {media === 'desktop' && isDevMode && (
-            <DialogHeaderButton>
-              <IconCode />
-            </DialogHeaderButton>
-          )}
           <DialogHeaderButton
             bordered
             onClick={() => {
