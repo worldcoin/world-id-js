@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/worldcoin/world-id-js/compare/v0.4.0-alpha.3...v0.4.0) (2022-08-10)
+
 ## 0.4.0-alpha.[1-3] (2022-08-10)
 
 No details for alpha releases.
