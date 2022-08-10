@@ -24,6 +24,7 @@ export const Button = styled('button', {
       sm: {
         height: 24,
         padding: '0 10px',
+        fontSize: '11px',
         borderRadius: '$sm',
       },
       lg: {
