@@ -10,6 +10,6 @@
     "cspell": "6.1.3"
   },
   "scripts": {
-    "spellcheck": "cspell **/*.{ts,js,tsx,json} -e **/dist/ -e **/node_modules/"
+    "spellcheck": "cspell **/*.{ts,js,tsx,json} -e **/dist/ -e **/node_modules/ -e /node_modules/"
   }
 }
