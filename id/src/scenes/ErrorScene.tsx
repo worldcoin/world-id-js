@@ -1,5 +1,5 @@
 import { useActions, useValues } from 'kea'
-import { verificationLogic } from 'logic/verificationLogic'
+import { verificationLogic } from 'logics/verificationLogic'
 import { styled } from 'stitches'
 import { Dialog } from 'components/Dialog'
 import { DialogHeader } from 'components/DialogHeader'

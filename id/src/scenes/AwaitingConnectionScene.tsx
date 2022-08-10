@@ -22,8 +22,8 @@ import { Button } from 'components/Button'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { WorldcoinApp } from 'assets/logos'
 import { DevModeLink } from 'components/DevModeButton'
-import { widgetLogic } from 'logic/widgetLogic'
-import { verificationLogic } from 'logic/verificationLogic'
+import { widgetLogic } from 'logics/widgetLogic'
+import { verificationLogic } from 'logics/verificationLogic'
 import { LearnMoreScene } from './LearnMoreScene'
 import { ModalView } from 'types'
 
@@ -247,11 +247,6 @@ export function AwaitingConnectionScene() {
             </DialogHeaderButton>
           )}
           <DialogHeaderLogo />
-          {media === 'desktop' && isDevMode && (
-            <DialogHeaderButton>
-              <IconCode />
-            </DialogHeaderButton>
-          )}
           <DialogHeaderButton
             bordered
             onClick={() => {

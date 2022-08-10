@@ -7,8 +7,8 @@ import { Typography } from 'components/Typography'
 import { Button } from 'components/Button'
 import { Circle } from 'components/Circle'
 import { IconSuccess } from 'assets/icons'
-import { verificationLogic } from 'logic/verificationLogic'
-import { widgetLogic } from 'logic/widgetLogic'
+import { verificationLogic } from 'logics/verificationLogic'
+import { widgetLogic } from 'logics/widgetLogic'
 
 const SRoot = styled(Dialog, {
   display: 'flex',

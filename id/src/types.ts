@@ -12,7 +12,7 @@ export interface AppProps {
   theme?: 'light' | 'dark'
   debug?: boolean
   on_success: (result: VerificationResponse) => void
-  on_error: (error: VerificationErrorResponse) => void
+  on_error?: (error: VerificationErrorResponse) => void
   on_init_success?: () => void
   on_init_error?: (errorMessage: string) => void
 }
@@ -27,7 +27,7 @@ export interface WidgetProps extends Pick<AppProps, 'theme' | 'debug' | 'signal'
   advancedUseRawActionId?: AppProps['advanced_use_raw_action_id']
   disableRemoteFonts?: AppProps['disable_remote_fonts']
   onSuccess: AppProps['on_success']
-  onError: AppProps['on_error']
+  onError?: AppProps['on_error']
   onInitSuccess?: AppProps['on_init_success']
   onInitError?: AppProps['on_init_error']
 }

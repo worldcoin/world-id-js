@@ -4,8 +4,8 @@ import { AwaitingVerificationScene } from './AwaitingVerificationScene'
 import { AwaitingConnectionScene } from './AwaitingConnectionScene'
 import { ConfirmedScene } from './ConfirmedScene'
 import { ErrorScene } from './ErrorScene'
-import { widgetLogic } from 'logic/widgetLogic'
-import { verificationLogic } from 'logic/verificationLogic'
+import { widgetLogic } from 'logics/widgetLogic'
+import { verificationLogic } from 'logics/verificationLogic'
 import { VerificationState } from 'types'
 
 export function PrincipalScene() {
