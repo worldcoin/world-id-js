@@ -24,6 +24,7 @@ export const Button = styled('button', {
       sm: {
         height: 24,
         padding: '0 10px',
+        fontSize: '11px',
         borderRadius: '$sm',
       },
       lg: {
@@ -40,6 +41,7 @@ export const Button = styled('button', {
     },
     color: {
       default: {},
+      neutral: {},
       primary: {},
       gradient: {},
     },
@@ -62,6 +64,14 @@ export const Button = styled('button', {
       css: {
         color: '$color',
         background: '$buttonDefaultBg',
+      },
+    },
+    {
+      variant: 'default',
+      color: 'neutral',
+      css: {
+        color: '$buttonNeutralColor',
+        background: '$buttonNeutralBg',
       },
     },
     {

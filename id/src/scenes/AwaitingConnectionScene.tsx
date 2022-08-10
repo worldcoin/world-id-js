@@ -201,7 +201,7 @@ export function AwaitingConnectionScene() {
     size?: 'sm' | 'xl'
     muted?: boolean
     data?: string | null
-    color?: 'primary' | 'default'
+    color?: 'primary' | 'neutral'
   }
 
   function CopyToClipboard(props: CopyToClipboardProps) {
@@ -270,7 +270,7 @@ export function AwaitingConnectionScene() {
                 </SMainTextCaption>
               </SMainText>
               <SMainCopy>
-                {media === 'desktop' && <CopyToClipboard color="default" size="sm" data={qrCodeContent} />}
+                {media === 'desktop' && <CopyToClipboard color="neutral" size="sm" data={qrCodeContent} />}
                 {media !== 'desktop' && !codeShown && (
                   <Button variant="link" color="default" size="xl" onClick={toggleCodeShown}>
                     Show QR code instead

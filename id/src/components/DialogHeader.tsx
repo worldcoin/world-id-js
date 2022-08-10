@@ -16,7 +16,7 @@ export const DialogHeader = styled('div', {
         },
       },
       false: {
-        gridTemplateColumns: '1fr auto auto',
+        gridTemplateColumns: '1fr auto',
 
         '@smDown': {
           gridTemplateColumns: '1fr auto',
