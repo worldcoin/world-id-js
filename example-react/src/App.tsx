@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { WorldIDWidget, utils, WidgetProps } from "@worldcoin/id";
+import { WorldIDWidget, WidgetProps } from "@worldcoin/id";
 
 const widgetProps: WidgetProps = {
   actionId: "wid_staging_PCNQeDC5CX",
@@ -9,7 +9,7 @@ const widgetProps: WidgetProps = {
   appName: "candyApp",
   signalDescription: "Receive initial airdrop April 2022",
   theme: "light",
-  debug: true,
+  debug: true, // DO NOT SET TO `true` IN PRODUCTION
   onSuccess: (result) => console.log(result),
   onError: ({ code, detail }) => console.log({ code, detail }),
   onInitSuccess: () => console.log("Init successful"),
@@ -22,11 +22,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>World ID React Example</p>
-        {/* ADD REACT COMPONENT HERE */}
+        {/* World ID component below */}
         <WorldIDWidget {...widgetProps} />
-        <div
-          style={{ marginTop: "16px" }}
-        >{`Random number from utils ${utils.randomNumber(1, 100)}`}</div>
       </header>
     </div>
   );
