@@ -188,7 +188,7 @@ export const verificationLogic = kea<verificationLogicType>([
         widgetLogic.props.on_success(values.successResult)
       }
       if (values.verificationState !== VerificationState.Confirmed || !values.successResult) {
-        widgetLogic.props.on_error({
+        widgetLogic.props.on_error?.({
           code: values.errorResult || ErrorCodes.GenericError,
           detail: values.internalError,
         })

@@ -1,7 +1,7 @@
 import { useValues } from 'kea'
 import { createRoot } from 'react-dom/client'
 import { AppProps } from 'types'
-import { vanillaWidgetLogic } from './logic/vanillaWidgetLogic'
+import { vanillaWidgetLogic } from './logics/vanillaWidgetLogic'
 import { WorldIDWidget } from './Widget'
 
 // Make utils available on the JS vanilla version

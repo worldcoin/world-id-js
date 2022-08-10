@@ -6,7 +6,7 @@ import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
 import { Loader } from 'components/Loader'
 import { Typography } from 'components/Typography'
 import { Button } from 'components/Button'
-import { verificationLogic } from 'logic/verificationLogic'
+import { verificationLogic } from 'logics/verificationLogic'
 
 const SRoot = styled(Dialog, {
   display: 'flex',

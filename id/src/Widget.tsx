@@ -2,7 +2,7 @@ import { styled, lightTheme, darkTheme, globalStyles } from 'stitches'
 import { WorldIDBox } from './components/WorldIDBox'
 import { PrincipalScene } from 'scenes/PrincipalScene'
 import { useValues } from 'kea'
-import { widgetLogic } from './logic/widgetLogic'
+import { widgetLogic } from './logics/widgetLogic'
 import { useEffect } from 'react'
 import { AppProps, WidgetProps } from 'types'
 
