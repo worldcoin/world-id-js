@@ -1,6 +1,7 @@
 import sha3 from 'js-sha3'
 import { arrayify, concat, hexlify } from '@ethersproject/bytes'
 import { AppProps, VerificationRequest, VerificationRequestParams } from 'types'
+import WalletConnect from '@walletconnect/client'
 
 /**
  * Generates a random integer between a specified range
@@ -120,4 +121,20 @@ export function keccak256(value: Buffer): string {
   const tight: Array<Uint8Array> = [arrayify(value)]
   const data = hexlify(concat(tight))
   return '0x' + sha3.keccak_256(arrayify(data))
+}
+
+/**
+ * Build data for QR Code
+ * @param connector WalletConnect connection instance
+ * @returns string
+ */
+export function buildQRData(connector: WalletConnect): string {
+  const bridgeUrl = new URL(connector.bridge)
+  const result = new URL('https://worldcoin.org/verify')
+  result.searchParams.append('t', connector.handshakeTopic)
+  result.searchParams.append('k', connector.key)
+  result.searchParams.append('b', bridgeUrl.hostname)
+  result.searchParams.append('v', '1')
+
+  return result.toString()
 }
