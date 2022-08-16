@@ -130,3 +130,10 @@ export const update = (propsToUpdate: Partial<AppProps>) => {
  * Returns actual World ID props
  */
 export const getProps = () => vanillaWidgetLogic.values.params
+
+/**
+ * Reset internal state. Useful for unit-testing
+ */
+export const reset = () => {
+  isInitialized = false
+}
