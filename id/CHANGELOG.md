@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.5.0 (2022-08-16)
+
+### Features
+
+- Share build qr data snippet ([#43](https://github.com/worldcoin/world-id-js/issues/43)) ([63e27d0](https://github.com/worldcoin/world-id-js/commit/63e27d04fcc73eaed14e7e7b11a66e9c9b835710))
+
+### Style
+
+- Fix and improve styles ([#42](https://github.com/worldcoin/world-id-js/pull/42)) ([c3c0ec1](https://github.com/worldcoin/world-id-js/commit/c3c0ec1c7fb2bd8342c525a7f130ef18884ac5e8))
+
 ## 0.4.0 (2022-08-10)
 
 Revamped UI, native React widget and much more!
