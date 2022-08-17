@@ -13,7 +13,9 @@ export const randomNumber = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-export const buildVerificationRequest = (props: AppProps): VerificationRequest => {
+export const buildVerificationRequest = (
+  props: VerificationRequestParams & { advanced_use_raw_signal: boolean; advanced_use_raw_action_id: boolean }
+): VerificationRequest => {
   if (!props.signal) {
     throw new Error('Unexpectedly trying to build verification request without a `signal`.')
   }
