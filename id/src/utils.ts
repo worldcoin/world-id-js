@@ -1,6 +1,6 @@
 import sha3 from 'js-sha3'
-import { arrayify, concat, hexlify } from '@ethersproject/bytes'
-import { AppProps, VerificationRequest, VerificationRequestParams } from 'types'
+import { arrayify, BytesLike, concat, hexlify, isBytesLike } from '@ethersproject/bytes'
+import { AppProps, HashFunctionOutput, VerificationRequest, VerificationRequestParams } from 'types'
 import WalletConnect from '@walletconnect/client'
 
 /**
@@ -19,8 +19,8 @@ export const buildVerificationRequest = (props: AppProps): VerificationRequest =
   }
 
   const params: VerificationRequestParams = {
-    signal: props.advanced_use_raw_signal ? props.signal : hashBytes(props.signal).digest,
-    action_id: props.advanced_use_raw_action_id ? props.action_id : hashBytes(props.action_id).digest,
+    signal: props.advanced_use_raw_signal ? props.signal : worldIDHash(props.signal).digest,
+    action_id: props.advanced_use_raw_action_id ? props.action_id : worldIDHash(props.action_id).digest,
   }
 
   if (props.app_name) {
@@ -101,13 +101,38 @@ export const validateInputParams = (params: AppProps): { valid: boolean; error?:
 
 /**
  * Hashes an input using the `keccak256` hashing function used across the World ID protocol, to be used as
- * a ZKP input.
- * @param input - Input to hash (if it's a string, it'll be converted to bytes first)
+ * a ZKP input. The function will try to determine the best hashing mechanism, if the string already looks like hex-encoded
+ * bytes (e.g. `0x0000000000000000000000000000000000000000`), it will be hashed directly.
+ * @param input Any string, hex-like string, bytes represented as a hex string.
+ * @returns
+ */
+export function worldIDHash(input: BytesLike | Buffer): HashFunctionOutput {
+  if (isBytesLike(input)) {
+    return hashEncodedBytes(input)
+  }
+  return hashString(input)
+}
+
+/**
+ * Using `worldIDHash` is recommended! Use this if you're certain you want to hash a string.
+ * Converts an input to bytes and then hashes it with the World ID protocol hashing function.
+ * @param input - String to hash
  * @returns hash
  */
-export function hashBytes(input: string | Buffer): { hash: BigInt; digest: string } {
-  const bytesInput = Buffer.isBuffer(input) ? input : Buffer.from(input)
-  const hash = BigInt(keccak256(bytesInput)) >> BigInt(8)
+export function hashString(input: string): HashFunctionOutput {
+  const bytesInput = Buffer.from(input)
+  return hashEncodedBytes(bytesInput)
+}
+
+/**
+ * Using `worldIDHash` is recommended! Use this if you're certain you want to hash raw bytes.
+ * Hashes raw bytes input using the `keccak256` hashing function used across the World ID protocol, to be used as
+ * a ZKP input. Example use cases include when you're hashing an address to be verified in a smart contract.
+ * @param input - Bytes represented as a hex string.
+ * @returns
+ */
+export function hashEncodedBytes(input: BytesLike): HashFunctionOutput {
+  const hash = BigInt(keccak256(input)) >> BigInt(8)
   const rawDigest = hash.toString(16)
   return { hash, digest: `0x${rawDigest.padStart(64, '0')}` }
 }
@@ -117,7 +142,7 @@ export function hashBytes(input: string | Buffer): { hash: BigInt; digest: strin
  * @param value value to hash
  * @returns
  */
-export function keccak256(value: Buffer): string {
+export function keccak256(value: BytesLike): string {
   const tight: Array<Uint8Array> = [arrayify(value)]
   const data = hexlify(concat(tight))
   return '0x' + sha3.keccak_256(arrayify(data))

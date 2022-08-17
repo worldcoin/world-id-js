@@ -90,3 +90,8 @@ export enum VerificationState {
   Confirmed,
   Failed,
 }
+
+export interface HashFunctionOutput {
+  hash: BigInt
+  digest: string
+}
