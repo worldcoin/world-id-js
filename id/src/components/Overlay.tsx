@@ -1,6 +1,8 @@
 import { MouseEventHandler, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { ComponentProps } from '@stitches/react'
-import { styled } from 'stitches'
+import { styled, lightTheme, darkTheme } from 'stitches'
+import { widgetLogic } from 'logics/widgetLogic'
 
 const OverlayRoot = styled('div', {
   width: '100%',
@@ -47,9 +49,18 @@ export function Overlay(props: OverlayProps) {
     [props.onClose]
   )
 
-  return (
-    <OverlayRoot open={props.open} onClick={handleClick} data-testid="overlay">
+  const theme = widgetLogic.props.theme
+
+  const children = (
+    <OverlayRoot
+      className={theme === 'dark' ? darkTheme : lightTheme}
+      open={props.open}
+      onClick={handleClick}
+      data-testid="overlay"
+    >
       {props.children}
     </OverlayRoot>
   )
+
+  return createPortal(children, document.documentElement)
 }
