@@ -6,7 +6,7 @@ import { utils } from "@worldcoin/id";
 import { WidgetProps } from "@worldcoin/id";
 import { useEffect } from "react";
 
-const WorldIDWidget = dynamic(() => import("@worldcoin/id").then((mod) => mod.WorldIDWidget), { ssr: false });
+const WorldIDWidget = dynamic<WidgetProps>(() => import("@worldcoin/id").then((mod) => mod.WorldIDWidget), { ssr: false });
 
 const widgetProps: WidgetProps = {
   actionId: "wid_staging_PCNQeDC5CX",

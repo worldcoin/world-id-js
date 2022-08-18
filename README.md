@@ -40,6 +40,23 @@ import { WorldIDWidget } from "@worldcoin/id";
 />;
 ```
 
+### Next.js apps
+
+If your app is built on Next.js, using the React widget is by far the easiest approach, but need to disable SSR.
+
+```jsx
+import { WidgetProps } from "@worldcoin/id";
+const WorldIDWidget = dynamic<WidgetProps>(() => import("@worldcoin/id").then((mod) => mod.WorldIDWidget), { ssr: false });
+
+<WorldIDWidget
+    actionId="wid_staging_PN8fFL7V2N" // obtain this from developer.worldcoin.org
+    signal="my_signal"
+    enableTelemetry
+    onSuccess={(proof) => console.log(proof)}
+    onError={(error) => console.error(error)}
+/>;
+```
+
 ### Generic JS apps
 
 If your app doesn't have a framework or doesn't use React, continue here.
