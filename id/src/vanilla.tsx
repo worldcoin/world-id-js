@@ -135,5 +135,6 @@ export const getProps = () => vanillaWidgetLogic.values.params
  * Reset internal state. Useful for unit-testing
  */
 export const reset = () => {
+  console.warn('Advanced method intended for internal use! Avoid calling this method directly.')
   isInitialized = false
 }

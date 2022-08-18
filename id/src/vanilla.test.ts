@@ -28,7 +28,14 @@ beforeEach(() => {
 
 afterEach(() => {
   window.location.reload()
+
+  // console.warn is mocked so we don't output the expected warning message from reset() when running tests
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  jest.spyOn(console, 'warn').mockImplementation(() => {})
+
   reset()
+
+  jest.clearAllMocks()
 })
 
 beforeAll(() => {
@@ -120,6 +127,8 @@ describe('parameter validation', () => {
     expect(on_init_error).toBeCalledWith('The `action_id` parameter is always required.')
     const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
+    // FIXME: Add assertion that the "widget unavailable" message is shown
+    // FIXME: Add assertion that error was logged. Any core initialization error should be logged even with debug=false
   })
 
   it('validates action_id is non-empty when updating', async () => {
@@ -141,6 +150,7 @@ describe('parameter validation', () => {
     })
     element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
+    // FIXME: Add assertion that widget is actually rendered (i.e. I'm a unique person + logo)
   })
 
   it('validates action_id is non-null', async () => {
@@ -180,6 +190,7 @@ describe('parameter validation', () => {
     })
     const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
+    // FIXME: Add assertion that the "widget unavailable" message is shown
   })
 
   it('can be initialized with empty `signal`', () => {
