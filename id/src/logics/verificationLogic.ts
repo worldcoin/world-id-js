@@ -7,7 +7,7 @@ import {
   telemetryVerificationLaunched,
   telemetryVerificationSuccess,
 } from 'telemetry'
-import { buildVerificationRequest, verifyVerificationResponse } from 'utils'
+import { buildQRData, buildVerificationRequest, verifyVerificationResponse } from 'utils'
 import { widgetLogic } from './widgetLogic'
 
 import type { verificationLogicType } from './verificationLogicType'
@@ -125,14 +125,8 @@ export const verificationLogic = kea<verificationLogicType>([
         return
       }
 
-      const bridgeUrl = new URL(connector.bridge)
-      const url = new URL('https://worldcoin.org/verify')
-      url.searchParams.append('t', connector.handshakeTopic)
-      url.searchParams.append('k', connector.key)
-      url.searchParams.append('b', bridgeUrl.hostname)
-      url.searchParams.append('v', '1')
-
-      actions.setQrCodeContent(url.toString())
+      const qrData = buildQRData(connector)
+      actions.setQrCodeContent(qrData)
       actions.finishWidgetLoading()
     },
 

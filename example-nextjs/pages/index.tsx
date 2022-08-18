@@ -6,7 +6,7 @@ import { utils } from "@worldcoin/id";
 import { WidgetProps } from "@worldcoin/id";
 import { useEffect } from "react";
 
-const WorldIDWidget = dynamic(() => import("@worldcoin/id").then((mod) => mod.WorldIDWidget), { ssr: false });
+const WorldIDWidget = dynamic<WidgetProps>(() => import("@worldcoin/id").then((mod) => mod.WorldIDWidget), { ssr: false });
 
 const widgetProps: WidgetProps = {
   actionId: "wid_staging_PCNQeDC5CX",
@@ -15,7 +15,7 @@ const widgetProps: WidgetProps = {
   appName: "ConfCon",
   signalDescription: "Get your ticket to ConfCon 2023",
   theme: "dark",
-  debug: true, // DO NOT SET TO `true` IN PRODUCTION
+  debug: true, // Recommended **only** for development
   onSuccess: (result) => console.log(result),
   onError: ({ code, detail }) => console.log({ code, detail }),
   onInitSuccess: () => console.log("Init successful"),

@@ -83,7 +83,7 @@ export const widgetLogic = kea<widgetLogicType>([
     processProps: async ({ props }) => {
       const { valid, error } = validateInputParams(props)
 
-      if (!valid && props.debug) {
+      if (!valid) {
         console.error(error)
       }
 

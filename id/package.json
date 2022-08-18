@@ -1,7 +1,7 @@
 {
   "name": "@worldcoin/id",
   "type": "module",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "description": "Integrate World ID (proof-of-personhood) into your Javascript apps.",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -87,7 +87,7 @@
     "qr-code-styling-new": "1.6.1"
   },
   "peerDependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "18.0.15",
+    "react-dom": "18.0.6"
   }
 }
