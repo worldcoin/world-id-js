@@ -15,7 +15,7 @@ const widgetProps: WidgetProps = {
   appName: "ConfCon",
   signalDescription: "Get your ticket to ConfCon 2023",
   theme: "dark",
-  debug: true, // DO NOT SET TO `true` IN PRODUCTION
+  debug: true, // Recommended **only** for development
   onSuccess: (result) => console.log(result),
   onError: ({ code, detail }) => console.log({ code, detail }),
   onInitSuccess: () => console.log("Init successful"),
