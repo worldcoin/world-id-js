@@ -40,6 +40,24 @@ import { WorldIDWidget } from "@worldcoin/id";
 />;
 ```
 
+### Next.js apps
+
+If your app is built on Next.js, you need to disable SSR for the widget. This is because one of the underlying libraries (`kea-js`) that the widget depends on requires `window` which is `undefined` when rendering on the server.
+
+```jsx
+import { WidgetProps } from "@worldcoin/id";
+const WorldIDWidget =
+  dynamic < WidgetProps > (() => import("@worldcoin/id").then((mod) => mod.WorldIDWidget), { ssr: false });
+
+<WorldIDWidget
+  actionId="wid_staging_PN8fFL7V2N" // obtain this from developer.worldcoin.org
+  signal="my_signal"
+  enableTelemetry
+  onSuccess={(proof) => console.log(proof)}
+  onError={(error) => console.error(error)}
+/>;
+```
+
 ### Generic JS apps
 
 If your app doesn't have a framework or doesn't use React, continue here.
