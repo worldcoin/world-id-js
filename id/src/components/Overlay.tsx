@@ -63,7 +63,7 @@ export function Overlay(props: OverlayProps) {
   )
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const container = document.getElementsByTagName('body')[0]! // body always presence
+  const container = document.getElementsByTagName('body')[0]! // body always present
 
   return createPortal(children, container)
 }
