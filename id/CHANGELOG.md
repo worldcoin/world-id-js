@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.6.0 (2022-08-17)
+
+### ⚠ BREAKING CHANGES
+
+- fix encoding for raw bytes (#47)
+
+### Bug Fixes
+
+- fix encoding for raw bytes ([#47](https://github.com/worldcoin/world-id-js/issues/47)) ([d1206f8](https://github.com/worldcoin/world-id-js/commit/d1206f81b766c024023d0759b94e071a12cc80c2))
+
 ## 0.5.0 (2022-08-16)
 
 ### Features
