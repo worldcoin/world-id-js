@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.7.0 (2022-08-18)
+
+### Features
+
+- log param errors ([#49](https://github.com/worldcoin/world-id-js/issues/49)) ([27b5305](https://github.com/worldcoin/world-id-js/commit/27b5305768e48f675f3aab8ea19464652a06b82d))
+- use portal for overlay ([#50](https://github.com/worldcoin/world-id-js/issues/50)) ([5be7872](https://github.com/worldcoin/world-id-js/commit/5be78726a156f724f0713ade7376b97cde926003))
+
 ## 0.6.0 (2022-08-17)
 
 ### ⚠ BREAKING CHANGES
