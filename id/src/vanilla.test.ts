@@ -113,9 +113,11 @@ describe('initialization', () => {
 })
 
 describe('parameter validation', () => {
-  it('validates action_id is non-empty', () => {
+  it('validates action_id is non-empty', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const error = jest.spyOn(console, 'error').mockImplementation(() => {}) // Expected errors not logged on output
     const on_init_error = jest.fn()
-    act(() => {
+    await act(() => {
       init('wld-container-test', {
         on_init_error,
         action_id: '',
@@ -127,8 +129,9 @@ describe('parameter validation', () => {
     expect(on_init_error).toBeCalledWith('The `action_id` parameter is always required.')
     const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
-    // FIXME: Add assertion that the "widget unavailable" message is shown
-    // FIXME: Add assertion that error was logged. Any core initialization error should be logged even with debug=false
+    expect(element.textContent).toBe('Widget is unavailable')
+    expect(error).toHaveBeenNthCalledWith(1, 'The `action_id` parameter is always required.')
+    expect(error).toHaveBeenNthCalledWith(2, 'The `action_id` parameter cannot be empty.')
   })
 
   it('validates action_id is non-empty when updating', async () => {
@@ -143,6 +146,7 @@ describe('parameter validation', () => {
     let element
     element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeFalsy()
+    expect(element.textContent).toBe("I'm a unique person")
     await act(() => {
       update({
         action_id: '',
@@ -150,7 +154,7 @@ describe('parameter validation', () => {
     })
     element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
-    // FIXME: Add assertion that widget is actually rendered (i.e. I'm a unique person + logo)
+    expect(element.textContent).toBe('Widget is unavailable')
   })
 
   it('validates action_id is non-null', async () => {
@@ -190,7 +194,7 @@ describe('parameter validation', () => {
     })
     const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
-    // FIXME: Add assertion that the "widget unavailable" message is shown
+    expect(element.textContent).toBe('Widget is unavailable')
   })
 
   it('can be initialized with empty `signal`', () => {
