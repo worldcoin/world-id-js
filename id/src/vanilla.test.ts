@@ -337,22 +337,32 @@ describe('parameter validation', () => {
     expect(element.textContent).toBe('Widget is unavailable')
   })
 
-  it('throws error if incorrect element type is passed', () => {
-    // FIXME: This test should pass
-    // // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    // expect(() => init(123, { action_id: SAMPLE_ACTION_ID })).toThrow(
-    //   'The passed element parameter does not look like a valid HTML element.'
-    // )
+  it('throws error if incorrect element type is passed', async () => {
+    const on_init_error = jest.fn()
+    await act(() => {
+      // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+      init(123, {
+        action_id: SAMPLE_ACTION_ID,
+        signal: SAMPLE_SIGNAL,
+        on_init_error,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    expect(on_init_error).toBeCalledWith('The passed element parameter does not look like a valid HTML element.')
   })
-  it('throws error if element cannot be found on DOM', () => {
-    // FIXME: This test should pass
-    // expect(() =>
-    //   init('i_do_not_exist', {
-    //     action_id: SAMPLE_ACTION_ID,
-    //     on_error: () => null,
-    //     on_success: () => null,
-    //   })
-    // ).toThrow('Element to mount World ID not found. Please make sure the element is valid.')
+  it('throws error if element cannot be found on DOM', async () => {
+    const on_init_error = jest.fn()
+    await act(() => {
+      init('i_do_not_exist', {
+        action_id: SAMPLE_ACTION_ID,
+        signal: SAMPLE_SIGNAL,
+        on_init_error,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    expect(on_init_error).toBeCalledWith('Element to mount World ID not found. Please make sure the element is valid.')
   })
 })
 
