@@ -228,10 +228,12 @@ describe('parameter validation', () => {
     expect(element.textContent).toBe('Widget is unavailable')
   })
 
+  /* cspell:disable-next-line */
   it('unavailable if raw action ID `0xgggggggggggggggggggggg` does not look like a hex-encoded hash', async () => {
     await act(() => {
       init('wld-container-test', {
         advanced_use_raw_action_id: true,
+        /* cspell:disable-next-line */
         action_id: '0xgggggggggggggggggggggg',
         signal: SAMPLE_SIGNAL,
         on_error: () => null,
@@ -290,11 +292,13 @@ describe('parameter validation', () => {
     expect(element.textContent).toBe('Widget is unavailable')
   })
 
+  /* cspell:disable-next-line */
   it('unavailable if raw signal `0xgggggggggggggggggggggg` does not look like a hex-encoded hash', async () => {
     await act(() => {
       init('wld-container-test', {
         advanced_use_raw_signal: true,
         action_id: SAMPLE_ACTION_ID,
+        /* cspell:disable-next-line */
         signal: '0xgggggggggggggggggggggg',
         on_error: () => null,
         on_success: () => null,
