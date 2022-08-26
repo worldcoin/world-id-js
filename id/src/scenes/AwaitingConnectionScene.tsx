@@ -288,7 +288,14 @@ export function AwaitingConnectionScene() {
                 ) : null}
               </SMainCode>
               <SMainCta>
-                <Button color="gradient" size="xl" fullWidth>
+                <Button
+                  color="gradient"
+                  size="xl"
+                  fullWidth
+                  as="a"
+                  href={qrCodeContent ?? 'https://worldcoin.org/verify'}
+                  target="_blank"
+                >
                   Get Worldcoin app
                 </Button>
               </SMainCta>
