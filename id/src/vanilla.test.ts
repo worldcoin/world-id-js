@@ -402,26 +402,22 @@ describe('activation', () => {
     expect(widgetLogic.values.isWidgetEnabled).toBeFalsy()
   })
 })
+
 //REVIEW now fonts links with stitches in Widget component
 // describe('remote fonts', () => {
 //   it('loads remote font by default', () => {
 //     init('wld-container-test', { action_id: SAMPLE_ACTION_ID })
-
 //     const elements = document.getElementsByTagName('link')
-
 //     if (!elements) {
 //       throw new Error('Link element not found.')
 //     }
-
 //     let elementFound = false
-
 //     for (const element of elements) {
 //       if (element.href.includes('https://fonts.googleapis.com/css2?family=Rubik') && element.rel === 'stylesheet') {
 //         elementFound = true
 //         break
 //       }
 //     }
-
 //     expect(elementFound).toBeTruthy()
 //   })
 
@@ -435,31 +431,34 @@ describe('activation', () => {
 //     },
 //     disableRemoteFonts: true,
 //   })
-
 //   // No external stylesheet is loaded
 //   const elements = document.getElementsByTagName('link')
 //   expect(elements).toHaveLength(0)
 // })
 // })
 
-// describe('state checks', () => {
-//   it('isInitialized', () => {
-//     expect(isInitialized()).toBeFalsy()
+describe('state checks', () => {
+  it('isInitialized', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        action_id: SAMPLE_ACTION_ID,
+        signal: '',
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    expect(widgetLogic.values.isWidgetInitialized).toBeTruthy()
+  })
 
-//     init('wld-container-test', { action_id: SAMPLE_ACTION_ID })
-
-//     expect(isInitialized()).toBeTruthy()
-//   })
-
-//   it('isEnabled', () => {
-//     expect(isEnabled()).toBeFalsy()
-
-//     init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })
-
-//     expect(isEnabled()).toBeFalsy()
-
-//     expect(() => enable()).not.toThrow()
-
-//     expect(isEnabled()).toBeTruthy()
-//   })
-// })
+  it('isEnabled', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        action_id: SAMPLE_ACTION_ID,
+        signal: SAMPLE_SIGNAL,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    expect(widgetLogic.values.isWidgetEnabled).toBeTruthy()
+  })
+})
