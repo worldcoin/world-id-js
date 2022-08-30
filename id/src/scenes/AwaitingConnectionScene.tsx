@@ -296,7 +296,7 @@ export function AwaitingConnectionScene() {
                   href={qrCodeContent ?? 'https://worldcoin.org/verify'}
                   target="_blank"
                 >
-                  Get Worldcoin app
+                  Open Worldcoin app
                 </Button>
               </SMainCta>
             </>
