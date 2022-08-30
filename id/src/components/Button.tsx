@@ -1,15 +1,18 @@
 import { styled } from 'stitches'
 
 export const Button = styled('button', {
+  boxSizing: 'border-box',
   display: 'inline-grid',
   gridAutoFlow: 'column',
   alignItems: 'center',
+  justifyContent: 'center',
   padding: 0,
   border: 0,
   outline: 0,
   background: 'transparent',
   borderRadius: '$lg',
   cursor: 'pointer',
+  textDecoration: 'none',
 
   variants: {
     variant: {
