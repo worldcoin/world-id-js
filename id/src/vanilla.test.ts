@@ -404,23 +404,6 @@ describe('activation', () => {
 })
 
 //REVIEW now fonts links with stitches in Widget component
-// describe('remote fonts', () => {
-//   it('loads remote font by default', () => {
-//     init('wld-container-test', { action_id: SAMPLE_ACTION_ID })
-//     const elements = document.getElementsByTagName('link')
-//     if (!elements) {
-//       throw new Error('Link element not found.')
-//     }
-//     let elementFound = false
-//     for (const element of elements) {
-//       if (element.href.includes('https://fonts.googleapis.com/css2?family=Rubik') && element.rel === 'stylesheet') {
-//         elementFound = true
-//         break
-//       }
-//     }
-//     expect(elementFound).toBeTruthy()
-//   })
-
 // it('does not load remote font if disabled', () => {
 //   init('wld-container-test', {
 //     connectionProps: {
