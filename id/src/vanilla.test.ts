@@ -403,22 +403,30 @@ describe('activation', () => {
   })
 })
 
-//REVIEW now fonts links with stitches in Widget component
-// it('does not load remote font if disabled', () => {
-//   init('wld-container-test', {
-//     connectionProps: {
-//       action_id: SAMPLE_ACTION_ID,
-//       signal: SAMPLE_SIGNAL,
-//       onVerificationError: () => null,
-//       onVerificationSuccess: () => null,
-//     },
-//     disableRemoteFonts: true,
-//   })
-//   // No external stylesheet is loaded
-//   const elements = document.getElementsByTagName('link')
-//   expect(elements).toHaveLength(0)
-// })
-// })
+it('load remote font by default', async () => {
+  await act(() => {
+    init('wld-container-test', {
+      action_id: SAMPLE_ACTION_ID,
+      signal: SAMPLE_SIGNAL,
+      on_error: () => null,
+      on_success: () => null,
+    })
+  })
+  expect(document.querySelector('#wld-container-test > [data-disable-remote-fonts]')).not.toBeInTheDocument()
+})
+
+it('does not load remote font if disabled', async () => {
+  await act(() => {
+    init('wld-container-test', {
+      action_id: SAMPLE_ACTION_ID,
+      signal: SAMPLE_SIGNAL,
+      on_error: () => null,
+      on_success: () => null,
+      disable_remote_fonts: true,
+    })
+  })
+  expect(document.querySelector('#wld-container-test > [data-disable-remote-fonts]')).toBeInTheDocument()
+})
 
 describe('state checks', () => {
   it('isInitialized', async () => {

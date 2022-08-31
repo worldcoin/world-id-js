@@ -37,7 +37,10 @@ export function WorldIDWidget(props: WidgetProps): JSX.Element {
   }, [props.disableRemoteFonts])
 
   return (
-    <Wrapper className={props.theme === 'dark' ? darkTheme : lightTheme}>
+    <Wrapper
+      className={props.theme === 'dark' ? darkTheme : lightTheme}
+      data-disable-remote-fonts={props.disableRemoteFonts ? 'true' : undefined}
+    >
       <WorldIDBox />
       {!widgetLoading && <PrincipalScene />}
     </Wrapper>
