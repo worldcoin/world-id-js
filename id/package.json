@@ -93,6 +93,7 @@
     "@ethersproject/bytes": "5.6.1",
     "@stitches/react": "1.2.8",
     "@walletconnect/client": "1.7.5",
+    "framer-motion": "7.2.1",
     "js-sha3": "0.8.0",
     "kea": "3.0.1",
     "posthog-js-lite": "0.0.5",
