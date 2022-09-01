@@ -8,14 +8,3 @@ export const parameters = {
     },
   },
 }
-
-// Setup storybook global decorators. See https://storybook.js.org/docs/react/writing-stories/decorators#global-decorators
-// export const decorators = [
-//   (Story) => {
-//     return (
-//       <KeaStory>
-//         <Story />
-//       </KeaStory>
-//     )
-//   },
-// ]
