@@ -13,9 +13,9 @@ Getting started with the Javascript package is really easy. Just follow the step
 - Install the package in your app (**recommended**).
 
 ```bash
-npm install @worldcoin/id
-# or
 yarn add @worldcoin/id
+# or
+npm install @worldcoin/id
 ```
 
 - **Alternatively**, you can add the standalone script directly in your HTML,

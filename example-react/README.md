@@ -6,7 +6,7 @@ To run this example simply run:
 
 ```sh
 # make sure to run this in the `/example-react` folder
-npm run dev
+yarn dev
 ```
 
 More information about the JS widget can be found [here](../README.md).
