@@ -26,22 +26,25 @@ import { widgetLogic } from 'logics/widgetLogic'
 import { verificationLogic } from 'logics/verificationLogic'
 import { LearnMoreScene } from './LearnMoreScene'
 import { ModalView } from 'types'
+import { motion } from 'framer-motion'
 
-const SModal = styled('div', {
-  transitionProperty: 'max-height',
-  transition: '1000ms',
+const SModal = motion(
+  styled('div', {
+    transitionProperty: 'max-height',
+    transition: '1000ms',
 
-  variants: {
-    centered: {
-      true: {
-        maxHeight: '320px',
-      },
-      false: {
-        maxHeight: '562px',
+    variants: {
+      centered: {
+        true: {
+          maxHeight: '320px',
+        },
+        false: {
+          maxHeight: '562px',
+        },
       },
     },
-  },
-})
+  })
+)
 
 const SMain = styled(Dialog, {
   width: 500,
@@ -226,19 +229,20 @@ export function AwaitingConnectionScene() {
 
     return (
       <Button variant={props.variant} size={props.size} color={props.color} onClick={onClick}>
-        {isCopied ? (
-          <>
-            <IconCircleSuccess style={{ marginRight: 4 }} /> Copied!
-          </>
-        ) : (
-          'Copy QR code'
-        )}
+        {isCopied && <IconCircleSuccess style={{ marginRight: 4 }} />}
+        <span>{isCopied ? 'Copied!' : 'Copy QR code'}</span>
       </Button>
     )
   }
 
   return (
-    <SModal centered={!isVerificationFlow}>
+    <SModal
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.05 }}
+      exit={{ opacity: 0, scale: 0, transition: { duration: 0.1 } }}
+      centered={!isVerificationFlow}
+    >
       <SMain>
         <DialogHeader extended={!isVerificationFlow}>
           {!isVerificationFlow && (
