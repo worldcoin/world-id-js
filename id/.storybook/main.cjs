@@ -9,11 +9,6 @@ module.exports = {
   webpackFinal: async (config, { configType }) => {
     config.resolve.modules.push(path.resolve(__dirname, '../src'))
 
-    config.plugins = [
-      ...(config.plugins ?? []),
-      new webpack.DefinePlugin({ worldIdJSVersion: JSON.stringify(packageJson.version) }),
-    ]
-
     // Return the altered config
     return config
   },

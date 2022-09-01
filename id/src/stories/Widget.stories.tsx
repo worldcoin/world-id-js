@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { WorldIDWidget } from '../Widget'
 
 export default {
-  title: 'Widget/Widget',
+  title: 'Widget/Core Widget',
   component: WorldIDWidget,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
@@ -18,4 +18,10 @@ export const Default = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
   signal: 'a_valid_signal',
+}
+
+export const Disabled = Template.bind({})
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Disabled.args = {
+  signal: '',
 }
