@@ -248,6 +248,8 @@ export function AwaitingConnectionScene() {
           )}
           <DialogHeaderLogo />
           <DialogHeaderButton
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             bordered
             onClick={() => {
               terminate()
@@ -315,7 +317,9 @@ export function AwaitingConnectionScene() {
             <Typography variant="p1">
               Proving unique-humanness through biometrics, without intruding privacy.
             </Typography>
-            <Button color="gradient">Install now</Button>
+            <Button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} color="gradient">
+              Install now
+            </Button>
           </SCta>
         )}
 
