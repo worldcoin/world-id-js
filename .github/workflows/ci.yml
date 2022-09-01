@@ -14,17 +14,17 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "npm"
+          cache: "yarn"
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn --frozen-lockfile
 
       - name: Check formatting with Prettier
         working-directory: ./id
-        run: npm run format:check
+        run: yarn format:check
 
       - name: Spellcheck (entire repository)
-        run: npm run spellcheck
+        run: yarn spellcheck
 
   typecheck:
     name: Typecheck & linting
@@ -36,23 +36,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "npm"
+          cache: "yarn"
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn --frozen-lockfile
 
       - name: Lint with ESLint
         working-directory: ./id
-        run: npm run lint
+        run: yarn lint
 
       - name: Generate Kea typing
         working-directory: ./id
-        run: npm run typegen
+        run: yarn typegen
 
       - name: Check Typescript
         working-directory: ./id
         run: |
-          npm run typecheck
+          yarn typecheck
 
   test:
     name: Test
@@ -64,11 +64,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "npm"
+          cache: "yarn"
 
-      - name: Install dependencies and run tests
+      - name: Install dependencies
         working-directory: ./id
-        run: npm install-ci-test
+        run: yarn --frozen-lockfile
+
+      - name: Run tests
+        working-directory: ./id
+        run: yarn test
 
   test-build:
     name: Test production build
@@ -80,12 +84,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "npm"
+          cache: "yarn"
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn --frozen-lockfile
 
       - name: Build
         working-directory: ./id
         run: |
-          npm run build
+          yarn build

@@ -14,22 +14,22 @@ To develop locally and contribute to this package, you can simply follow these i
 - Install dependencies
   ```bash
   # be sure to run this in the root folder of the repo
-  npm install
+  yarn install
   ```
 - Run tests
   ```bash
   # runs in the /id folder
   cd id/
-  npm run test
+  yarn test
   ```
 - Run local test project
   ```bash
   # runs in the /id folder
-  npm run dev
+  yarn dev
   ```
 - Open browser at `http://localhost:3000`
 - To build the production bundle you can simply run.
   ```bash
   # runs in the /id folder
-  npm run build
+  yarn build
   ```

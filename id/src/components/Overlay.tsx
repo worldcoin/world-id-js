@@ -39,7 +39,7 @@ const OverlayRoot = styled('div', {
 export interface OverlayProps extends ComponentProps<typeof OverlayRoot> {
   onClose: () => void
 }
-export function Overlay(props: OverlayProps) {
+export function Overlay(props: OverlayProps): JSX.Element {
   const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     (event) => {
       if (event.currentTarget === event.target) {
