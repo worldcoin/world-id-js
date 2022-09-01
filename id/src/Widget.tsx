@@ -9,7 +9,6 @@ import { AppProps, WidgetProps } from 'types'
 const Wrapper = styled('div', {
   width: '100%',
   maxWidth: '300px',
-  backgroundColor: 'red',
 })
 
 export function WorldIDWidget(props: WidgetProps): JSX.Element {
