@@ -298,6 +298,7 @@ export function AwaitingConnectionScene() {
                   color="gradient"
                   size="xl"
                   fullWidth
+                  // @ts-ignore this prop gets passed to the stitches component, is valid
                   as="a"
                   href={qrCodeContent ?? 'https://worldcoin.org/verify'}
                   target="_blank"
