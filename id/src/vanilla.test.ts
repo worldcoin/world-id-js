@@ -73,8 +73,8 @@ describe('initialization', () => {
     expect(element.disabled).toBeTruthy() // Because `signal` is not passed
     // Click does not trigger anything
     fireEvent.click(element)
-    const overlay = queryAllByTestId(document.body, 'overlay')[0]
-    expect(overlay).toBeVisible()
+    // Overlay is not mounted
+    expect(queryAllByTestId(document.body, 'overlay')).toEqual([])
   })
 
   it('cannot be initialized twice', () => {
