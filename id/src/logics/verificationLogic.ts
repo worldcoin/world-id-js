@@ -118,6 +118,12 @@ export const verificationLogic = kea<verificationLogicType>([
         }
       })
 
+      connector.on('disconnect', (error) => {
+        if (error) {
+          actions.initConnection()
+        }
+      })
+
       telemetryVerificationLaunched()
     },
     setConnectorUri: ({ connectorUri }) => {
