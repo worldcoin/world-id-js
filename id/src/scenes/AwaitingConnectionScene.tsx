@@ -19,7 +19,7 @@ import { DialogHeader } from 'components/DialogHeader'
 import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
 import { DialogHeaderButton } from 'components/DialogHeaderButton'
 import { Button } from 'components/Button'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { WorldcoinApp } from 'assets/logos'
 import { DevModeLink } from 'components/DevModeButton'
 import { widgetLogic } from 'logics/widgetLogic'
@@ -238,73 +238,75 @@ export function AwaitingConnectionScene() {
   }
 
   return (
-    <SModal centered={!isVerificationFlow}>
-      <SMain>
-        <DialogHeader extended={!isVerificationFlow}>
-          {!isVerificationFlow && (
-            <DialogHeaderButton onClick={() => setModalView(ModalView.VerificationFlow)} bordered>
-              <IconLeft />
+    <Fragment>
+      <SModal centered={!isVerificationFlow}>
+        <SMain>
+          <DialogHeader extended={!isVerificationFlow}>
+            {!isVerificationFlow && (
+              <DialogHeaderButton onClick={() => setModalView(ModalView.VerificationFlow)} bordered>
+                <IconLeft />
+              </DialogHeaderButton>
+            )}
+            <DialogHeaderLogo />
+            <DialogHeaderButton
+              bordered
+              onClick={() => {
+                terminate()
+                disableModal()
+              }}
+            >
+              <IconClose />
             </DialogHeaderButton>
-          )}
-          <DialogHeaderLogo />
-          <DialogHeaderButton
-            bordered
-            onClick={() => {
-              terminate()
-              disableModal()
-            }}
-          >
-            <IconClose />
-          </DialogHeaderButton>
-        </DialogHeader>
-        <SMainContent>
-          {isVerificationFlow && (
-            <>
-              <SMainText>
-                {/* TODO make Typography components be able to be rendered as different tags, not only div */}
-                <SMainTextTitle variant="h1" color="gradient">
-                  Prove you haven’t done this before with World ID
-                </SMainTextTitle>
-                <SMainTextCaption variant="p1">
-                  Scan or copy this QR code with your phone’s camera or Worldcoin mobile app.
-                </SMainTextCaption>
-              </SMainText>
-              <SMainCopy>
-                {media === 'desktop' && <CopyToClipboard color="neutral" size="sm" data={qrCodeContent} />}
-                {media !== 'desktop' && !codeShown && (
-                  <Button variant="link" color="default" size="xl" onClick={toggleCodeShown}>
-                    Show QR code instead
+          </DialogHeader>
+          <SMainContent>
+            {isVerificationFlow && (
+              <>
+                <SMainText>
+                  {/* TODO make Typography components be able to be rendered as different tags, not only div */}
+                  <SMainTextTitle variant="h1" color="gradient">
+                    Prove you haven’t done this before with World ID
+                  </SMainTextTitle>
+                  <SMainTextCaption variant="p1">
+                    Scan or copy this QR code with your phone’s camera or Worldcoin mobile app.
+                  </SMainTextCaption>
+                </SMainText>
+                <SMainCopy>
+                  {media === 'desktop' && <CopyToClipboard color="neutral" size="sm" data={qrCodeContent} />}
+                  {media !== 'desktop' && !codeShown && (
+                    <Button variant="link" color="default" size="xl" onClick={toggleCodeShown}>
+                      Show QR code instead
+                    </Button>
+                  )}
+                  {media !== 'desktop' && codeShown && (
+                    <CopyToClipboard variant="link" color="primary" size="xl" data={qrCodeContent} />
+                  )}
+                </SMainCopy>
+                <SMainCode>
+                  {media !== 'desktop' && !codeShown ? (
+                    <WorldcoinApp />
+                  ) : qrCodeContent ? (
+                    <Qrcode data={qrCodeContent} />
+                  ) : null}
+                </SMainCode>
+                <SMainCta>
+                  <Button
+                    color="gradient"
+                    size="xl"
+                    fullWidth
+                    as="a"
+                    href={qrCodeContent ?? 'https://worldcoin.org/verify'}
+                    target="_blank"
+                  >
+                    Open Worldcoin app
                   </Button>
-                )}
-                {media !== 'desktop' && codeShown && (
-                  <CopyToClipboard variant="link" color="primary" size="xl" data={qrCodeContent} />
-                )}
-              </SMainCopy>
-              <SMainCode>
-                {media !== 'desktop' && !codeShown ? (
-                  <WorldcoinApp />
-                ) : qrCodeContent ? (
-                  <Qrcode data={qrCodeContent} />
-                ) : null}
-              </SMainCode>
-              <SMainCta>
-                <Button
-                  color="gradient"
-                  size="xl"
-                  fullWidth
-                  as="a"
-                  href={qrCodeContent ?? 'https://worldcoin.org/verify'}
-                  target="_blank"
-                >
-                  Open Worldcoin app
-                </Button>
-              </SMainCta>
-            </>
-          )}
+                </SMainCta>
+              </>
+            )}
 
-          {!isVerificationFlow && <LearnMoreScene />}
-        </SMainContent>
-      </SMain>
+            {!isVerificationFlow && <LearnMoreScene />}
+          </SMainContent>
+        </SMain>
+      </SModal>
 
       <SBottomDialog hidden={!isVerificationFlow}>
         {media === 'desktop' && !isDevMode && (
@@ -367,6 +369,6 @@ export function AwaitingConnectionScene() {
           </SDev>
         )}
       </SBottomDialog>
-    </SModal>
+    </Fragment>
   )
 }
