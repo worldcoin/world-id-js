@@ -37,6 +37,7 @@ import { WorldIDWidget } from "@worldcoin/id";
   enableTelemetry
   onSuccess={(proof) => console.log(proof)}
   onError={(error) => console.error(error)}
+  debug={true} // to aid with debugging, remove in production
 />;
 ```
 
@@ -55,6 +56,7 @@ const WorldIDWidget =
   enableTelemetry
   onSuccess={(proof) => console.log(proof)}
   onError={(error) => console.error(error)}
+  debug={true} // to aid with debugging, remove in production
 />;
 ```
 
@@ -75,39 +77,10 @@ import worldID from "@worldcoin/id";
 worldID.init("world-id-container", {
   action_id: "wid_staging_PN8fFL7V2N", // obtain this from developer.worldcoin.org
   signal: "my_signal",
+  on_success: (proof) => console.log(proof),
+  on_error: (error) => console.error(error),
+  debug: true, // to aid with debugging, remove in production
   enableTelemetry: true,
-});
-```
-
-3. On document load, enable the World ID flow. When you call `.enable()` you will receive a promise to which you can subscribe to receive success or failure results. On failure, we recommend you call `.enable()` again to let the user try again (unless the failure code is a terminal one, e.g. `already_signed`).
-
-**With async/await:**
-
-```js
-document.addEventListener("DOMContentLoaded", async function () {
-  try {
-    const result = await worldID.enable();
-    console.log("World ID verified successfully:", result);
-  } catch (failure) {
-    console.warn("World ID verification failed:", failure);
-    // Re-activate here so your end user can try again
-  }
-});
-```
-
-**With promises:**
-
-```js
-document.addEventListener("DOMContentLoaded", function () {
-  worldID
-    .enable()
-    .then((result) => {
-      console.log("World ID verified successfully:", result);
-    })
-    .catch((failure) => {
-      console.warn("World ID verification failed:", failure);
-      // Re-activate here so your end user can try again
-    });
 });
 ```
 
