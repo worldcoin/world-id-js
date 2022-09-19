@@ -6,7 +6,13 @@ const LearnMore = styled('div', {
   alignItems: 'center',
   rowGap: '24px',
   color: '$color',
-  padding: '12px 12px 0',
+  padding: '12px 12px',
+  width: 452,
+  boxSizing: 'border-box',
+
+  '@smDown': {
+    width: '100%',
+  },
 })
 const Text = styled(Typography)
 

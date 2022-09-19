@@ -1,6 +1,5 @@
 import { useActions } from 'kea'
 import { styled } from 'stitches'
-import { Dialog } from 'components/Dialog'
 import { DialogHeader } from 'components/DialogHeader'
 import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
 import { Typography } from 'components/Typography'
@@ -10,11 +9,15 @@ import { IconSuccess } from 'assets/icons'
 import { verificationLogic } from 'logics/verificationLogic'
 import { widgetLogic } from 'logics/widgetLogic'
 
-const SRoot = styled(Dialog, {
+const SRoot = styled('div', {
   display: 'flex',
   flexFlow: 'column',
   alignItems: 'center',
   width: 400,
+
+  '@smDown': {
+    width: '100%',
+  },
 })
 
 const SCircle = styled(Circle, {

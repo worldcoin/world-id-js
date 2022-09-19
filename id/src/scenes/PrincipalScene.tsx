@@ -7,6 +7,8 @@ import { ErrorScene } from './ErrorScene'
 import { widgetLogic } from 'logics/widgetLogic'
 import { verificationLogic } from 'logics/verificationLogic'
 import { VerificationState } from 'types'
+import { BottomDialog } from 'components/BottomDialog'
+import { MainDialog } from 'components/MainDialog'
 
 export function PrincipalScene() {
   const { isModalVisible } = useValues(widgetLogic)
@@ -22,10 +24,14 @@ export function PrincipalScene() {
         disableModal()
       }}
     >
-      {verificationState === VerificationState.Failed && <ErrorScene />}
-      {verificationState === VerificationState.Confirmed && <ConfirmedScene />}
-      {verificationState === VerificationState.AwaitingVerification && <AwaitingVerificationScene />}
-      {verificationState === VerificationState.AwaitingConnection && <AwaitingConnectionScene />}
+      <MainDialog>
+        {verificationState === VerificationState.Failed && <ErrorScene />}
+        {verificationState === VerificationState.Confirmed && <ConfirmedScene />}
+        {verificationState === VerificationState.AwaitingVerification && <AwaitingVerificationScene />}
+        {verificationState === VerificationState.AwaitingConnection && <AwaitingConnectionScene />}
+      </MainDialog>
+
+      {verificationState === VerificationState.AwaitingConnection && <BottomDialog />}
     </Overlay>
   )
 }

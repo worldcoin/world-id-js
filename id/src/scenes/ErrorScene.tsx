@@ -1,7 +1,6 @@
 import { useActions, useValues } from 'kea'
 import { verificationLogic } from 'logics/verificationLogic'
 import { styled } from 'stitches'
-import { Dialog } from 'components/Dialog'
 import { DialogHeader } from 'components/DialogHeader'
 import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
 import { Typography } from 'components/Typography'
@@ -9,11 +8,15 @@ import { Button } from 'components/Button'
 import { Circle } from 'components/Circle'
 import { IconFailure } from 'assets/icons'
 
-const SRoot = styled(Dialog, {
+const SRoot = styled('div', {
   display: 'flex',
   flexFlow: 'column',
   alignItems: 'center',
   width: 400,
+
+  '@smDown': {
+    width: '100%',
+  },
 })
 
 const SCircle = styled(Circle, {
