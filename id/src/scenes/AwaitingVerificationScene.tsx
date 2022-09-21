@@ -1,6 +1,5 @@
 import { useActions } from 'kea'
 import { styled } from 'stitches'
-import { Dialog } from 'components/Dialog'
 import { DialogHeader } from 'components/DialogHeader'
 import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
 import { Loader } from 'components/Loader'
@@ -8,11 +7,16 @@ import { Typography } from 'components/Typography'
 import { Button } from 'components/Button'
 import { verificationLogic } from 'logics/verificationLogic'
 
-const SRoot = styled(Dialog, {
+const SRoot = styled('div', {
   display: 'flex',
   flexFlow: 'column',
   alignItems: 'center',
+  margin: '0 auto',
   width: 400,
+
+  '@smDown': {
+    width: '100%',
+  },
 })
 
 const SLoader = styled(Loader, {
