@@ -95,3 +95,8 @@ export interface HashFunctionOutput {
   hash: BigInt
   digest: string
 }
+
+export interface QRContentInterface {
+  default: string
+  mobile?: string
+}
