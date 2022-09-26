@@ -126,7 +126,8 @@ export const verificationLogic = kea<verificationLogicType>([
       }
 
       const qrData = buildQRData(connector)
-      actions.setQrCodeContent(qrData)
+      const mobileQRCode = buildQRData(connector, window.location.href)
+      actions.setQrCodeContent({ default: qrData, mobile: mobileQRCode })
       actions.finishWidgetLoading()
     },
 

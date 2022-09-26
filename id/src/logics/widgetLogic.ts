@@ -1,6 +1,6 @@
 import { kea, actions, reducers, path, events, props, propsChanged, listeners } from 'kea'
 import { initTelemetry } from 'telemetry'
-import { AppProps, ModalView } from 'types'
+import { AppProps, ModalView, QRContentInterface } from 'types'
 import { validateInputParams } from 'utils'
 
 import type { widgetLogicType } from './widgetLogicType'
@@ -20,7 +20,7 @@ export const widgetLogic = kea<widgetLogicType>([
     toggleModal: true,
     initTelemetry: true,
     setModalView: (view: ModalView) => ({ view }),
-    setQrCodeContent: (content: string) => ({ content }),
+    setQrCodeContent: (content: QRContentInterface) => ({ content }),
     setIsDevMode: (isDev: boolean) => ({ isDev }),
   }),
   reducers({
@@ -50,7 +50,7 @@ export const widgetLogic = kea<widgetLogicType>([
     ],
 
     qrCodeContent: [
-      null as string | null,
+      null as QRContentInterface | null,
       {
         setQrCodeContent: (_, { content }) => content,
       },

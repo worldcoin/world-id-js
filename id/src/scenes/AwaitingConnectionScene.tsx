@@ -175,7 +175,7 @@ export function AwaitingConnectionScene() {
             </SMainText>
 
             <SMainCopy>
-              {media === 'desktop' && <CopyToClipboard color="neutral" size="sm" data={qrCodeContent} />}
+              {media === 'desktop' && <CopyToClipboard color="neutral" size="sm" data={qrCodeContent?.default} />}
 
               {media !== 'desktop' && !codeShown && (
                 <Button variant="link" color="default" size="xl" onClick={toggleCodeShown}>
@@ -184,7 +184,12 @@ export function AwaitingConnectionScene() {
               )}
 
               {media !== 'desktop' && codeShown && (
-                <CopyToClipboard variant="link" color="primary" size="xl" data={qrCodeContent} />
+                <CopyToClipboard
+                  variant="link"
+                  color="primary"
+                  size="xl"
+                  data={qrCodeContent?.mobile || qrCodeContent?.default}
+                />
               )}
             </SMainCopy>
 
@@ -192,7 +197,7 @@ export function AwaitingConnectionScene() {
               {media !== 'desktop' && !codeShown ? (
                 <WorldcoinApp />
               ) : qrCodeContent ? (
-                <Qrcode data={qrCodeContent} />
+                <Qrcode data={qrCodeContent.default} />
               ) : null}
             </SMainCode>
 
@@ -202,7 +207,7 @@ export function AwaitingConnectionScene() {
                 size="xl"
                 fullWidth
                 as="a"
-                href={qrCodeContent ?? 'https://worldcoin.org/verify'}
+                href={(qrCodeContent?.mobile || qrCodeContent?.default) ?? 'https://worldcoin.org/verify'}
                 target="_blank"
               >
                 Open Worldcoin app
