@@ -2,10 +2,6 @@ import { createStitches, createTheme, globalCss } from '@stitches/react'
 
 export const globalStyles = globalCss({
   '@import': 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&family=Sora:wght@600&display=swap',
-
-  '*': {
-    fontFamily: '"Rubik", Arial, Helvetica, sans-serif',
-  },
 })
 
 export const { styled, css, getCssText } = createStitches({
