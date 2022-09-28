@@ -8,7 +8,7 @@ import { Typography } from 'components/Typography'
 import { DialogHeader } from 'components/DialogHeader'
 import { DialogHeaderLogo } from 'components/DialogHeaderLogo'
 import { DialogHeaderButton } from 'components/DialogHeaderButton'
-import { Button } from 'components/Button'
+import { Button, ButtonLink } from 'components/Button'
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { WorldcoinApp } from 'assets/logos'
 import { widgetLogic } from 'logics/widgetLogic'
@@ -127,13 +127,8 @@ export function AwaitingConnectionScene() {
 
     return (
       <Button variant={props.variant} size={props.size} color={props.color} onClick={onClick}>
-        {isCopied ? (
-          <>
-            <IconCircleSuccess style={{ marginRight: 4 }} /> Copied!
-          </>
-        ) : (
-          'Copy QR code'
-        )}
+        {isCopied && <IconCircleSuccess style={{ marginRight: 4 }} />}
+        <span>{isCopied ? 'Copied!' : 'Copy QR code'}</span>
       </Button>
     )
   }
@@ -202,16 +197,15 @@ export function AwaitingConnectionScene() {
             </SMainCode>
 
             <SMainCta>
-              <Button
+              <ButtonLink
                 color="gradient"
                 size="xl"
                 fullWidth
-                as="a"
                 href={(qrCodeContent?.mobile || qrCodeContent?.default) ?? 'https://worldcoin.org/verify'}
                 target="_blank"
               >
                 Open Worldcoin app
-              </Button>
+              </ButtonLink>
             </SMainCta>
           </Fragment>
         )}

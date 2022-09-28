@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion'
 import { styled } from 'stitches'
 
-export const Button = styled('button', {
+const ButtonStyleProps = {
   boxSizing: 'border-box',
   display: 'inline-grid',
   gridAutoFlow: 'column',
@@ -99,9 +100,9 @@ export const Button = styled('button', {
         lineHeight: '18px',
         textTransform: 'uppercase',
         background: `
-          linear-gradient(to right, $background, $background) padding-box,
-          linear-gradient(to right, $buttonGradientFrom, $buttonGradientTo) border-box
-        `,
+        linear-gradient(to right, $background, $background) padding-box,
+        linear-gradient(to right, $buttonGradientFrom, $buttonGradientTo) border-box
+      `,
         border: '2px solid transparent',
 
         '@smDown': {
@@ -135,4 +136,8 @@ export const Button = styled('button', {
       },
     },
   ],
-})
+}
+
+export const Button = motion(styled('button', ButtonStyleProps))
+
+export const ButtonLink = motion(styled('a', ButtonStyleProps))

@@ -8,6 +8,11 @@ module.exports = {
   framework: '@storybook/react',
   webpackFinal: async (config, { configType }) => {
     config.resolve.modules.push(path.resolve(__dirname, '../src'))
+    config.module.rules.push({
+      test: /\.mjs$/,
+      include: /node_modules/,
+      type: 'javascript/auto',
+    })
 
     // Return the altered config
     return config
