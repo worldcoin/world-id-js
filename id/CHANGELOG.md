@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.9.0-alpha.0 (2022-09-26)
+
+### Features
+
+- add return_to to mobile QR ([#68](https://github.com/worldcoin/world-id-js/issues/68)) ([3b46d4c](https://github.com/worldcoin/world-id-js/commit/3b46d4c67dcc45e03a15ec5575e9e2e9f6c515ea))
+
 ## 0.8.0 (2022-08-18)
 
 ### Bug Fixes
