@@ -5,6 +5,7 @@ import {
   DevModeWorldcoinAppIcon,
   IconCode,
 } from 'assets/icons'
+import { motion } from 'framer-motion'
 import { useMedia } from 'hooks/useMedia'
 import { useValues } from 'kea'
 import { widgetLogic } from 'logics/widgetLogic'
@@ -16,26 +17,15 @@ import { DevModeLink } from './DevModeButton'
 import { Dialog } from './Dialog'
 import { Typography } from './Typography'
 
-const SBottomDialog = styled(Dialog, {
-  width: 500,
-  marginTop: '8px',
-  transitionProperty: 'opacity, transform, visibility',
-  transition: '1000ms',
-
-  variants: {
-    hidden: {
-      true: {
-        opacity: '0',
-        visibility: 'hidden',
-        transform: 'translateY(100%)',
-      },
+const SBottomDialog = motion(
+  styled(Dialog, {
+    width: 500,
+    marginTop: '8px',
+    '@smDown': {
+      display: 'none',
     },
-  },
-
-  '@smDown': {
-    display: 'none',
-  },
-})
+  })
+)
 
 const SCta = styled('div', {
   width: '100%',
@@ -87,7 +77,13 @@ export function BottomDialog() {
   const isVisible = useMemo(() => modalView === ModalView.VerificationFlow, [modalView])
 
   return (
-    <SBottomDialog hidden={!isVisible}>
+    <SBottomDialog
+      hidden={!isVisible}
+      initial={{ marginTop: -40, opacity: 0 }}
+      animate={{ marginTop: 8, opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      exit={{ opacity: 0, marginTop: -400, scale: 0, transition: { duration: 0.15 } }}
+    >
       {media === 'desktop' && !isDevMode && (
         <SCta>
           <SCtaHeader>

@@ -15,7 +15,6 @@ import { widgetLogic } from 'logics/widgetLogic'
 import { verificationLogic } from 'logics/verificationLogic'
 import { LearnMoreScene } from './LearnMoreScene'
 import { ModalView } from 'types'
-import { motion } from 'framer-motion'
 
 const SMainContent = styled('div', {
   display: 'grid',

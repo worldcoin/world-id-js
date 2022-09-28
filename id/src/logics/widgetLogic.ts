@@ -107,7 +107,7 @@ export const widgetLogic = kea<widgetLogicType>([
   events(({ actions, props }) => ({
     afterMount: () => {
       actions.processProps(props)
-      actions.setIsDevMode(typeof window !== 'undefined' ? window.location.hostname === 'localhost' : false)
+      actions.setIsDevMode(false)
     },
   })),
 ])
