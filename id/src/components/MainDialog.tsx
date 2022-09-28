@@ -11,7 +11,7 @@ export function MainDialog(props: { children: ReactNode }) {
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{ duration: 0.1 }}
-      exit={{ opacity: 0, scale: 0, transition: { duration: 0.5 } }}
+      exit={{ opacity: 0, scale: 0, transition: { duration: 0.15 } }}
     >
       {props.children}
     </SMainDialog>

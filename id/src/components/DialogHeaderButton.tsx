@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { styled } from 'stitches'
 
-export const DialogHeaderButton = motion(
+export const SDialogHeaderButton = motion(
   styled('button', {
     display: 'grid',
     placeContent: 'center',
@@ -29,3 +29,13 @@ export const DialogHeaderButton = motion(
     },
   })
 )
+
+interface DialogHeaderButtonProps {
+  bordered?: boolean
+  children?: React.ReactNode
+  onClick?: () => void
+}
+
+export const DialogHeaderButton = (props: DialogHeaderButtonProps): JSX.Element => {
+  return <SDialogHeaderButton {...props} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} />
+}
