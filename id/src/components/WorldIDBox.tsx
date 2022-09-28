@@ -129,6 +129,7 @@ export function WorldIDBox() {
         data-testid="world-id-box"
         disabled={isVerified || widgetLoading || !isWidgetInitialized || !isWidgetEnabled}
         grid={isWidgetInitialized && !widgetLoading}
+        type="button"
       >
         {isWidgetInitialized && !widgetLoading && (
           <>

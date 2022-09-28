@@ -72,7 +72,7 @@ const SDevModeStamp = styled('div', {
 })
 
 export function BottomDialog() {
-  const { modalView, isDevMode } = useValues(widgetLogic)
+  const { modalView, isDebug, qrCodeContent } = useValues(widgetLogic)
   const { media } = useMedia()
   const isVisible = useMemo(() => modalView === ModalView.VerificationFlow, [modalView])
 
@@ -84,7 +84,7 @@ export function BottomDialog() {
       transition={{ duration: 0.3 }}
       exit={{ opacity: 0, marginTop: -400, scale: 0, transition: { duration: 0.15 } }}
     >
-      {media === 'desktop' && !isDevMode && (
+      {media === 'desktop' && !isDebug && (
         <SCta>
           <SCtaHeader>
             <Typography variant="h2">Don’t have the Worldcoin app yet?</Typography>
@@ -96,10 +96,10 @@ export function BottomDialog() {
         </SCta>
       )}
 
-      {media === 'desktop' && isDevMode && (
+      {media === 'desktop' && isDebug && (
         <SDev>
           <SDevHeader>
-            <Typography variant="h2">Running in dev mode</Typography>
+            <Typography variant="h2">Running in debug mode</Typography>
 
             <SDevModeStamp>
               <IconCode />
@@ -121,7 +121,7 @@ export function BottomDialog() {
             />
 
             <DevModeLink
-              href="https://worldcoin.org/verify"
+              href={qrCodeContent?.mobile || 'https://worldcoin.org/verify'}
               icon={<DevModeWorldcoinAppIcon />}
               heading="Worldcoin app"
               description="Open or install Worldcoin app to test in production"

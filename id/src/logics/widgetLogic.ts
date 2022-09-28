@@ -21,7 +21,7 @@ export const widgetLogic = kea<widgetLogicType>([
     initTelemetry: true,
     setModalView: (view: ModalView) => ({ view }),
     setQrCodeContent: (content: QRContentInterface) => ({ content }),
-    setIsDevMode: (isDev: boolean) => ({ isDev }),
+    setIsDebug: (isDebug: boolean) => ({ isDebug }),
   }),
   reducers({
     // Whether the widget is initialized with minimum valid parameters (i.e. action_id)
@@ -56,10 +56,10 @@ export const widgetLogic = kea<widgetLogicType>([
       },
     ],
 
-    isDevMode: [
+    isDebug: [
       false,
       {
-        setIsDevMode: (_, { isDev }) => isDev,
+        setIsDebug: (_, { isDebug }) => isDebug,
       },
     ],
 
@@ -81,6 +81,8 @@ export const widgetLogic = kea<widgetLogicType>([
   }),
   listeners(({ actions }) => ({
     processProps: async ({ props }) => {
+      actions.setIsDebug(props.debug ?? false)
+
       const { valid, error } = validateInputParams(props)
 
       if (!valid) {
@@ -107,7 +109,6 @@ export const widgetLogic = kea<widgetLogicType>([
   events(({ actions, props }) => ({
     afterMount: () => {
       actions.processProps(props)
-      actions.setIsDevMode(typeof window !== 'undefined' ? window.location.hostname === 'localhost' : false)
     },
   })),
 ])
