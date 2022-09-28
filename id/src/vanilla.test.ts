@@ -113,9 +113,11 @@ describe('initialization', () => {
 })
 
 describe('parameter validation', () => {
-  it('validates action_id is non-empty', () => {
+  it('validates action_id is non-empty', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const error = jest.spyOn(console, 'error').mockImplementation(() => {}) // Expected errors not logged on output
     const on_init_error = jest.fn()
-    act(() => {
+    await act(() => {
       init('wld-container-test', {
         on_init_error,
         action_id: '',
@@ -127,8 +129,9 @@ describe('parameter validation', () => {
     expect(on_init_error).toBeCalledWith('The `action_id` parameter is always required.')
     const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
-    // FIXME: Add assertion that the "widget unavailable" message is shown
-    // FIXME: Add assertion that error was logged. Any core initialization error should be logged even with debug=false
+    expect(element.textContent).toBe('Widget is unavailable')
+    expect(error).toHaveBeenNthCalledWith(1, 'The `action_id` parameter is always required.')
+    expect(error).toHaveBeenNthCalledWith(2, 'The `action_id` parameter cannot be empty.')
   })
 
   it('validates action_id is non-empty when updating', async () => {
@@ -143,6 +146,7 @@ describe('parameter validation', () => {
     let element
     element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeFalsy()
+    expect(element.textContent).toBe("I'm a unique person")
     await act(() => {
       update({
         action_id: '',
@@ -150,7 +154,7 @@ describe('parameter validation', () => {
     })
     element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
-    // FIXME: Add assertion that widget is actually rendered (i.e. I'm a unique person + logo)
+    expect(element.textContent).toBe('Widget is unavailable')
   })
 
   it('validates action_id is non-null', async () => {
@@ -190,7 +194,7 @@ describe('parameter validation', () => {
     })
     const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
     expect(element.disabled).toBeTruthy()
-    // FIXME: Add assertion that the "widget unavailable" message is shown
+    expect(element.textContent).toBe('Widget is unavailable')
   })
 
   it('can be initialized with empty `signal`', () => {
@@ -209,49 +213,160 @@ describe('parameter validation', () => {
     expect(element.disabled).toBeTruthy()
   })
 
-  it('throws error if raw action ID does not look like a hex-encoded hash', () => {
-    // FIXME: This test should pass
-    // const invalid_action_ids = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg'] // cspell:disable-line
-    // for (const action_id of invalid_action_ids) {
-    //   // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    //   expect(() => init('wld-container-test', { action_id: action_id, advanced_use_raw_action_id: true })).toThrow(
-    //     'but the action ID you provided does not look to be validly hashed or encoded'
-    //   )
-    //   resetContext({
-    //     plugins: [testUtilsPlugin],
-    //   })
-    // }
+  it('unavailable if raw action ID `hello_world` does not look like a hex-encoded hash', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        advanced_use_raw_action_id: true,
+        action_id: 'hello_world',
+        signal: SAMPLE_SIGNAL,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
+    expect(element.disabled).toBeTruthy()
+    expect(element.textContent).toBe('Widget is unavailable')
   })
 
-  it('throws error if raw signal does not look like a hex-encoded hash', () => {
-    // FIXME: This test should pass
-    // const invalid_signals = ['hello_world', 1, BigInt(8), '0xgggggggggggggggggggggg'] // cspell:disable-line
-    // for (const signal of invalid_signals) {
-    //   expect(() =>
-    //     // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    //     init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal, advanced_use_raw_signal: true })
-    //   ).toThrow('but the signal you provided does not look to be validly hashed or encoded')
-    //   resetContext({
-    //     plugins: [testUtilsPlugin],
-    //   })
-    // }
+  /* cspell:disable-next-line */
+  it('unavailable if raw action ID `0xgggggggggggggggggggggg` does not look like a hex-encoded hash', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        advanced_use_raw_action_id: true,
+        /* cspell:disable-next-line */
+        action_id: '0xgggggggggggggggggggggg',
+        signal: SAMPLE_SIGNAL,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
+    expect(element.disabled).toBeTruthy()
+    expect(element.textContent).toBe('Widget is unavailable')
   })
-  it('throws error if incorrect element type is passed', () => {
-    // FIXME: This test should pass
-    // // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
-    // expect(() => init(123, { action_id: SAMPLE_ACTION_ID })).toThrow(
-    //   'The passed element parameter does not look like a valid HTML element.'
-    // )
+
+  it('unavailable if raw action ID `1` does not look like a hex-encoded hash', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        advanced_use_raw_action_id: true,
+        // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+        action_id: 1,
+        signal: SAMPLE_SIGNAL,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
+    expect(element.disabled).toBeTruthy()
+    expect(element.textContent).toBe('Widget is unavailable')
   })
-  it('throws error if element cannot be found on DOM', () => {
-    // FIXME: This test should pass
-    // expect(() =>
-    //   init('i_do_not_exist', {
-    //     action_id: SAMPLE_ACTION_ID,
-    //     on_error: () => null,
-    //     on_success: () => null,
-    //   })
-    // ).toThrow('Element to mount World ID not found. Please make sure the element is valid.')
+
+  it('unavailable if raw action ID `BigInt(8)` does not look like a hex-encoded hash', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        advanced_use_raw_action_id: true,
+        // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+        action_id: BigInt(8),
+        signal: SAMPLE_SIGNAL,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
+    expect(element.disabled).toBeTruthy()
+    expect(element.textContent).toBe('Widget is unavailable')
+  })
+
+  it('unavailable if raw signal `hello_world` does not look like a hex-encoded hash', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        advanced_use_raw_signal: true,
+        action_id: SAMPLE_ACTION_ID,
+        signal: 'hello_world',
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
+    expect(element.disabled).toBeTruthy()
+    expect(element.textContent).toBe('Widget is unavailable')
+  })
+
+  /* cspell:disable-next-line */
+  it('unavailable if raw signal `0xgggggggggggggggggggggg` does not look like a hex-encoded hash', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        advanced_use_raw_signal: true,
+        action_id: SAMPLE_ACTION_ID,
+        /* cspell:disable-next-line */
+        signal: '0xgggggggggggggggggggggg',
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
+    expect(element.disabled).toBeTruthy()
+    expect(element.textContent).toBe('Widget is unavailable')
+  })
+
+  it('unavailable if raw signal `1` does not look like a hex-encoded hash', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        advanced_use_raw_signal: true,
+        action_id: SAMPLE_ACTION_ID,
+        // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+        signal: 1,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
+    expect(element.disabled).toBeTruthy()
+    expect(element.textContent).toBe('Widget is unavailable')
+  })
+
+  it('unavailable if raw signal `BigInt(8)` does not look like a hex-encoded hash', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        advanced_use_raw_signal: true,
+        action_id: SAMPLE_ACTION_ID,
+        // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+        signal: BigInt(8),
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    const element = getByTestId(document.body, 'world-id-box') as HTMLButtonElement
+    expect(element.disabled).toBeTruthy()
+    expect(element.textContent).toBe('Widget is unavailable')
+  })
+
+  it('throws error if incorrect element type is passed', async () => {
+    const on_init_error = jest.fn()
+    await act(() => {
+      // @ts-expect-error testing invalid parameters passed, we want to bypass TS for this
+      init(123, {
+        action_id: SAMPLE_ACTION_ID,
+        signal: SAMPLE_SIGNAL,
+        on_init_error,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    expect(on_init_error).toBeCalledWith('The passed element parameter does not look like a valid HTML element.')
+  })
+  it('throws error if element cannot be found on DOM', async () => {
+    const on_init_error = jest.fn()
+    await act(() => {
+      init('i_do_not_exist', {
+        action_id: SAMPLE_ACTION_ID,
+        signal: SAMPLE_SIGNAL,
+        on_init_error,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    expect(on_init_error).toBeCalledWith('Element to mount World ID not found. Please make sure the element is valid.')
   })
 })
 
@@ -287,64 +402,54 @@ describe('activation', () => {
     expect(widgetLogic.values.isWidgetEnabled).toBeFalsy()
   })
 })
-//REVIEW now fonts links with stitches in Widget component
-// describe('remote fonts', () => {
-//   it('loads remote font by default', () => {
-//     init('wld-container-test', { action_id: SAMPLE_ACTION_ID })
 
-//     const elements = document.getElementsByTagName('link')
+it('load remote font by default', async () => {
+  await act(() => {
+    init('wld-container-test', {
+      action_id: SAMPLE_ACTION_ID,
+      signal: SAMPLE_SIGNAL,
+      on_error: () => null,
+      on_success: () => null,
+    })
+  })
+  expect(document.querySelector('#wld-container-test > [data-disable-remote-fonts]')).not.toBeInTheDocument()
+})
 
-//     if (!elements) {
-//       throw new Error('Link element not found.')
-//     }
+it('does not load remote font if disabled', async () => {
+  await act(() => {
+    init('wld-container-test', {
+      action_id: SAMPLE_ACTION_ID,
+      signal: SAMPLE_SIGNAL,
+      on_error: () => null,
+      on_success: () => null,
+      disable_remote_fonts: true,
+    })
+  })
+  expect(document.querySelector('#wld-container-test > [data-disable-remote-fonts]')).toBeInTheDocument()
+})
 
-//     let elementFound = false
+describe('state checks', () => {
+  it('isInitialized', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        action_id: SAMPLE_ACTION_ID,
+        signal: '',
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    expect(widgetLogic.values.isWidgetInitialized).toBeTruthy()
+  })
 
-//     for (const element of elements) {
-//       if (element.href.includes('https://fonts.googleapis.com/css2?family=Rubik') && element.rel === 'stylesheet') {
-//         elementFound = true
-//         break
-//       }
-//     }
-
-//     expect(elementFound).toBeTruthy()
-//   })
-
-// it('does not load remote font if disabled', () => {
-//   init('wld-container-test', {
-//     connectionProps: {
-//       action_id: SAMPLE_ACTION_ID,
-//       signal: SAMPLE_SIGNAL,
-//       onVerificationError: () => null,
-//       onVerificationSuccess: () => null,
-//     },
-//     disableRemoteFonts: true,
-//   })
-
-//   // No external stylesheet is loaded
-//   const elements = document.getElementsByTagName('link')
-//   expect(elements).toHaveLength(0)
-// })
-// })
-
-// describe('state checks', () => {
-//   it('isInitialized', () => {
-//     expect(isInitialized()).toBeFalsy()
-
-//     init('wld-container-test', { action_id: SAMPLE_ACTION_ID })
-
-//     expect(isInitialized()).toBeTruthy()
-//   })
-
-//   it('isEnabled', () => {
-//     expect(isEnabled()).toBeFalsy()
-
-//     init('wld-container-test', { action_id: SAMPLE_ACTION_ID, signal: SAMPLE_SIGNAL })
-
-//     expect(isEnabled()).toBeFalsy()
-
-//     expect(() => enable()).not.toThrow()
-
-//     expect(isEnabled()).toBeTruthy()
-//   })
-// })
+  it('isEnabled', async () => {
+    await act(() => {
+      init('wld-container-test', {
+        action_id: SAMPLE_ACTION_ID,
+        signal: SAMPLE_SIGNAL,
+        on_error: () => null,
+        on_success: () => null,
+      })
+    })
+    expect(widgetLogic.values.isWidgetEnabled).toBeTruthy()
+  })
+})
