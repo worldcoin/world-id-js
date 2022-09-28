@@ -15,6 +15,7 @@ describe('widgetLogic', () => {
   })
 
   test('debug mode is exposed properly', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const logic = widgetLogic({ action_id: 'wld_staging_12345678', on_success: () => {}, debug: true })
     logic.mount()
     await expectLogic(widgetLogic).toMatchValues({ isDebug: true })
