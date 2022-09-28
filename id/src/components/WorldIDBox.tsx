@@ -10,7 +10,7 @@ import { useMemo } from 'react'
 import { MouseEvent as ReactMouseEvent } from 'react'
 import { ModalView, VerificationState } from 'types'
 
-const SCaptcha = styled('div', {
+const SCaptcha = styled('button', {
   display: 'grid',
   gridGap: '8px',
   alignItems: 'center',
@@ -30,6 +30,11 @@ const SCaptcha = styled('div', {
   borderRadius: '$lg',
   cursor: 'pointer',
 
+  '&:disabled': {
+    cursor: 'not-allowed',
+    opacity: '0.6',
+  },
+
   variants: {
     grid: {
       false: {
@@ -37,12 +42,6 @@ const SCaptcha = styled('div', {
       },
       true: {
         gridTemplateColumns: 'auto 1fr auto',
-      },
-    },
-    disabled: {
-      true: {
-        cursor: 'not-allowed',
-        opacity: '0.6',
       },
     },
   },
@@ -130,7 +129,7 @@ export function WorldIDBox() {
         data-testid="world-id-box"
         disabled={isVerified || widgetLoading || !isWidgetInitialized || !isWidgetEnabled}
         grid={isWidgetInitialized && !widgetLoading}
-        role="button"
+        type="button"
       >
         {isWidgetInitialized && !widgetLoading && (
           <>

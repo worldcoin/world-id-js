@@ -11,7 +11,13 @@ beforeEach(() => {
 describe('widgetLogic', () => {
   test('runs afterMount events', async () => {
     widgetLogic.mount()
-    await expectLogic(widgetLogic).toMatchValues({ isDevMode: true })
+    await expectLogic(widgetLogic).toMatchValues({ isDebug: false })
+  })
+
+  test('debug mode is exposed properly', async () => {
+    const logic = widgetLogic({ action_id: 'wld_staging_12345678', on_success: () => {}, debug: true })
+    logic.mount()
+    await expectLogic(widgetLogic).toMatchValues({ isDebug: true })
   })
 
   test('initializes widget when `action_id` is passed', async () => {
