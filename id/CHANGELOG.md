@@ -4,10 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.9.1](https://github.com/worldcoin/world-id-js/compare/v0.9.0...v0.9.1) (2022-09-29)
 
-
 ### Bug Fixes
 
-* downgrade framer/motion to support React v17 ([#72](https://github.com/worldcoin/world-id-js/issues/72)) ([7b495cc](https://github.com/worldcoin/world-id-js/commit/7b495cc8841872116dfa05514c96ce9eb3aae5ab))
+- downgrade framer/motion to support React v17 ([#72](https://github.com/worldcoin/world-id-js/issues/72)) ([7b495cc](https://github.com/worldcoin/world-id-js/commit/7b495cc8841872116dfa05514c96ce9eb3aae5ab))
 
 ## 0.9.0 (2022-09-29)
 
