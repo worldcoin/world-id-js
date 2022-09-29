@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.2](https://github.com/worldcoin/world-id-js/compare/v0.9.1...v0.9.2) (2022-09-29)
+
+
+### Bug Fixes
+
+* install now link not working ([#73](https://github.com/worldcoin/world-id-js/issues/73)) ([5c69bc4](https://github.com/worldcoin/world-id-js/commit/5c69bc4cdd1e82cd97cfba4139e58c3ada9f91b1))
+
 ### [0.9.1](https://github.com/worldcoin/world-id-js/compare/v0.9.0...v0.9.1) (2022-09-29)
 
 ### Bug Fixes
