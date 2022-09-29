@@ -12,7 +12,7 @@ import { widgetLogic } from 'logics/widgetLogic'
 import { useMemo } from 'react'
 import { styled } from 'stitches'
 import { ModalView } from 'types'
-import { Button } from './Button'
+import { ButtonLink } from './Button'
 import { DevModeLink } from './DevModeButton'
 import { Dialog } from './Dialog'
 import { Typography } from './Typography'
@@ -90,9 +90,15 @@ export function BottomDialog() {
             <Typography variant="h2">Don’t have the Worldcoin app yet?</Typography>
           </SCtaHeader>
           <Typography variant="p1">Proving unique-humanness through biometrics, without intruding privacy.</Typography>
-          <Button color="gradient" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <ButtonLink
+            color="gradient"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://worldcoin.org/download"
+            target="_blank"
+          >
             Install now
-          </Button>
+          </ButtonLink>
         </SCta>
       )}
 
