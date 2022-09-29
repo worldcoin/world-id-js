@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## 0.9.0 (2022-09-29)
 
+**This version only supports React v18 or above.**
+
 ### ⚠ BREAKING CHANGES
 
 - explicit debug mode & fix #66 (#71)
