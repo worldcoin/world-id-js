@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 const OverlayRoot = motion(
   styled('div', {
     width: '100%',
-    height: '100vh',
+    height: '100%',
     position: 'fixed',
     zIndex: 2147483647, // maximum possible value
     top: '0',

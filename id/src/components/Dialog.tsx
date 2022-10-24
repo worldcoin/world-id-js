@@ -2,6 +2,8 @@ import { styled } from 'stitches'
 
 export const Dialog = styled('div', {
   boxSizing: 'border-box',
+  minHeight: 0,
+  overflow: 'auto',
   padding: '24px',
   color: '$color',
   background: '$background',
