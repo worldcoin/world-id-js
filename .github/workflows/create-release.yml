@@ -14,22 +14,14 @@ on:
           - minor
           - major
 
-
 jobs:
   create:
     name: Create release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Node 16
-        uses: actions/setup-node@v3
+      - uses: ottofeller/github-actions/create-release@main
         with:
-          node-version: 16
-          cache: "yarn"
-
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-
-      - name: Bump version
-        run: yarn release --release-as ${{ github.event.inputs.bump-level }}
+          initial-version: 0.0.1
+          bump-level: ${{ github.event.inputs.bump-level }}
+          release-branches: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
