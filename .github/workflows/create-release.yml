@@ -33,12 +33,3 @@ jobs:
 
       - name: Bump version
         run: yarn release --release-as ${{ github.event.inputs.bump-level }}
-
-  publish-npm:
-    needs: [set-commit-hash, lint, test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ottofeller/github-actions/publish-npm@main
-        with:
-          npm-token: ${{ secrets.NPM_TOKEN }}
-          dry-run: true
