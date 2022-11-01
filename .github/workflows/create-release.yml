@@ -9,6 +9,7 @@ on:
         required: false
         type: choice
         options:
+          - none
           - patch
           - minor
           - major
