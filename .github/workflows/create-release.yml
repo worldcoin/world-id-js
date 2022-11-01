@@ -4,6 +4,18 @@ on:
   push:
     branches:
       - denisbushaev-wid-43-automated-npm-publishing
+  workflow_dispatch:
+    inputs:
+      bump-level:
+        description: Version level to be bumped
+        default: patch
+        required: false
+        type: choice
+        options:
+          - none
+          - patch
+          - minor
+          - major
 
 
 jobs:
@@ -26,7 +38,7 @@ jobs:
 
       - name: Bump version
         working-directory: ./id
-        run: yarn release --release-as major
+        run: yarn release --release-as ${{ github.event.inputs.bump-level || 'patch' }}
 
       - name: Push new version
         uses: ad-m/github-push-action@master
@@ -41,5 +53,4 @@ jobs:
       - uses: ottofeller/github-actions/publish-npm@main
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
-          dry-run: true
           directory: id
