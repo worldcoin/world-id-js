@@ -26,7 +26,7 @@ jobs:
         run: yarn release --release-as ${{ github.event.inputs.bump-level }}
 
   publish-npm:
-    needs: [set-commit-hash, lint, test]
+    needs: [create]
     runs-on: ubuntu-latest
     steps:
       - uses: ottofeller/github-actions/publish-npm@main
