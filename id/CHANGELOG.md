@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.9.3 (2022-11-01)
+
+
+### Bug Fixes
+
+* add workflow_dispatch ([accab63](https://github.com/worldcoin/world-id-js/commit/accab63d7dbd7b7dd084af9b3fbd4dd012c3bc4a))
+
 ### [0.9.2](https://github.com/worldcoin/world-id-js/compare/v0.9.1...v0.9.2) (2022-09-29)
 
 ### Bug Fixes
