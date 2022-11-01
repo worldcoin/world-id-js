@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.0.0 (2022-11-01)
+
+
+### Bug Fixes
+
+* add push ([43bb8fa](https://github.com/worldcoin/world-id-js/commit/43bb8fad025860829da72e074e9446d6c379b7a5))
+
 ### [0.9.2](https://github.com/worldcoin/world-id-js/compare/v0.9.1...v0.9.2) (2022-09-29)
 
 ### Bug Fixes
