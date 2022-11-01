@@ -23,7 +23,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Bump version
-        run: yarn release --release-as ${{ github.event.inputs.bump-level }}
+        run: yarn release --release-as major
 
   publish-npm:
     needs: [create]
