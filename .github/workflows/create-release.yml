@@ -28,6 +28,12 @@ jobs:
         working-directory: ./id
         run: yarn release --release-as major
 
+      - name: Push new version
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
   publish-npm:
     needs: [create]
     runs-on: ubuntu-latest
