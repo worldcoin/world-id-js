@@ -2,6 +2,8 @@ import sha3 from 'js-sha3'
 import { arrayify, BytesLike, concat, hexlify, isBytesLike } from '@ethersproject/bytes'
 import { AppProps, HashFunctionOutput, VerificationRequest, VerificationRequestParams } from 'types'
 import WalletConnect from '@walletconnect/client'
+import { devPortalUrl } from 'const'
+import * as jose from 'jose'
 
 /**
  * Generates a random integer between a specified range
@@ -55,6 +57,33 @@ export const verifyVerificationResponse = (result: Record<string, string | undef
   }
 
   return true
+}
+
+/**
+ * Verifies JWT
+ * @param token JWT token to verify
+ */
+export const verifyJWT = async (token: string): Promise<boolean> => {
+  try {
+    const jsonKeys = (await (await fetch(`${devPortalUrl}/api/v1/jwks`)).json()) as {
+      keys: Array<{ e: string; n: string; kty: string; kid: string }>
+    }
+
+    const kid = jose.decodeProtectedHeader(token).kid
+    const jsonKey = jsonKeys.keys.find((key) => key.kid === kid)
+
+    if (!jsonKey) {
+      return false
+    }
+
+    const publicKey = await jose.importJWK(jsonKey, 'PS256')
+    const { payload } = await jose.jwtVerify(token, publicKey, { issuer: devPortalUrl })
+
+    return !!payload.verified
+  } catch (err) {
+    console.log(err)
+    return false
+  }
 }
 
 /**

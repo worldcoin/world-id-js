@@ -48,3 +48,5 @@ export const END_USER_ERROR_MESSAGES: Partial<Record<ErrorCodes, EndUserErrorDis
 export const breakpoints = {
   sm: '768px',
 }
+
+export const devPortalUrl = 'https://developer.worldcoin.org'
