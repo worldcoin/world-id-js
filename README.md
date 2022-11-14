@@ -84,6 +84,10 @@ worldID.init("world-id-container", {
 });
 ```
 
+### React Native
+
+React Native is currently not supported, but we'll work on adding support in the future.
+
 ## 🧑‍💻 Development & testing
 
 If you want to develop or contribute to this project, please refer to the development instructions in the `id` [README](/id/README.md).
