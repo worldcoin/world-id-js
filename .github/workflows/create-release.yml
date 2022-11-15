@@ -1,9 +1,6 @@
 name: Create release
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       bump-level:
@@ -15,7 +12,6 @@ on:
           - patch
           - minor
           - major
-
 
 jobs:
   create:
