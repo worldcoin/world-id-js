@@ -1,0 +1,51 @@
+name: Create release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump-level:
+        description: Version level to be bumped
+        default: patch
+        required: false
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  create:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: fregante/setup-git-user@v1
+
+      - name: Set up Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+
+      - name: Install dependencies
+        working-directory: ./id
+        run: yarn --frozen-lockfile
+
+      - name: Bump version
+        working-directory: ./id
+        run: yarn release --release-as ${{ github.event.inputs.bump-level || 'patch' }}
+
+      - name: Push new version
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+  publish-npm:
+    needs: [create]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ottofeller/github-actions/publish-npm@main
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          directory: id
