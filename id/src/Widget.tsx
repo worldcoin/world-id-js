@@ -20,6 +20,7 @@ export function WorldIDWidget(props: WidgetProps): JSX.Element {
     signal_description: props.signalDescription,
     advanced_use_raw_signal: props.advancedUseRawSignal,
     advanced_use_raw_action_id: props.advancedUseRawActionId,
+    walletconnect_project_id: props.walletconnectProjectId,
     disable_remote_fonts: props.disableRemoteFonts,
     on_success: props.onSuccess,
     on_error: props.onError,
