@@ -1,8 +1,8 @@
-import sha3 from 'js-sha3'
 import { arrayify, BytesLike, concat, hexlify, isBytesLike } from '@ethersproject/bytes'
-import { AppProps, HashFunctionOutput, VerificationRequest, VerificationRequestParams } from 'types'
 import { devPortalUrl } from 'const'
 import * as jose from 'jose'
+import sha3 from 'js-sha3'
+import { AppProps, HashFunctionOutput, VerificationRequest, VerificationRequestParams } from 'types'
 
 /**
  * Generates a random integer between a specified range
@@ -184,14 +184,13 @@ export function keccak256(value: BytesLike): string {
  */
 export function buildQRData(uri: string, returnUrl?: string): string {
   const result = new window.URL('https://worldcoin.org/verify')
-  const encodedUri = encodeURIComponent(uri)
-  result.searchParams.append('w', encodedUri)
+  result.searchParams.append('w', uri)
 
   // returnUrl optionally instructs the WLD app how to return to the website after the verification is complete (intended for mobile only).
   if (returnUrl) result.searchParams.append('r', returnUrl)
 
   console.log(`WC URI: ${uri}`) // DEBUG
-  console.log(`WLD URL: ${decodeURIComponent(result.toString())}`) // DEBUG
+  console.log(`WLD URL: ${result.toString()}`) // DEBUG
 
   return result.toString()
 }
