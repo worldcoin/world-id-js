@@ -144,7 +144,7 @@ export const verificationLogic = kea<verificationLogicType>([
           requiredNamespaces: {
             eip155: {
               methods: ['wld_worldIDVerification'],
-              chains: ['eip155:1'], // Chain ID used does not matter, since we only perform signatures
+              chains: ['eip155:1'], // Chain ID used does not matter, since we only perform custom JSON RPC messages (World ID verification)
               events: ['chainChanged', 'accountsChanged'],
             },
           },
