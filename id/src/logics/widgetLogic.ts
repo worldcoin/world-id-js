@@ -26,7 +26,7 @@ export const widgetLogic = kea<widgetLogicType>([
   }),
   reducers({
     walletconnectProjectId: [
-      '6554d54387272daa3e661a0caaf20689',
+      '309dd595b0db2f2c22edb904a835e21d',
       {
         setWalletConnectProjectId: (_, { projectId }) => projectId,
       },
@@ -89,7 +89,7 @@ export const widgetLogic = kea<widgetLogicType>([
   listeners(({ actions }) => ({
     processProps: async ({ props }) => {
       actions.setIsDebug(props.debug ?? false)
-      actions.setWalletConnectProjectId(props.walletconnect_project_id ?? '850bd27744522e73bd6c739ccd53efd1')
+      actions.setWalletConnectProjectId(props.walletconnect_project_id ?? '309dd595b0db2f2c22edb904a835e21d')
 
       const { valid, error } = validateInputParams(props)
 
