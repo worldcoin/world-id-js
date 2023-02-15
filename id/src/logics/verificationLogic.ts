@@ -1,4 +1,3 @@
-import WalletConnect from '@walletconnect/client'
 import { END_USER_ERROR_MESSAGES, ERROR_MESSAGES } from 'const'
 import { kea, actions, reducers, path, listeners, events, connect, selectors } from 'kea'
 import {
@@ -12,15 +11,32 @@ import { widgetLogic } from './widgetLogic'
 
 import type { verificationLogicType } from './verificationLogicType'
 import { EndUserErrorDisplay, ErrorCodes, ExpectedErrorResponse, VerificationResponse, VerificationState } from 'types'
+import Client from '@walletconnect/sign-client'
+import { getSdkError } from '@walletconnect/utils'
+import { debug } from 'helpers/debug'
 
-let connector: WalletConnect
+// NOTE: additional type because kea won't export original type from @walletconnect/sign-client for some reason
+export type WCClient = Client
 
-try {
-  connector = new WalletConnect({
-    bridge: 'https://bridge.walletconnect.org',
+const debugClientEvents = (client: WCClient) => {
+  const events = [
+    'session_proposal',
+    'session_update',
+    'session_extend',
+    'session_ping',
+    'session_delete',
+    'session_expire',
+    'session_request',
+    'session_request_sent',
+    'session_event',
+    'proposal_expire',
+  ] as const
+
+  events.forEach((eventName) => {
+    client.on(eventName, (event) => {
+      debug(eventName, event)
+    })
   })
-} catch (error) {
-  console.error('Unable to create WalletConnect connector')
 }
 
 export const verificationLogic = kea<verificationLogicType>([
@@ -28,11 +44,14 @@ export const verificationLogic = kea<verificationLogicType>([
   actions({
     // ANCHOR connection actions
     initConnection: true,
+    clientConnect: true,
     setConnectorUri: (connectorUri: string | null) => ({ connectorUri }),
+    setTopic: (topic: string | null) => ({ topic }),
     setConnectionStartTime: (startTime: null | number) => ({ startTime }),
+    setClient: (client: WCClient | null) => ({ client }),
 
     // ANCHOR verification actions
-    handleConnectionEstablished: true,
+    handleConnectionEstablished: (client: WCClient) => ({ client }),
     setVerificationState: (verificationState: VerificationState) => ({ verificationState }),
     setError: (errorCode: ErrorCodes) => ({ errorCode }),
     setSuccess: (result: VerificationResponse) => ({ result }),
@@ -41,6 +60,7 @@ export const verificationLogic = kea<verificationLogicType>([
     reset: true,
   }),
   connect({
+    values: [widgetLogic, ['walletconnectProjectId']],
     actions: [widgetLogic, ['finishWidgetLoading', 'setQrCodeContent', 'disableModal']],
   }),
   reducers({
@@ -49,6 +69,18 @@ export const verificationLogic = kea<verificationLogicType>([
       null as string | null,
       {
         setConnectorUri: (_, { connectorUri }) => connectorUri,
+      },
+    ],
+    topic: [
+      null as string | null,
+      {
+        setTopic: (_, { topic }) => topic,
+      },
+    ],
+    client: [
+      null as WCClient | null,
+      {
+        setClient: (_, { client }) => client,
       },
     ],
     connectionStartTime: [
@@ -89,40 +121,63 @@ export const verificationLogic = kea<verificationLogicType>([
   listeners(({ actions, values }) => ({
     // ANCHOR connection listeners
     initConnection: async () => {
-      if (values.connectorUri) {
-        return
-      }
+      debug('Starting connection process')
+      debug(values.walletconnectProjectId)
 
-      if (connector.connected) {
-        try {
-          await connector.killSession()
-        } catch (error) {
-          console.error('Error while killing session', error)
-        }
-      }
+      const currentClient = await Client.init({
+        projectId: values.walletconnectProjectId,
+        metadata: {
+          name: 'World ID',
+          description: 'Verify with World ID',
+          url: '#',
+          icons: ['https://worldcoin.org/icons/logo-small.svg'],
+        },
+      })
+
+      debug('currentClient: ', currentClient)
+      actions.setClient(currentClient)
 
       try {
-        await connector.createSession()
-        actions.setConnectorUri(connector.uri)
-        actions.setConnectionStartTime(performance.now())
+        debug('Connecting to WalletConnect')
+
+        const { uri, approval } = await currentClient.connect({
+          requiredNamespaces: {
+            eip155: {
+              methods: ['wld_worldIDVerification'],
+              chains: ['eip155:1'], // Chain ID used does not matter, since we only perform custom JSON RPC messages (World ID verification)
+              events: ['accountsChanged'],
+            },
+          },
+        })
+
+        debug('connector: ', { uri, approval })
+
+        if (uri) {
+          actions.setConnectorUri(uri)
+          const session = await approval()
+          debug('session: ', session)
+
+          if (!session) {
+            actions.setError(ErrorCodes.ConnectionFailed)
+            return console.error(`Application didn't receive a session: ${session}`)
+          }
+
+          debugClientEvents(currentClient)
+
+          // @FIXME: add error handling when session is disconnected
+          // currentClient.on('session_delete', () => {
+          //   console.log('session_delete')
+          //   actions.initConnection()
+          // })
+
+          actions.setTopic(session.topic)
+          actions.handleConnectionEstablished(currentClient)
+        }
+
+        debug('Connection established')
       } catch (error) {
-        console.error('Error while creating WalletConnect session', error)
+        console.error(`Unable to establish a connection with the WLD app: ${error}`)
       }
-
-      connector.on('connect', async (error: unknown) => {
-        if (error) {
-          actions.setError(ErrorCodes.ConnectionFailed)
-          console.error(`Failed to establish connection to WLD app: ${error}`)
-        } else {
-          actions.handleConnectionEstablished()
-        }
-      })
-
-      connector.on('disconnect', (error) => {
-        if (error) {
-          actions.initConnection()
-        }
-      })
 
       telemetryVerificationLaunched()
     },
@@ -131,45 +186,60 @@ export const verificationLogic = kea<verificationLogicType>([
         return
       }
 
-      const qrData = buildQRData(connector)
-      const mobileQRCode = buildQRData(connector, window.location.href)
+      const qrData = buildQRData(connectorUri)
+      const mobileQRCode = buildQRData(connectorUri, window.location.href)
       actions.setQrCodeContent({ default: qrData, mobile: mobileQRCode })
       actions.finishWidgetLoading()
     },
 
     // ANCHOR verification listeners
-    handleConnectionEstablished: async () => {
+    handleConnectionEstablished: async ({ client }) => {
+      if (!values.topic) {
+        return console.error('No topic found, cannot proceed with verification')
+      }
+
       actions.setVerificationState(VerificationState.AwaitingVerification)
+
       telemetryConnectionEstablished(
         values.connectionStartTime ? (performance.now() - values.connectionStartTime) / 1000 : undefined
       )
 
-      try {
-        const result = await connector.sendCustomRequest(buildVerificationRequest(widgetLogic.props))
-        if (verifyVerificationResponse(result)) {
-          actions.setSuccess(result)
-        } else {
-          actions.setError(ErrorCodes.UnexpectedResponse)
-          console.error(ERROR_MESSAGES[ErrorCodes.UnexpectedResponse], result)
-        }
-      } catch (error: unknown) {
-        // Verification was unsuccessful. Attempt to determine the specific error, or return a generic error otherwise.
-        let errorCode = ErrorCodes.GenericError
-        const errorMessage = (error as ExpectedErrorResponse).message
-        if (errorMessage && Object.values(ErrorCodes).includes(errorMessage as ErrorCodes)) {
-          errorCode = errorMessage as ErrorCodes
-        }
-        actions.setError(errorCode)
-      }
+      await client
+        .request<{ [x in keyof VerificationResponse]?: string }>({
+          topic: values.topic,
+          chainId: 'eip155:1',
+          request: buildVerificationRequest(widgetLogic.props),
+        })
+        .then((result) => {
+          debug('client.request result: ', result)
 
-      // Terminate the session; we only use WalletConnect for one-off transactions
-      try {
-        try {
-          await connector.killSession()
-        } catch (error) {
-          console.error('Error while killing session', error)
-        }
-      } catch {}
+          if (verifyVerificationResponse(result)) {
+            actions.setSuccess(result as VerificationResponse)
+          } else {
+            actions.setError(ErrorCodes.UnexpectedResponse)
+            console.error(ERROR_MESSAGES[ErrorCodes.UnexpectedResponse], result)
+          }
+        })
+        .catch((error: unknown) => {
+          // Verification was unsuccessful. Attempt to determine the specific error, or return a generic error otherwise.
+          let errorCode = ErrorCodes.GenericError
+          const errorMessage = (error as ExpectedErrorResponse).message
+          if (errorMessage && Object.values(ErrorCodes).includes(errorMessage as ErrorCodes)) {
+            errorCode = errorMessage as ErrorCodes
+          }
+          actions.setError(errorCode)
+        })
+        .finally(async () => {
+          if (!values.topic) {
+            return console.error('No topic found, cannot proceed with disconnecting')
+          }
+
+          await client.disconnect({ topic: values.topic, reason: getSdkError('USER_DISCONNECTED') })
+        })
+        .catch((error) => {
+          // Terminate the session; we only use WalletConnect for one-off transactions
+          console.error(`Unable to disconnect: ${error}`)
+        })
     },
     setSuccess: async () => {
       telemetryVerificationSuccess()
@@ -198,13 +268,20 @@ export const verificationLogic = kea<verificationLogicType>([
       actions.reset()
     },
     reset: async () => {
-      if (connector.connected) {
-        try {
-          await connector.killSession()
-        } catch (error) {
-          console.error('Error while killing session', error)
-        }
+      if (!values.client || !values.topic) {
+        return console.error('No client or topic found, cannot proceed with resetting')
       }
+
+      await values.client
+        .disconnect({ topic: values.topic, reason: getSdkError('USER_DISCONNECTED') })
+        .then(() => {
+          actions.setClient(null)
+          actions.setTopic(null)
+        })
+        .catch((error) => {
+          // Terminate the session; we only use WalletConnect for one-off transactions
+          console.error(`Unable to disconnect: ${error}`)
+        })
     },
     tryAgain: () => {
       // NOTE `tryAgain` is almost an alias to `reset`, with the distinction we start a new connection right away

@@ -45,8 +45,9 @@ const VanillaWidget = (): JSX.Element => {
 
 let isInitialized = false
 
-const handleInitError = (errorMessage: string, props: AppProps): void => {
-  console.error(errorMessage)
+const handleInitError = (errorMessage: string, props: AppProps, type: 'error' | 'warn' | 'log' = 'error'): void => {
+  console[type](errorMessage)
+
   if (props.on_init_error) {
     props.on_init_error(errorMessage)
   }
@@ -81,6 +82,14 @@ export const init = (elementInput: string | Element | DocumentFragment, props: A
 
     if (!props.action_id) {
       handleInitError('The `action_id` parameter is always required.', props)
+    }
+
+    if (!props.walletconnect_project_id) {
+      handleInitError(
+        'WalletConnect project ID not detected.  Using default, but this is not advisable for production usage!',
+        props,
+        'warn'
+      )
     }
 
     try {

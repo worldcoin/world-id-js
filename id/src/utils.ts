@@ -1,9 +1,8 @@
-import sha3 from 'js-sha3'
 import { arrayify, BytesLike, concat, hexlify, isBytesLike } from '@ethersproject/bytes'
-import { AppProps, HashFunctionOutput, VerificationRequest, VerificationRequestParams } from 'types'
-import WalletConnect from '@walletconnect/client'
 import { devPortalUrl } from 'const'
 import * as jose from 'jose'
+import sha3 from 'js-sha3'
+import { AppProps, HashFunctionOutput, VerificationRequest, VerificationRequestParams } from 'types'
 
 /**
  * Generates a random integer between a specified range
@@ -179,21 +178,19 @@ export function keccak256(value: BytesLike): string {
 
 /**
  * Build data for QR Code
- * @param connector WalletConnect connection instance
+ * @param uri string of wc uri
+ * @param returnUrl string; url of the website to return to after verification is complete
  * @returns string
  */
-export function buildQRData(connector: WalletConnect, returnUrl?: string): string {
-  const bridgeUrl = new URL(connector.bridge)
-  const result = new URL('https://worldcoin.org/verify')
-  result.searchParams.append('t', connector.handshakeTopic)
-  result.searchParams.append('k', connector.key)
-  result.searchParams.append('b', bridgeUrl.hostname)
-  result.searchParams.append('v', '1')
+export function buildQRData(uri: string, returnUrl?: string): string {
+  const result = new window.URL('https://worldcoin.org/verify')
+  result.searchParams.append('w', uri)
 
-  if (returnUrl) {
-    // The returnUrl optionally instructs the WLD app how to return to the website after the verification is complete (intended for mobile only).
-    result.searchParams.append('r', returnUrl)
-  }
+  // returnUrl optionally instructs the WLD app how to return to the website after the verification is complete (intended for mobile only).
+  if (returnUrl) result.searchParams.append('r', returnUrl)
+
+  console.log(`WC URI: ${uri}`) // DEBUG
+  console.log(`WLD URL: ${result.toString()}`) // DEBUG
 
   return result.toString()
 }

@@ -79,6 +79,7 @@
     "jest": "27.5.1",
     "kea-test-utils": "0.2.2",
     "kea-typegen": "3.1.0",
+    "lokijs": "1.5.12",
     "meow": "10.1.2",
     "prettier": "2.6.0",
     "prettier-eslint": "13.0.0",
@@ -92,7 +93,8 @@
   "dependencies": {
     "@ethersproject/bytes": "5.6.1",
     "@stitches/react": "1.2.8",
-    "@walletconnect/client": "1.7.5",
+    "@walletconnect/sign-client": "^2.4.0",
+    "@walletconnect/utils": "^2.2.1",
     "framer-motion": "6.5.1",
     "jose": "4.10.4",
     "js-sha3": "0.8.0",

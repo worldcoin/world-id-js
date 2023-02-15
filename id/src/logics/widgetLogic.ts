@@ -22,8 +22,15 @@ export const widgetLogic = kea<widgetLogicType>([
     setModalView: (view: ModalView) => ({ view }),
     setQrCodeContent: (content: QRContentInterface) => ({ content }),
     setIsDebug: (isDebug: boolean) => ({ isDebug }),
+    setWalletConnectProjectId: (projectId: string) => ({ projectId }),
   }),
   reducers({
+    walletconnectProjectId: [
+      '309dd595b0db2f2c22edb904a835e21d',
+      {
+        setWalletConnectProjectId: (_, { projectId }) => projectId,
+      },
+    ],
     // Whether the widget is initialized with minimum valid parameters (i.e. action_id)
     isWidgetInitialized: [
       false,
@@ -82,6 +89,7 @@ export const widgetLogic = kea<widgetLogicType>([
   listeners(({ actions }) => ({
     processProps: async ({ props }) => {
       actions.setIsDebug(props.debug ?? false)
+      actions.setWalletConnectProjectId(props.walletconnect_project_id ?? '309dd595b0db2f2c22edb904a835e21d')
 
       const { valid, error } = validateInputParams(props)
 

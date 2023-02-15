@@ -9,6 +9,7 @@ export interface AppProps {
   advanced_use_raw_signal?: boolean
   advanced_use_raw_action_id?: boolean
   disable_remote_fonts?: boolean
+  walletconnect_project_id?: string
   theme?: 'light' | 'dark'
   debug?: boolean
   on_success: (result: VerificationResponse) => void
@@ -26,6 +27,7 @@ export interface WidgetProps extends Pick<AppProps, 'theme' | 'debug' | 'signal'
   advancedUseRawSignal?: AppProps['advanced_use_raw_signal']
   advancedUseRawActionId?: AppProps['advanced_use_raw_action_id']
   disableRemoteFonts?: AppProps['disable_remote_fonts']
+  walletconnectProjectId?: AppProps['walletconnect_project_id']
   onSuccess: AppProps['on_success']
   onError?: AppProps['on_error']
   onInitSuccess?: AppProps['on_init_success']
